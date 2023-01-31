@@ -54,7 +54,7 @@ namespace Personal.Andreas.Scripts.Flowfield
 
         private void Clear()
         {
-            // _chunks.Clear();
+            _chunks.Clear();
             _chunkList.Clear();
             _visited.Clear();
         }
@@ -218,14 +218,14 @@ namespace Personal.Andreas.Scripts.Flowfield
             // ch.Nodes[i].pathId = (ushort)currentPathId;
         }
 
-        public void UpdateField(Vector2 p)
+        public void UpdateField(Vector2 worldPosition)
         {
             //  update area size
 
 
             int ts = (int)TileSize;
 
-            CoordinateHelper.PositionToWorldCoords(p.x, p.y, ts, out int startX, out int startY);
+            CoordinateHelper.PositionToWorldCoords(worldPosition.x, worldPosition.y, ts, out int startX, out int startY);
 
             // int startX = (int)(p.X / ts);
             // int startY = (int)(p.Y / ts);
@@ -253,7 +253,7 @@ namespace Personal.Andreas.Scripts.Flowfield
             _tileBounds = new Rect(startX - _updateWidth, startY - _updateHeight, _updateWidth * 2, _updateHeight * 2);
 
             var size = new Vector2(_updateWidth * ts, _updateHeight * ts);
-            Bounds = new Rect((int)(p.x - size.x), (int)(p.y - size.y), (int)size.x * 2, (int)size.y * 2);
+            Bounds = new Rect((int)(worldPosition.x - size.x), (int)(worldPosition.y - size.y), (int)size.x * 2, (int)size.y * 2);
 
             _visited.Add(new Vector2Int(startX, startY));
 

@@ -1,4 +1,5 @@
-﻿using Personal.Andreas.Scripts.Flowfield;
+﻿using System;
+using Personal.Andreas.Scripts.Flowfield;
 using Personal.Andreas.Scripts.Util;
 using UnityEditor;
 using UnityEngine;
@@ -11,6 +12,11 @@ namespace Personal.Andreas.Scripts
 
         private const int tempWorldSize = 5;
         private const int tempWorldLength = tempWorldSize * tempWorldSize;
+
+        private void Start()
+        {
+            SetupTempFlowField();
+        }
 
         private bool[] CreateRandomBlocks()
         {
@@ -34,20 +40,32 @@ namespace Personal.Andreas.Scripts
             {
                 var ch = new FlowChunk(_field.ChunkSize);
                 ch.IndexOffset = new Vector2Int(
-                    (i % tempWorldSize) * _field.ChunkSize,
-                    (i / tempWorldSize) * _field.ChunkSize);
+                    (i % tempWorldSize),
+                    (i / tempWorldSize));
                 ch.Blocks = CreateRandomBlocks();
 
                 //  random fields
                 for(int j = 0; j < ch.Field.Length; j++)
                 {
-                    ch.Field[j] = new Vector2(Rng.NextF(-1f, 1f), Rng.NextF(-1f, 1f));
+                    ch.Field[j] = new Vector2(Rng.NextF(-1f, 1f), Rng.NextF(-1f, 1f)).normalized;
                 }
                 
                 chunks[i] = ch;
             }
 
             _field.Setup(chunks);
+        }
+
+        private void Update()
+        {
+            if(Input.GetMouseButtonDown(0))
+            {
+                var mpos = Input.mousePosition;
+
+                var pos = new Vector2(7, 12);
+                Debug.Log($"mpos: {mpos}  |  pos: {pos}");
+                _field.UpdateField(pos);
+            }
         }
 
         private void OnDrawGizmos()
@@ -64,7 +82,7 @@ namespace Personal.Andreas.Scripts
             {
                 var ch = chunks[i];
 
-                var pos = ch.IndexOffset;
+                var pos = new Vector2(ch.IndexOffset.x * _field.ChunkSize, ch.IndexOffset.y * _field.ChunkSize);
                 DrawChunk(pos);
 
                 for(int j = 0; j < ch.Field.Length; j++)
