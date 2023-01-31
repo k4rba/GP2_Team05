@@ -10,11 +10,12 @@ namespace Personal.Andreas.Scripts.Flowfield
         public bool[] Blocks;
         public Vector2Int IndexOffset;
         
-        private byte _size;
+        private int _size;
 
         public FlowChunk(int size)
         {
             int length = size * size;
+            _size = size;
             Nodes = new VNode[length];
             Field = new Vector2[length];
             Blocks = new bool[length];
@@ -26,6 +27,6 @@ namespace Personal.Andreas.Scripts.Flowfield
             return Nodes[i];
         }
         
-        public int GetHash() => CoordinateHelper.GetHash(IndexOffset.x, IndexOffset.y);
+        public int GetHash => CoordinateHelper.GetHash(IndexOffset.x, IndexOffset.y);
     }
 }

@@ -26,7 +26,8 @@ namespace Personal.Andreas.Scripts.Util
 
         public static int GetHash(int x, int y)
         {
-            int hash = (x, y).GetHashCode();
+            int hash = new Vector3(x, 0, y).GetHashCode();
+            // (x, y).GetHashCode();
             return hash;
         }
         

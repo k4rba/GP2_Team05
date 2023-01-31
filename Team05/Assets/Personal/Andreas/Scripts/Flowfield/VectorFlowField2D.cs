@@ -5,48 +5,68 @@ using Personal.Andreas.Scripts.Util;
 
 namespace Personal.Andreas.Scripts.Flowfield
 {
+    public struct FieldInfo
+    {
+        public Vector3 pos;
+
+        public FieldInfo(Vector3 pos)
+        {
+            this.pos = pos;
+        }
+    }
+
     [Serializable]
     public class VectorFlowField2D
     {
         public int ChunkLength => ChunkSize * ChunkSize;
 
         [NonSerialized] public int ChunkSize = 5;
-        [NonSerialized] public float TileSize = 1;
+        [NonSerialized] public int TileSize = 1;
 
         [NonSerialized] public Rect Bounds;
 
         private List<FlowChunk> _chunkList;
-        private Dictionary<int, FlowChunk> _chunks;
-        
+        private Dictionary<Vector2Int, FlowChunk> _chunks;
+
         private List<Vector2Int> _visited;
 
-        private int _updateWidth = 18;
-        private int _updateHeight = 10;
-        
+        private int _updateWidth = 5;
+        private int _updateHeight = 5;
+
         private int _maxDistance;
         private Rect _tileBounds;
         private Vector2Int _curStart;
         private int _currentPathId = 0;
 
+
+        public List<FieldInfo> NewlySet;
+
         public VectorFlowField2D()
         {
             _visited = new List<Vector2Int>();
-            _chunks = new Dictionary<int, FlowChunk>();
+            _chunks = new Dictionary<Vector2Int, FlowChunk>();
             _chunkList = new();
+            NewlySet = new();
+        }
+
+        private int GetHash(int x, int y)
+        {
+            return new Vector3(x, 0, y).GetHashCode();
         }
 
         private bool InBounds(int x, int y)
         {
             // return x >= 0 && x < _width && y >= 0 && y < _height;
             CoordinateHelper.WorldCoordsToChunkCoords(x, y, ChunkSize, out int cx, out int cy);
-            int h = (cx, cy).GetHashCode();
-            return _chunks.ContainsKey(h);
+            //int h = GetHash(x, y); // (cx, cy).GetHashCode();
+            return _chunks.ContainsKey(new Vector2Int(cx, cy));
         }
 
         public Vector2 GetFieldDirection(int x, int y)
         {
             var h = CoordinateHelper.WorldCoordsToHash(x, y, ChunkSize);
-            var ch = GetChunk(h);
+            CoordinateHelper.WorldCoordsToChunkCoords(x, y, ChunkSize, out int cx, out int cy);
+            var ch = GetChunk(cx, cy);
             if(ch == null) return Vector2.zero;
             int i = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, ChunkSize, ch.IndexOffset);
             return ch.Field[i];
@@ -61,10 +81,10 @@ namespace Personal.Andreas.Scripts.Flowfield
 
         private void AddChunk(FlowChunk chunk)
         {
-            _chunks.Add(chunk.GetHash(), chunk);
+            _chunks.Add(chunk.IndexOffset, chunk);
             _chunkList.Add(chunk);
         }
-        
+
         public void Setup(FlowChunk[] chunks)
         {
             Clear();
@@ -74,20 +94,20 @@ namespace Personal.Andreas.Scripts.Flowfield
                 var ch = chunks[i];
                 AddChunk(ch);
             }
-            
+
             // for(int i = 0; i < map.ChunkList.Count; i++)
             // {
-                // var mapChunk = map.ChunkList[i];
-                // SetupChunkBlocks(mapChunk);
+            // var mapChunk = map.ChunkList[i];
+            // SetupChunkBlocks(mapChunk);
             // }
         }
 
         // public void SetupChunkBlocks(byte tile)
         // {
-            // FlowChunk flowChunk;
-            // if(!_chunks.TryGetValue(ch.Hash, out flowChunk))
-                // flowChunk = CreateChunk(ch.ChunkCoords.X, ch.ChunkCoords.Y);
-            // flowChunk.Blocks = ch.Blocks;
+        // FlowChunk flowChunk;
+        // if(!_chunks.TryGetValue(ch.Hash, out flowChunk))
+        // flowChunk = CreateChunk(ch.ChunkCoords.X, ch.ChunkCoords.Y);
+        // flowChunk.Blocks = ch.Blocks;
         // }
 
         public void Reset(int sx, int ex, int sy, int ey)
@@ -148,31 +168,32 @@ namespace Personal.Andreas.Scripts.Flowfield
             return los;
         }
 
-        private FlowChunk CreateChunk(int cx, int cy)
-        {
-            var ch = new FlowChunk(ChunkSize) { IndexOffset = new Vector2Int(cx, cy) };
-            int h = (cx, cy).GetHashCode();
-            // _chunks.Add(h, ch);
-            _chunkList.Add(ch);
-            return ch;
-        }
+        // private FlowChunk CreateChunk(int cx, int cy)
+        // {
+        // var ch = new FlowChunk(ChunkSize) { IndexOffset = new Vector2Int(cx, cy) };
+        // int h = (cx, cy).GetHashCode();
+        // _chunks.Add(h, ch);
+        // _chunkList.Add(ch);
+        // return ch;
+        // }
 
-        private FlowChunk GetChunk(int h)
+        private FlowChunk GetChunk(Vector2Int index)
         {
-            _chunks.TryGetValue(h, out var chunk);
+            _chunks.TryGetValue(index, out var chunk);
             return chunk;
         }
 
         private FlowChunk GetChunk(int x, int y)
         {
             int h = CoordinateHelper.WorldCoordsToHash(x, y, ChunkSize);
-            return GetChunk(h);
+            CoordinateHelper.WorldCoordsToChunkCoords(x, y, ChunkSize, out int cx, out int cy);
+            return GetChunk(new Vector2Int(cx, cy));
         }
 
         private FlowChunk GetChunkWithC(int cx, int cy)
         {
-            int h = (cx, cy).GetHashCode();
-            _chunks.TryGetValue(h, out var chunk);
+            int h = GetHash(cx, cy); // new Vector3(cx, 0, cy).GetHashCode(); // (cx, cy).GetHashCode();
+            _chunks.TryGetValue(new Vector2Int(cx, cy), out var chunk);
             return chunk;
         }
 
@@ -223,9 +244,10 @@ namespace Personal.Andreas.Scripts.Flowfield
             //  update area size
 
 
-            int ts = (int)TileSize;
+            int ts = TileSize;
 
-            CoordinateHelper.PositionToWorldCoords(worldPosition.x, worldPosition.y, ts, out int startX, out int startY);
+            CoordinateHelper.PositionToWorldCoords(worldPosition.x, worldPosition.y, ts, out int startX,
+                out int startY);
 
             int sx = startX - _updateWidth;
             int ex = startX + _updateWidth;
@@ -234,6 +256,7 @@ namespace Personal.Andreas.Scripts.Flowfield
 
             int cx, cy;
 
+            NewlySet.Clear();
             Reset(sx, ex, sy, ey);
 
             _currentPathId++;
@@ -247,14 +270,18 @@ namespace Personal.Andreas.Scripts.Flowfield
 
             Vector2 endPos = new Vector2(startX, startY);
 
-            _tileBounds = new Rect(startX - _updateWidth, startY - _updateHeight, _updateWidth * 2, _updateHeight * 2);
+            _tileBounds = new Rect(startX - _updateWidth, startY + _updateHeight, _updateWidth * 2, _updateHeight * 2);
 
             var size = new Vector2(_updateWidth * ts, _updateHeight * ts);
-            Bounds = new Rect((int)(worldPosition.x - size.x), (int)(worldPosition.y - size.y), (int)size.x * 2, (int)size.y * 2);
+            Bounds = new Rect((int)(worldPosition.x - size.x), (int)(worldPosition.y - size.y), (int)size.x * 2,
+                (int)size.y * 2);
 
             _visited.Add(new Vector2Int(startX, startY));
 
-            int starti = CoordinateHelper.WorldCoordsToChunkTileIndex(startX, startY, ChunkSize, startChunk.IndexOffset);
+            Debug.Log($"tiles:   x{startX}({sx}-{ex}), y{startY}({sy}-{ey})");
+
+            int starti =
+                CoordinateHelper.WorldCoordsToChunkTileIndex(startX, startY, ChunkSize, startChunk.IndexOffset);
             var startNode = new VNode
             {
                 Distance = 1,
@@ -271,7 +298,19 @@ namespace Personal.Andreas.Scripts.Flowfield
 
             for(int i = 0; i < _visited.Count; i++)
             {
+                if(_visited.Count > 10000)
+                {
+                    Debug.LogWarning("Flowfield visits broke");
+                    break;
+                }
+
                 var v = _visited[i];
+
+                if(v.x == 4 && v.y == 0)
+                {
+                    
+                }
+                
                 CoordinateHelper.WorldCoordsToChunkCoords(v.x, v.y, ChunkSize, out cx, out cy);
                 if(cx != prevCX || cy != prevCY)
                     chunk = GetChunk(v.x, v.y);
@@ -309,10 +348,10 @@ namespace Personal.Andreas.Scripts.Flowfield
             prevMapX = 99999;
             prevMapY = 9999;
 
-            for(int X = sx; X < ex; X++)
-            for(int Y = sy; Y < ey; Y++)
+            for(int y = sy; y < ey; y++)
+            for(int x = sx; x < ex; x++)
             {
-                CoordinateHelper.WorldCoordsToChunkCoords(X, Y, ChunkSize, out cx, out cy);
+                CoordinateHelper.WorldCoordsToChunkCoords(x, y, ChunkSize, out cx, out cy);
                 if(cx != prevCX || cy != prevCY)
                     chunk = GetChunkWithC(cx, cy);
                 prevCX = cx;
@@ -320,16 +359,16 @@ namespace Personal.Andreas.Scripts.Flowfield
                 if(chunk == null)
                     continue;
 
-                int chunki = CoordinateHelper.WorldCoordsToChunkTileIndex(X, Y, ChunkSize, chunk.IndexOffset);
+                int chunki = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, ChunkSize, chunk.IndexOffset);
                 var currentNode = chunk.Nodes[chunki];
-                if(currentNode.PathId != _currentPathId)
-                    continue;
+                // if(currentNode.PathId != _currentPathId)
+                    // continue;
 
                 int nearest = 5000;
                 Vector2 dir = Vector2.zero;
-                Vector2 pos = new Vector2(X, Y);
+                Vector2 tilePosition = new Vector2(x, y);
 
-                foreach(var np in GetFlowNeis(X, Y, neiChunk))
+                foreach(var np in GetFlowNeis(x, y, neiChunk))
                 {
                     CoordinateHelper.WorldCoordsToChunkCoords(np.x, np.y, ChunkSize, out int ncx, out int ncy);
                     if(ncx != prevNpX || ncy != prevNpY)
@@ -343,14 +382,20 @@ namespace Personal.Andreas.Scripts.Flowfield
                     if(dis < nearest)
                     {
                         nearest = dis;
-                        dir = (np.ToVector2() - pos).normalized;
+                        dir = (np.ToVector2() - tilePosition).normalized;
                     }
                 }
 
                 if(currentNode.LineOfSight)
-                    dir = (endPos - pos).normalized;
+                    dir = (endPos - tilePosition).normalized;
 
                 chunk.Field[chunki] = chunk.Blocks[chunki] ? Vector2.zero : dir;
+
+                var pos = new Vector3(
+                    x + TileSize * .5f,
+                    0,
+                    y + TileSize * .5f);
+                NewlySet.Add(new FieldInfo(pos));
             }
 
             // startNode.distance = 1;

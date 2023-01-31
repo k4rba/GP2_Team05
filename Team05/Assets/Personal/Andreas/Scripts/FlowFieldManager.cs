@@ -1,5 +1,4 @@
-﻿using System;
-using Personal.Andreas.Scripts.Flowfield;
+﻿using Personal.Andreas.Scripts.Flowfield;
 using Personal.Andreas.Scripts.Util;
 using UnityEditor;
 using UnityEngine;
@@ -9,9 +8,16 @@ namespace Personal.Andreas.Scripts
     public class FlowFieldManager : MonoBehaviour
     {
         [SerializeField] private VectorFlowField2D _field;
+        [SerializeField] private Transform _unit;
+
+        [SerializeField] private bool _drawIndexes = false;
+        [SerializeField] private bool _drawTiles = false;
+        [SerializeField] private bool _drawChunks = true;
 
         private const int tempWorldSize = 5;
         private const int tempWorldLength = tempWorldSize * tempWorldSize;
+
+        private Vector2Int prevPos;
 
         private void Start()
         {
@@ -23,7 +29,7 @@ namespace Personal.Andreas.Scripts
             var blocks = new bool[_field.ChunkLength];
             for(int i = 0; i < blocks.Length; i++)
             {
-                blocks[i] = Rng.Roll(5);
+                blocks[i] = false; //Rng.Roll(5);
             }
 
             return blocks;
@@ -49,7 +55,7 @@ namespace Personal.Andreas.Scripts
                 {
                     ch.Field[j] = new Vector2(Rng.NextF(-1f, 1f), Rng.NextF(-1f, 1f)).normalized;
                 }
-                
+
                 chunks[i] = ch;
             }
 
@@ -58,24 +64,48 @@ namespace Personal.Andreas.Scripts
 
         private void Update()
         {
-            if(Input.GetMouseButtonDown(0))
-            {
-                var mpos = Input.mousePosition;
+            UpdateField();
+        }
 
-                var pos = new Vector2(7, 12);
-                Debug.Log($"mpos: {mpos}  |  pos: {pos}");
-                _field.UpdateField(pos);
+        void UpdateField()
+        {
+            var pos = _unit.transform.position;
+
+            CoordinateHelper.PositionToWorldCoords(pos.x, pos.z, _field.TileSize, out int startX, out int startY);
+
+            var newPos = new Vector2Int(startX, startY);
+
+            if(newPos != prevPos)
+            {
+                Debug.Log($"update field - pos: {pos}");
+                prevPos = newPos;
+                _field.UpdateField(new Vector2(pos.x, pos.z));
             }
         }
 
         private void OnDrawGizmos()
         {
+            int h = new Vector3(1, 4).GetHashCode();
+            int h2 = new Vector3(-3, -1).GetHashCode();
+            
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 SetupTempFlowField();
                 return;
             }
+            
+            DrawRect(_field.Bounds.position, _field.Bounds.size);
+            
+            UpdateField();
 
+            // var fieldInfos = _field.NewlySet;
+            // for(int i = 0; i < fieldInfos.Count; i++)
+            // {
+                // var fi = fieldInfos[i];
+                // Gizmos.DrawWireSphere(fi.pos, 0.16f);
+            // }
+            
+            
             var chunks = _field.GetChunks();
 
             for(int i = 0; i < chunks.Count; i++)
@@ -83,7 +113,11 @@ namespace Personal.Andreas.Scripts
                 var ch = chunks[i];
 
                 var pos = new Vector2(ch.IndexOffset.x * _field.ChunkSize, ch.IndexOffset.y * _field.ChunkSize);
-                DrawChunk(pos);
+
+                if(_drawChunks)
+                {
+                    DrawChunk(pos);
+                }
 
                 for(int j = 0; j < ch.Field.Length; j++)
                 {
@@ -96,24 +130,36 @@ namespace Personal.Andreas.Scripts
                         pos.y + (tileY * _field.TileSize));
 
                     var direction = ch.Field[j];
-                    DrawTile(tilePos, direction);
+                    DrawTile(tilePos, direction,
+                        tileX + ch.IndexOffset.x * _field.ChunkSize,
+                        tileY + ch.IndexOffset.y * _field.ChunkSize,
+                        ch.Blocks[j]);
                 }
             }
-            
         }
 
-        private void DrawTile(Vector3 pos, Vector2 dir)
+        private void DrawTile(Vector3 pos, Vector2 dir, int x, int y, bool block)
         {
             var finalDir = dir.ToVector3XZ();
             var start = pos + new Vector3(_field.TileSize * .5f, 0, _field.TileSize * .5f);
             var end = start + finalDir * 0.35f;
 
-            Handles.color = Color.red;
-            Handles.DrawWireDisc(start, Vector3.up, 0.1f);
-            if(finalDir != Vector3.zero)
+            if(_drawTiles)
             {
-                Gizmos.color = Color.red;
-                Gizmos.DrawLine(start, end);
+                var color = block ? Color.red : Color.green;
+                Handles.color = color;
+                Handles.DrawWireDisc(start, Vector3.up, 0.1f);
+                if(!block && finalDir != Vector3.zero)
+                {
+                    Gizmos.color = color;
+                    Gizmos.DrawLine(start, end);
+                }
+            }
+
+            if(_drawIndexes)
+            {
+                start.y += 0.4f;
+                Handles.Label(start, $"{x},{y}");
             }
         }
 
