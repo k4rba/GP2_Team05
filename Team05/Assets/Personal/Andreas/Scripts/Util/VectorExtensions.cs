@@ -17,5 +17,10 @@ namespace Personal.Andreas.Scripts.Util
                 Mathf.Clamp(val.x, min, max),
                 Mathf.Clamp(val.y, min, max));
         }
+
+        public static Vector2 ToVector2(this Vector2Int vec)
+        {
+            return new Vector2(vec.x, vec.y);
+        }
     }
 }
