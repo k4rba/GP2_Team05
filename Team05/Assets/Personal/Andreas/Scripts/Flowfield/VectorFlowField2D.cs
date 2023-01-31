@@ -227,9 +227,6 @@ namespace Personal.Andreas.Scripts.Flowfield
 
             CoordinateHelper.PositionToWorldCoords(worldPosition.x, worldPosition.y, ts, out int startX, out int startY);
 
-            // int startX = (int)(p.X / ts);
-            // int startY = (int)(p.Y / ts);
-
             int sx = startX - _updateWidth;
             int ex = startX + _updateWidth;
             int sy = startY - _updateHeight;
