@@ -2,6 +2,8 @@
 {
     public struct VNode
     {
+        public static readonly VNode Empty = new VNode();
+        
         public ushort Distance;
         public bool LineOfSight;
         public ushort PathId;
@@ -18,6 +20,5 @@
             LineOfSight = false;
         }
 
-        public static readonly VNode Empty = new VNode();
     }
 }

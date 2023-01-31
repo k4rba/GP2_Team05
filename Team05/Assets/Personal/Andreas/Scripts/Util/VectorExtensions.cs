@@ -22,5 +22,10 @@ namespace Personal.Andreas.Scripts.Util
         {
             return new Vector2(vec.x, vec.y);
         }
+
+        public static Vector3 ToVector3XZ(this Vector2 vec)
+        {
+            return new Vector3(vec.x, 0, vec.y);
+        }
     }
 }
