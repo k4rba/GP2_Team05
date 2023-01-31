@@ -26,10 +26,12 @@ namespace Personal.Andreas.Scripts
 
         private bool[] CreateRandomBlocks()
         {
+            bool fullyBlock = Rng.Roll(20);
+            
             var blocks = new bool[_field.ChunkLength];
             for(int i = 0; i < blocks.Length; i++)
             {
-                blocks[i] = false; //Rng.Roll(5);
+                blocks[i] = fullyBlock ? true : Rng.Roll(5);
             }
 
             return blocks;
