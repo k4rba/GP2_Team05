@@ -17,7 +17,6 @@ namespace Personal.Andreas.Scripts.Flowfield
 
         private List<FlowChunk> _chunkList;
         private Dictionary<Vector2Int, FlowChunk> _chunks;
-
         private List<Vector2Int> _visited;
 
         private int _updateWidth = 10;

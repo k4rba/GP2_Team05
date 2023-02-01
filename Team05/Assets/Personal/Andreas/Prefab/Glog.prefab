@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 2364625275172572658}
   - component: {fileID: 393053759622581551}
   - component: {fileID: 6801998372670092304}
+  - component: {fileID: 5331549039461306065}
   m_Layer: 0
   m_Name: Glog
   m_TagString: Untagged
@@ -64,6 +65,18 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 80
   m_CollisionDetection: 0
+--- !u!114 &5331549039461306065
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2379351155670192603}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b41deff79f644846881ee03e922a6e5f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6459683086368872620
 GameObject:
   m_ObjectHideFlags: 0
