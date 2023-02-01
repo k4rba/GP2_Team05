@@ -1,5 +1,5 @@
-﻿using Personal.Andreas.Scripts.Util;
-using UnityEngine;
+﻿using UnityEngine;
+using Util;
 
 #if UNITY_EDITOR
 using UnityEditor;

@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Personal.Andreas.Scripts.Util;
+using Util;
 
 namespace FlowFieldSystem
 {
