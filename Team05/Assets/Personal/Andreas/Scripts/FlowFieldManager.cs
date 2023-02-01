@@ -1,12 +1,11 @@
-﻿using Personal.Andreas.Scripts.Flowfield;
-using Personal.Andreas.Scripts.Util;
+﻿using Personal.Andreas.Scripts.Util;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Personal.Andreas.Scripts
+namespace FlowFieldSystem
 {
     public class FlowFieldManager : MonoBehaviour
     {

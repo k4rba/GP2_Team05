@@ -1,4 +1,4 @@
-﻿namespace Personal.Andreas.Scripts.Flowfield
+﻿namespace FlowFieldSystem
 {
     public struct VNode
     {

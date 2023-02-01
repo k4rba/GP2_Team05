@@ -1,7 +1,7 @@
 ﻿using Personal.Andreas.Scripts.Util;
 using UnityEngine;
 
-namespace Personal.Andreas.Scripts.Flowfield
+namespace FlowFieldSystem
 {
     public class FlowChunk
     {

@@ -1,9 +1,7 @@
 ﻿using System.Collections.Generic;
-using Personal.Andreas.Scripts.Actors;
-using Personal.Andreas.Scripts.Flowfield;
 using UnityEngine;
 
-namespace Personal.Andreas.Scripts
+namespace FlowFieldSystem
 {
     public class FlowAgentManager : MonoBehaviour
     {

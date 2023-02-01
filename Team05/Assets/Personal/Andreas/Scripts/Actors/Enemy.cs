@@ -1,4 +1,4 @@
-﻿using Personal.Andreas.Scripts.Flowfield;
+﻿using FlowFieldSystem;
 using UnityEngine;
 
 namespace Personal.Andreas.Scripts.Actors
