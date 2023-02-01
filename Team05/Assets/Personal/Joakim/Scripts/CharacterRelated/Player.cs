@@ -4,15 +4,18 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
+using Health;
 
-public class Player : MonoBehaviour, Attack.IPlayerAttacker {
+public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
     private Vector2 _moveDirection;
     private Vector2 _lookDirection;
     private Rigidbody _rb;
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
     public GameObject characterTypeHolder;
-
+    
+    public float Health { get; set; }
+    public float Energy { get; set; }
     [field: SerializeField] public float AttackSpeed { get; set; }
 
     public enum CharacterType {
@@ -74,4 +77,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker {
         if (context.performed)
             _lookDirection = context.ReadValue<Vector2>();
     }
+
+
 }
