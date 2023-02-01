@@ -7,15 +7,17 @@ using AttackNamespace;
 using Health;
 
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
-    private Vector2 _moveDirection;
+    public Vector2 _moveDirection;
     private Vector2 _lookDirection;
     private Rigidbody _rb;
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
     public GameObject characterTypeHolder;
-    
+
     public float Health { get; set; }
     public float Energy { get; set; }
+
+    private bool switchedToCharacterMode = true;
     [field: SerializeField] public float AttackSpeed { get; set; }
 
     public enum CharacterType {
@@ -26,6 +28,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public CharacterType cType;
 
     private void Awake() {
+        GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
         switch (cType) {
             case CharacterType.Ranged:
@@ -46,7 +49,15 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
+    private void Update() {
+        if (CharacterManager.Instance.CheckIfAllLockedIn() && switchedToCharacterMode) {
+            GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
+            switchedToCharacterMode = false;
+        }
+    }
+
     private void FixedUpdate() {
+        Debug.Log(_moveDirection);
         _rb.velocity = new Vector3(_moveDirection.x * moveSpeed, 0, _moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
@@ -71,6 +82,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveDirection = context.ReadValue<Vector2>();
+        Debug.Log(_moveDirection);
     }
 
     public void OnLook(InputAction.CallbackContext context) {

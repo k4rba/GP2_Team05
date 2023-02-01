@@ -111,9 +111,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829fda358966f9348b794ec8213cfaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BasicDamage>k__BackingField: 0
-  <SpecialDamage>k__BackingField: 0
-  <ProjectileSpeed>k__BackingField: 50
+  <BasicDamage>k__BackingField: 0.54
+  <SpecialDamage>k__BackingField: 0.8
+  <ProjectileSpeed>k__BackingField: 12.96
   <AttackSize>k__BackingField: 0.2
   rangedAttackType: 0
 --- !u!54 &-1876642951860437504

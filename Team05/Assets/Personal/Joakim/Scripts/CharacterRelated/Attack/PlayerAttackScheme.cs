@@ -6,7 +6,7 @@ using UnityEngine;
 public class PlayerAttackScheme : MonoBehaviour {
     public delegate void BasicAttacks();
 
-    public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
+    public List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
 
     public GameObject player;
     private GameObject _basicAttack;
@@ -32,7 +32,7 @@ public class PlayerAttackScheme : MonoBehaviour {
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
     }
 
-    private void Start() {
+    public void InitializeAttack() {
         switch (characterType) {
             case Character.Ranged:
                 player = GameObject.Find("RangedPlayer");
