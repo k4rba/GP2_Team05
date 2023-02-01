@@ -1033,6 +1033,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _ffManager: {fileID: 1013496886}
+  _agentsEnabled: 1
   _agents:
   - {fileID: 255458391}
   - {fileID: 1236165867}
@@ -1455,7 +1456,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1847702319}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 12.67, y: 0, z: 12.77}
+  m_LocalPosition: {x: 13.43, y: 0, z: 15.51}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:

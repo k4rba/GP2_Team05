@@ -1,12 +1,15 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Personal.Andreas.Scripts
 {
     public class FlowFieldAgentManager : MonoBehaviour
     {
         [SerializeField] private FlowFieldManager _ffManager;
+        [SerializeField] private bool _agentsEnabled = true;
         [SerializeField] private List<GameObject> _agents;
+
 
         private void Awake()
         {
@@ -18,10 +21,13 @@ namespace Personal.Andreas.Scripts
 
         private void Update()
         {
-            for(int i = 0; i < _agents.Count; i++)
+            if(_agentsEnabled)
             {
-                var agent = _agents[i];
-                MoveAgent(agent.transform);
+                for(int i = 0; i < _agents.Count; i++)
+                {
+                    var agent = _agents[i];
+                    MoveAgent(agent.transform);
+                }
             }
         }
 
@@ -36,6 +42,5 @@ namespace Personal.Andreas.Scripts
             // tf.gameObject.GetComponent<Rigidbody>().AddForce(velocity, ForceMode.Acceleration);
             tf.gameObject.GetComponent<Rigidbody>().MovePosition(pos);
         }
-        
     }
 }
