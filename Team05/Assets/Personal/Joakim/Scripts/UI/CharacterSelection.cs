@@ -11,30 +11,24 @@ public class CharacterSelection : MonoBehaviour {
     public int playerNumber = 0;
     public GameObject selectionObject;
     public GameObject meleeNode, rangedNode;
-    public TextMeshProUGUI playerNumberText;
-    public bool allLockedIn, rangedLockedIn, meleeLockedIn;
+    private PlayerInput _playerInput;
 
     private void Awake() {
-        playerNumberText = GetComponentInChildren<TextMeshProUGUI>();
-        selectionObject = this.gameObject;
-        selectionObject.transform.parent = GameObject.Find("CharacterSelection").transform;
         playerNumber = PlayerJoinManager.Instance.playerNumber;
-        playerNumberText.text = playerNumber.ToString();
         switch (playerNumber) {
             case 1:
-                name = "Player1Selector";
+                selectionObject = GameObject.Find("Player1Selector");
                 meleeNode = GameObject.Find("P1-MeleeNode");
                 rangedNode = GameObject.Find("P1-RangedNode");
                 break;
             case 2:
-                name = "Player2Selector";
+                selectionObject = GameObject.Find("Player2Selector");
                 meleeNode = GameObject.Find("P2-MeleeNode");
                 rangedNode = GameObject.Find("P2-RangedNode");
                 break;
         }
     }
-
-    private void Update() {
+    public void SwitchSelectionVisual() {
         SelectedCharacter(selectDir);
         switch (selectedDir) {
             case -1:
@@ -58,16 +52,33 @@ public class CharacterSelection : MonoBehaviour {
 
     public void OnSelect(InputAction.CallbackContext context) {
         selectDir = context.ReadValue<Vector2>();
+        SwitchSelectionVisual();
     }
 
     public void OnChoose(InputAction.CallbackContext context) {
         if (!context.performed) return;
         switch (selectedDir) {
             case -1:
-                rangedLockedIn = true;
+                CharacterManager.Instance.rangedLockedIn = true;
+                GetComponent<Player>().cType = Player.CharacterType.Ranged;
+                GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
+                name = "RangedPlayer";
+                GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                // CharacterManager.Instance.DistributeCharacter(playerNumber, "Ranged");
+                if (CharacterManager.Instance.CheckIfAllLockedIn()) {
+
+                }
                 break;
             case 1:
-                meleeLockedIn = true;
+                CharacterManager.Instance.meleeLockedIn = true;
+                GetComponent<Player>().cType = Player.CharacterType.Melee;
+                GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
+                name = "MeleePlayer";
+                GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                // CharacterManager.Instance.DistributeCharacter(playerNumber, "Melee");
+                if (CharacterManager.Instance.CheckIfAllLockedIn()) {
+
+                }
                 break;
         }
     }
