@@ -1,7 +1,10 @@
 ﻿using Personal.Andreas.Scripts.Flowfield;
 using Personal.Andreas.Scripts.Util;
-using UnityEditor;
 using UnityEngine;
+
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace Personal.Andreas.Scripts
 {
@@ -24,10 +27,11 @@ namespace Personal.Andreas.Scripts
             SetupTempFlowField();
         }
 
+        //  temporary testing
         private bool[] CreateRandomBlocks()
         {
             bool fullyBlock = Rng.Roll(20);
-            
+
             var blocks = new bool[_field.ChunkLength];
             for(int i = 0; i < blocks.Length; i++)
             {
@@ -69,7 +73,12 @@ namespace Personal.Andreas.Scripts
             UpdateField();
         }
 
-        void UpdateField()
+        public Vector2 GetDirection(Vector3 position)
+        {
+            return _field.GetFieldDirection(position);
+        }
+
+        private void UpdateField()
         {
             var pos = _unit.transform.position;
 
@@ -79,35 +88,25 @@ namespace Personal.Andreas.Scripts
 
             if(newPos != prevPos)
             {
-                Debug.Log($"update field - pos: {pos}");
                 prevPos = newPos;
                 _field.UpdateField(new Vector2(pos.x, pos.z));
             }
         }
 
+#if UNITY_EDITOR
+
         private void OnDrawGizmos()
         {
-            int h = new Vector3(1, 4).GetHashCode();
-            int h2 = new Vector3(-3, -1).GetHashCode();
-            
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 SetupTempFlowField();
                 return;
             }
-            
+
             DrawRect(_field.Bounds.position, _field.Bounds.size);
-            
+
             UpdateField();
 
-            // var fieldInfos = _field.NewlySet;
-            // for(int i = 0; i < fieldInfos.Count; i++)
-            // {
-                // var fi = fieldInfos[i];
-                // Gizmos.DrawWireSphere(fi.pos, 0.16f);
-            // }
-            
-            
             var chunks = _field.GetChunks();
 
             for(int i = 0; i < chunks.Count; i++)
@@ -183,5 +182,7 @@ namespace Personal.Andreas.Scripts
             Gizmos.DrawLine(botLeft, topLeft);
             Gizmos.color = Color.white;
         }
+
+#endif
     }
 }

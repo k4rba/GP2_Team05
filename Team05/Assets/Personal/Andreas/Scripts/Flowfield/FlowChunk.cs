@@ -26,7 +26,5 @@ namespace Personal.Andreas.Scripts.Flowfield
             int i = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, _size, IndexOffset);
             return Nodes[i];
         }
-        
-        public int GetHash => CoordinateHelper.GetHash(IndexOffset.x, IndexOffset.y);
     }
 }

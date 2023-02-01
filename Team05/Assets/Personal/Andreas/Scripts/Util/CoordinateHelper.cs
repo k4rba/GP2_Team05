@@ -31,19 +31,19 @@ namespace Personal.Andreas.Scripts.Util
             return hash;
         }
         
-        public static void PositionToWorldCoords(int px, int py, int chunkSize, out int x, out int y)
+        public static void PositionToWorldCoords(int px, int py, int tileSize, out int x, out int y)
         {
-            x = px / chunkSize;
-            y = py / chunkSize;
+            x = px / tileSize;
+            y = py / tileSize;
             if(px <= 0)
                 x--;
             if(py <= 0)
                 y--;
         }
 
-        public static void PositionToWorldCoords(float px, float py, int chunkSize, out int x, out int y)
+        public static void PositionToWorldCoords(float px, float py, int tileSize, out int x, out int y)
         {
-            PositionToWorldCoords((int)px, (int)py, chunkSize, out x, out y);
+            PositionToWorldCoords((int)px, (int)py, tileSize, out x, out y);
         }
     }
 }
