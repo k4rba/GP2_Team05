@@ -1,23 +1,43 @@
-﻿using FlowFieldSystem;
+﻿using System;
+using Andreas.Scripts.EnemyData;
+using AudioSystem;
+using FlowFieldSystem;
 using UnityEngine;
+using UnityEngine.Events;
+using Random = UnityEngine.Random;
 
 namespace Personal.Andreas.Scripts.Actors
 {
+    [Serializable]
+    public class PlaySoundEvent : UnityEvent<string>
+    {
+    }
+    
     public class Enemy : Actor, IFlowAgent
     {
+        public Vector3 FlowDirection { get; set; }
         public Vector3 Position
         {
             get => transform.position;
             set => transform.position = value;
         }
 
-        public Vector3 FlowDirection { get; set; }
+        [SerializeField] private EnemyData _data;
 
         private Rigidbody _body;
 
         private void Awake()
         {
             _body = gameObject.GetComponent<Rigidbody>();
+        }
+
+        private void OnDeath()
+        {
+        }
+
+        private void Start()
+        {
+            AudioManager.PlaySfx(_data.OnDeath.name);
         }
 
         private void Confused()
