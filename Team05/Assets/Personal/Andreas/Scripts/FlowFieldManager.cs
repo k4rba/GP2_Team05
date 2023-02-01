@@ -1,12 +1,11 @@
-﻿using Personal.Andreas.Scripts.Flowfield;
-using Personal.Andreas.Scripts.Util;
+﻿using Personal.Andreas.Scripts.Util;
 using UnityEngine;
 
 #if UNITY_EDITOR
 using UnityEditor;
 #endif
 
-namespace Personal.Andreas.Scripts
+namespace FlowFieldSystem
 {
     public class FlowFieldManager : MonoBehaviour
     {
@@ -17,7 +16,7 @@ namespace Personal.Andreas.Scripts
         [SerializeField] private bool _drawTiles = false;
         [SerializeField] private bool _drawChunks = true;
 
-        private const int tempWorldSize = 5;
+        private const int tempWorldSize = 10;
         private const int tempWorldLength = tempWorldSize * tempWorldSize;
 
         private Vector2Int prevPos;
@@ -122,8 +121,8 @@ namespace Personal.Andreas.Scripts
 
                 for(int j = 0; j < ch.Field.Length; j++)
                 {
-                    int tileX = j % tempWorldSize;
-                    int tileY = j / tempWorldSize;
+                    int tileX = j % _field.ChunkSize;
+                    int tileY = j / _field.ChunkSize;
 
                     var tilePos = new Vector3(
                         pos.x + (tileX * _field.TileSize),
