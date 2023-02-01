@@ -5,7 +5,12 @@ namespace Personal.Andreas.Scripts.Actors
 {
     public class Enemy : Actor, IFlowAgent
     {
-        public Vector3 Position { get; set; }
+        public Vector3 Position
+        {
+            get => transform.position;
+            set => transform.position = value;
+        }
+        
         public Vector3 FlowDirection { get; set; }
 
         private Rigidbody _body;
