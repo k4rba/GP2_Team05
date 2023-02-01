@@ -24,6 +24,14 @@ namespace Util
             return GetHash(x, y);
         }
 
+        public static Vector3 TileIndexToPosition(int i, int chunkSize, Vector2Int offset)
+        {
+            int tx = (i % chunkSize) + offset.x * chunkSize;
+            int ty = (i / chunkSize) + offset.y * chunkSize;
+
+            return new Vector3(tx, 0f, ty);
+        }
+
         public static int GetHash(int x, int y)
         {
             int hash = new Vector3(x, 0, y).GetHashCode();

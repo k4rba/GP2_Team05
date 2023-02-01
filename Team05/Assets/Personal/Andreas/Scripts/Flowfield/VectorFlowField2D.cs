@@ -34,6 +34,8 @@ namespace FlowFieldSystem
             _chunkList = new();
         }
 
+        public List<FlowChunk> GetFlowChunks() => _chunkList;
+
         private int GetHash(int x, int y)
         {
             return new Vector3(x, 0, y).GetHashCode();

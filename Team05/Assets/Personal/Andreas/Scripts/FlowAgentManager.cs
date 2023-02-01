@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Personal.Andreas.Scripts;
 using UnityEngine;
 
 namespace FlowFieldSystem
@@ -8,6 +9,7 @@ namespace FlowFieldSystem
         [SerializeField] private FlowFieldManager _ffManager;
         [SerializeField] private bool _agentsEnabled = true;
         [SerializeField] private List<GameObject> _agents;
+        [SerializeField] private EnemyManager _enemyManager;
 
         private List<IFlowAgent> _flowAgents;
 
@@ -18,13 +20,38 @@ namespace FlowFieldSystem
             for(int i = 0; i < _agents.Count; i++)
             {
                 var comp = _agents[i].GetComponent<IFlowAgent>();
-                _flowAgents.Add(comp);
+                AddAgent(comp);
             }
             
             if(_ffManager == null)
             {
                 Debug.LogWarning("FlowFieldAgentManager is missing a FlowFieldManager");
             }
+            
+            _enemyManager.OnEnemyAdded += EnemyManagerOnOnEnemyAdded;
+        }
+
+        private void EnemyManagerOnOnEnemyAdded(GameObject enemyObj)
+        {
+            var agentComp = enemyObj.GetComponent<IFlowAgent>();
+            
+            if(agentComp==null)
+            {
+                Debug.LogError("No IFlowAgent component found in Enemy on spawn");
+                return;
+            }
+            
+            AddAgent(agentComp);
+        }
+
+        public void AddAgent(IFlowAgent agent)
+        {
+            _flowAgents.Add(agent);
+        }
+        
+        public void RemoveAgent(IFlowAgent agent)
+        {
+            _flowAgents.Remove(agent);
         }
 
         private void Update()

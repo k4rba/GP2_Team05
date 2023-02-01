@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
 namespace Util
 {
@@ -19,5 +20,10 @@ namespace Util
 
         public static T Choose<T>(params T[] items) => items[Next(0, items.Length - 1)];
 
+        public static T RandomItem<T>(this IList<T> items)
+        {
+            return items[Next(items.Count - 1)];
+        }
+        
     }
 }

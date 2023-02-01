@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using Util;
 
 #if UNITY_EDITOR
@@ -24,6 +25,13 @@ namespace FlowFieldSystem
         private void Start()
         {
             SetupTempFlowField();
+        }
+
+        public VectorFlowField2D GetField() => _field;
+        
+        public List<FlowChunk> GetFlowChunks()
+        {
+            return _field.GetChunks();
         }
 
         //  temporary testing
