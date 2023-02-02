@@ -3,7 +3,7 @@ using UnityEngine;
 using Util;
 
     #if UNITY_EDITOR
-// using UnityEditor;
+using UnityEditor;
     #endif
 
 namespace FlowFieldSystem
@@ -99,10 +99,10 @@ namespace FlowFieldSystem
 
         private void OnDrawGizmos()
         {
-            if(_unit == null)
-            {
-                return;
-            }
+            // if(_unit == null)
+            // {
+                // return;
+            // }
             
             if(_field == null || _field.GetChunks().Count == 0)
             {
