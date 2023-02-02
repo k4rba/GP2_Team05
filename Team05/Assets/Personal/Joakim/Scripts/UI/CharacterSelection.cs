@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using DG.Tweening;
 using UnityEngine.UIElements;
 using TMPro;
+using Cursor = UnityEngine.Cursor;
 
 public class CharacterSelection : MonoBehaviour {
     public Vector2 selectDir;
@@ -14,7 +15,8 @@ public class CharacterSelection : MonoBehaviour {
     private PlayerInput _playerInput;
     public bool debugMode;
 
-    private void Awake() {
+    private void Start()
+    {
         playerNumber = PlayerJoinManager.Instance.playerNumber;
         switch (playerNumber) {
             case 1:
@@ -28,6 +30,7 @@ public class CharacterSelection : MonoBehaviour {
                 rangedNode = GameObject.Find("P2-RangedNode");
                 break;
         }
+        
     }
 
     private void Update() {
@@ -51,10 +54,11 @@ public class CharacterSelection : MonoBehaviour {
                     name = "RangedPlayer";
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                     GameObject.Find("CharacterSelection").SetActive(false);
-                    GameObject otherPlayerMelee = Resources.Load<GameObject>("Player");
-                    Instantiate(otherPlayerMelee, new Vector3(0, 0, 0), Quaternion.identity);
+                    GameObject otherPlayerMeleePrefab = Resources.Load<GameObject>("Player");
+                    var otherPlayerMelee = Instantiate(otherPlayerMeleePrefab, new Vector3(0, 0, 0), Quaternion.identity);
                     otherPlayerMelee.transform.Find("AttackTypeHolder").GetComponent<PlayerAttackScheme>().characterType =
                         PlayerAttackScheme.Character.Melee;
+                    
                     otherPlayerMelee.GetComponent<Player>().cType = Player.CharacterType.Melee;
                     otherPlayerMelee.GetComponent<Player>().debugMode = true;
                     break;
@@ -65,8 +69,8 @@ public class CharacterSelection : MonoBehaviour {
                     name = "MeleePlayer";
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                     GameObject.Find("CharacterSelection").SetActive(false);
-                    GameObject otherPlayerRanged = Resources.Load<GameObject>("Player");
-                    Instantiate(otherPlayerRanged, new Vector3(0, 0, 0), Quaternion.identity);
+                    GameObject otherPlayerRangedPrefab = Resources.Load<GameObject>("Player");
+                    var otherPlayerRanged = Instantiate(otherPlayerRangedPrefab, new Vector3(0, 0, 0), Quaternion.identity);
                     otherPlayerRanged.transform.Find("AttackTypeHolder").GetComponent<PlayerAttackScheme>().characterType =
                         PlayerAttackScheme.Character.Ranged;
                     otherPlayerRanged.GetComponent<Player>().cType = Player.CharacterType.Ranged;
