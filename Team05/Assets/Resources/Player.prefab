@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   player: {fileID: 714828357488824669}
-  characterType: 0
+  characterType: 1
 --- !u!1 &714828357424995834
 GameObject:
   m_ObjectHideFlags: 0
@@ -201,7 +201,10 @@ MonoBehaviour:
   moveSpeed: 35.03
   playerAttackScheme: {fileID: 0}
   characterTypeHolder: {fileID: 714828357237576684}
+  <Health>k__BackingField: 0
+  <Energy>k__BackingField: 0
   <AttackSpeed>k__BackingField: 7.14
+  debugMode: 1
   cType: 1
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
@@ -221,6 +224,7 @@ MonoBehaviour:
   selectionObject: {fileID: 0}
   meleeNode: {fileID: 0}
   rangedNode: {fileID: 0}
+  debugMode: 0
 --- !u!114 &714828357488824482
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -327,6 +331,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 0ba8fd21-f406-4895-b37f-37a624d84f80
     m_ActionName: UI/Choose[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnMove
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 303943d1-3692-4361-8c1d-336f561771c1
+    m_ActionName: Player1/Move[/XInputControllerWindows/leftStick,/XInputControllerWindows1/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnLook
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 66136cb9-b1fa-4e06-b5f5-bbf690829c4d
+    m_ActionName: Player1/Look[/XInputControllerWindows/rightStick,/XInputControllerWindows1/rightStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnBasicAttack
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1ee935e2-af64-4df0-b529-5338bbe9050e
+    m_ActionName: Player1/BasicAttack[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
