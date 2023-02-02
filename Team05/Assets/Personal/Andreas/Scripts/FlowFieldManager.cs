@@ -2,17 +2,19 @@
 using UnityEngine;
 using Util;
 
-    #if UNITY_EDITOR
-// using UnityEditor;
-    #endif
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
 namespace FlowFieldSystem
 {
-    public class FlowFieldManager : MonoBehaviour {
-        [SerializeField] private VectorFlowField2D _field;
+    public class FlowFieldManager : MonoBehaviour
+    {
+        [SerializeField] private GameObject _ground;
+        [SerializeField] private GameObject _obstacles;
+        [Space(10)] [SerializeField] private VectorFlowField2D _field;
         [SerializeField] private Transform _unit;
-
-        [SerializeField] private bool _drawIndexes = false;
+        [Space(10)] [SerializeField] private bool _drawIndexes = false;
         [SerializeField] private bool _drawTiles = false;
         [SerializeField] private bool _drawChunks = true;
 
@@ -21,22 +23,69 @@ namespace FlowFieldSystem
 
         private Vector2Int prevPos;
 
-        private void Start() {
-            SetupTempFlowField();
+        private void Start()
+        {
+            // SetupTempFlowField();
+            Debug.Log("Generating FlowField");
+            GenerateFlowField();
+            Debug.Log("FlowField generated");
         }
 
         public VectorFlowField2D GetField() => _field;
 
-        public List<FlowChunk> GetFlowChunks() {
+        public List<FlowChunk> GetFlowChunks()
+        {
             return _field.GetChunks();
         }
 
+
+        public void GenerateFlowField()
+        {
+            //  ground
+            var groundColliders = _ground.GetComponentsInChildren<Collider>();
+
+            foreach(var col in groundColliders)
+            {
+                var bounds = col.bounds;
+
+                int sx = (int)bounds.min.x;
+                int ex = (int)bounds.max.x;
+                int sy = (int)bounds.min.z;
+                int ey = (int)bounds.max.z;
+
+                AddChunksInArea(sx, ex, sy, ey);
+            }
+        }
+
+        private void AddChunksInArea(int sx, int ex, int sy, int ey)
+        {
+
+            CoordinateHelper.PositionToChunkCoords(sx, sy, _field.TileSize, _field.ChunkSize, out int startCx, out int startCy);
+            CoordinateHelper.PositionToChunkCoords(ex, ey, _field.TileSize, _field.ChunkSize, out int endCx, out int endCy);
+
+            for(int cy = startCy; cy < endCy; cy++)
+            for(int cx = startCx; cx < endCx; cx++)
+            {
+                var ch = _field.CreateChunk();
+                ch.IndexOffset = new Vector2Int(cx, cy);
+
+                _field.AddChunk(ch);
+
+                Debug.Log($"added chunk: {ch.IndexOffset}");
+
+            }
+            
+        }
+
+
         //  temporary testing
-        private bool[] CreateRandomBlocks() {
+        private bool[] CreateRandomBlocks()
+        {
             bool fullyBlock = Rng.Roll(20);
 
             var blocks = new bool[_field.ChunkLength];
-            for (int i = 0; i < blocks.Length; i++) {
+            for(int i = 0; i < blocks.Length; i++)
+            {
                 // blocks[i] = fullyBlock ? true : Rng.Roll(5);
                 blocks[i] = false;
             }
@@ -44,13 +93,15 @@ namespace FlowFieldSystem
             return blocks;
         }
 
-        private void SetupTempFlowField() {
+        private void SetupTempFlowField()
+        {
             _field ??= new VectorFlowField2D();
 
             //  temporary
             var chunks = new FlowChunk[tempWorldLength];
 
-            for (int i = 0; i < chunks.Length; i++) {
+            for(int i = 0; i < chunks.Length; i++)
+            {
                 var ch = new FlowChunk(_field.ChunkSize);
                 ch.IndexOffset = new Vector2Int(
                     (i % tempWorldSize),
@@ -58,7 +109,8 @@ namespace FlowFieldSystem
                 ch.Blocks = CreateRandomBlocks();
 
                 //  random fields
-                for (int j = 0; j < ch.Field.Length; j++) {
+                for(int j = 0; j < ch.Field.Length; j++)
+                {
                     ch.Field[j] = new Vector2(Rng.NextF(-1f, 1f), Rng.NextF(-1f, 1f)).normalized;
                 }
 
@@ -68,16 +120,19 @@ namespace FlowFieldSystem
             _field.Setup(chunks);
         }
 
-        private void Update() {
+        private void Update()
+        {
             UpdateField();
         }
 
-        public Vector2 GetDirection(Vector3 position) {
+        public Vector2 GetDirection(Vector3 position)
+        {
             return _field.GetFieldDirection(position);
         }
 
-        private void UpdateField() {
-            if (_unit == null)
+        private void UpdateField()
+        {
+            if(_unit == null)
                 return;
             var pos = _unit.transform.position;
 
@@ -85,13 +140,15 @@ namespace FlowFieldSystem
 
             var newPos = new Vector2Int(startX, startY);
 
-            if (newPos != prevPos) {
+            if(newPos != prevPos)
+            {
                 prevPos = newPos;
                 _field.UpdateField(new Vector2(pos.x, pos.z));
             }
         }
 
-        public void SetUnit(Transform transform) {
+        public void SetUnit(Transform transform)
+        {
             _unit = transform;
         }
 
@@ -99,11 +156,6 @@ namespace FlowFieldSystem
 
         private void OnDrawGizmos()
         {
-            if(_unit == null)
-            {
-                return;
-            }
-            
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 SetupTempFlowField();

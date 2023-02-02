@@ -52,6 +52,11 @@ namespace FlowFieldSystem
             CoordinateHelper.PositionToWorldCoords(position.x, position.z, TileSize, out int x, out int y);
             return GetFieldDirection(x, y);
         }
+
+        public FlowChunk CreateChunk()
+        {
+            return new FlowChunk(ChunkSize);
+        }
         
         public Vector2 GetFieldDirection(int x, int y)
         {
@@ -68,12 +73,12 @@ namespace FlowFieldSystem
             _visited.Clear();
         }
 
-        private void AddChunk(FlowChunk chunk)
+        public void AddChunk(FlowChunk chunk)
         {
             _chunks.Add(chunk.IndexOffset, chunk);
             _chunkList.Add(chunk);
         }
-
+        
         public void Setup(FlowChunk[] chunks)
         {
             Clear();

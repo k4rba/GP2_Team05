@@ -62,7 +62,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void FixedUpdate() {
-        Debug.Log(_moveDirection);
+        // Debug.Log(_moveDirection);
         _rb.velocity = new Vector3(_moveDirection.x * moveSpeed, 0, _moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
