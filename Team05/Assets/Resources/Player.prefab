@@ -1,51 +1,5 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &714828357237576684
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 714828357237576686}
-  - component: {fileID: 714828357237576685}
-  m_Layer: 0
-  m_Name: AttackTypeHolder
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &714828357237576686
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714828357237576684}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 714828357488824484}
-  m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &714828357237576685
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 714828357237576684}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f0a1186ab1db00648a4bd7dbd501f9fc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  player: {fileID: 714828357488824669}
-  characterType: 1
 --- !u!1 &714828357424995834
 GameObject:
   m_ObjectHideFlags: 0
@@ -154,6 +108,7 @@ GameObject:
   m_Component:
   - component: {fileID: 714828357488824484}
   - component: {fileID: 714828357488824483}
+  - component: {fileID: 5651366575927957283}
   - component: {fileID: -9040017964127699642}
   - component: {fileID: 714828357488824482}
   - component: {fileID: 714828357488824481}
@@ -180,7 +135,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 714828357424995835}
-  - {fileID: 714828357237576686}
   - {fileID: 714828357503984147}
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -197,15 +151,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 337f712cffc18ee4f9781835c2451a5c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _moveDirection: {x: 0, y: 0}
-  moveSpeed: 5
+  moveDirection: {x: 0, y: 0}
+  health: 0
+  moveSpeed: 15
   playerAttackScheme: {fileID: 0}
-  characterTypeHolder: {fileID: 714828357237576684}
-  <Health>k__BackingField: 0
+  otherPlayer: {fileID: 0}
   <Energy>k__BackingField: 0
   <AttackSpeed>k__BackingField: 7.14
   debugMode: 0
   cType: 1
+--- !u!114 &5651366575927957283
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714828357488824669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0a1186ab1db00648a4bd7dbd501f9fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  characterType: 0
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -221,9 +188,6 @@ MonoBehaviour:
   selectDir: {x: 0, y: 0}
   selectedDir: 0
   playerNumber: 0
-  selectionObject: {fileID: 0}
-  meleeNode: {fileID: 0}
-  rangedNode: {fileID: 0}
   debugModeGameStarted: 0
 --- !u!114 &714828357488824482
 MonoBehaviour:
@@ -379,6 +343,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1ee935e2-af64-4df0-b529-5338bbe9050e
     m_ActionName: Player1/BasicAttack[/XInputControllerWindows/rightTrigger,/XInputControllerWindows1/rightTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnGiveHealth
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: e55ada96-32f5-4345-a98d-3b3322f9cbb9
+    m_ActionName: Player/TransferHealth[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -495,7 +475,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 714828357488824484}
-  m_RootOrder: 2
+  m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!108 &714828357503984149
 Light:

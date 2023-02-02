@@ -12,6 +12,7 @@ public class CharacterManager : MonoBehaviour {
         else if(Instance != this)
             Destroy(gameObject);
     }
+    
     public bool CheckIfAllLockedIn() {
         if (rangedLockedIn && meleeLockedIn) {
             characterSelectionScreen.SetActive(false);

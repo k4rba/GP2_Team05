@@ -6,9 +6,8 @@ using UnityEngine;
 public class PlayerAttackScheme : MonoBehaviour {
     public delegate void BasicAttacks();
 
-    public List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
-
-    public GameObject player;
+    public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
+    
     private GameObject _basicAttack;
 
     public enum Character {
@@ -35,16 +34,12 @@ public class PlayerAttackScheme : MonoBehaviour {
     public void InitializeAttack() {
         switch (characterType) {
             case Character.Ranged:
-                player = GameObject.Find("RangedPlayer");
                 _basicAttack = Resources.Load<GameObject>("RangedBasicProjectile");
                 BasicAttacksList.Add(BasicRangedAttack);
                 break;
             case Character.Melee:
-                player = GameObject.Find("MeleePlayer");
                 _basicAttack = Resources.Load<GameObject>("MeleeHit");
                 BasicAttacksList.Add(BasicMeleeAttack);
-                break;
-            default:
                 break;
         }
     }
