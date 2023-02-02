@@ -7,6 +7,10 @@ using AttackNamespace;
 using FlowFieldSystem;
 using Health;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
     public Vector2 _moveDirection;
     private Vector2 _lookDirection;
@@ -32,7 +36,24 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public CharacterType cType;
 
+#if UNITY_EDITOR
+    private void ModeChanged ()
+    {
+        if (!EditorApplication.isPlayingOrWillChangePlaymode &&
+            EditorApplication.isPlaying ) 
+        {
+            Debug.Log("Exiting playmode.");
+            debugMode = false;
+            
+        }
+    }
+#endif
+    
     private void Awake() {
+#if UNITY_EDITOR
+        EditorApplication.playmodeStateChanged += ModeChanged;
+#endif
+        
         playerNumber = PlayerJoinManager.Instance.playerNumber;
         name = "Player" + playerNumber;
         GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform);
@@ -65,9 +86,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         
         //DEBUG ONLY
         if (debugMode == true) {
-            transform.position = Vector3.MoveTowards(transform.position,
-                new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
-                    debugObj.transform.position.z), 2 * Time.deltaTime);
             switch (cType) {
                 case CharacterType.Melee: {
                     var objToFollow = GameObject.Find("RangedPlayer");
@@ -80,6 +98,9 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     break;
                 }
             }
+            transform.position = Vector3.MoveTowards(transform.position,
+                new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
+                    debugObj.transform.position.z), 2 * Time.deltaTime);
 
         }
         //END OF DEBUG
