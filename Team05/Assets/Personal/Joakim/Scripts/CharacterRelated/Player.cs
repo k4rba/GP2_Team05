@@ -98,6 +98,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     break;
                 }
             }
+
+            if (debugObj == null) return;
             transform.position = Vector3.MoveTowards(transform.position,
                 new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
                     debugObj.transform.position.z), 2 * Time.deltaTime);
@@ -113,7 +115,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void FixedUpdate() {
-        Debug.Log(_moveDirection);
         _rb.velocity = new Vector3(_moveDirection.x * moveSpeed, 0, _moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
@@ -138,7 +139,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveDirection = context.ReadValue<Vector2>();
-        Debug.Log("movement: " + _moveDirection);
     }
 
     public void OnLook(InputAction.CallbackContext context) {
