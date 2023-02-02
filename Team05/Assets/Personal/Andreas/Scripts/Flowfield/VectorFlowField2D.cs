@@ -57,7 +57,7 @@ namespace FlowFieldSystem
         {
             return new FlowChunk(ChunkSize);
         }
-        
+
         public Vector2 GetFieldDirection(int x, int y)
         {
             var ch = GetChunk(x, y);
@@ -66,7 +66,7 @@ namespace FlowFieldSystem
             return ch.Field[i];
         }
 
-        private void Clear()
+        public void Clear()
         {
             _chunks.Clear();
             _chunkList.Clear();
@@ -75,10 +75,15 @@ namespace FlowFieldSystem
 
         public void AddChunk(FlowChunk chunk)
         {
+            if(_chunks.ContainsKey(chunk.IndexOffset))
+            {
+                Debug.Log($"AddChunk-duplicate flow chunk: {chunk.IndexOffset}");
+            }
+
             _chunks.Add(chunk.IndexOffset, chunk);
             _chunkList.Add(chunk);
         }
-        
+
         public void Setup(FlowChunk[] chunks)
         {
             Clear();
@@ -88,7 +93,6 @@ namespace FlowFieldSystem
                 var ch = chunks[i];
                 AddChunk(ch);
             }
-
         }
 
         public void Reset(int sx, int ex, int sy, int ey)
@@ -175,6 +179,14 @@ namespace FlowFieldSystem
             if(mapChunk == null) return false;
             var blockIdx = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, ChunkSize, mapChunk.IndexOffset);
             return mapChunk.Blocks[blockIdx];
+        }
+
+        public void SetBlock(int x, int y, bool isBlock)
+        {
+            var mapChunk = GetChunk(x, y);
+            if(mapChunk == null) return;
+            var blockIdx = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, ChunkSize, mapChunk.IndexOffset);
+            mapChunk.Blocks[blockIdx] = isBlock;
         }
 
         private bool GetBlock(int x, int y, FlowChunk chunk)
@@ -318,7 +330,7 @@ namespace FlowFieldSystem
                 int chunki = CoordinateHelper.WorldCoordsToChunkTileIndex(x, y, ChunkSize, chunk.IndexOffset);
                 var currentNode = chunk.Nodes[chunki];
                 // if(currentNode.PathId != _currentPathId)
-                    // continue;
+                // continue;
 
                 int nearest = 5000;
                 Vector2 dir = Vector2.zero;
@@ -498,5 +510,14 @@ namespace FlowFieldSystem
         }
 
         public List<FlowChunk> GetChunks() => _chunkList;
+
+        public void SetBlocks(int startX, int endX, int startY, int endY, bool isBlock)
+        {
+            for(int y = startY; y <= endY; y++)
+            for(int x = startX; x <= endX; x++)
+            {
+                SetBlock(x, y, isBlock);
+            }
+        }
     }
 }

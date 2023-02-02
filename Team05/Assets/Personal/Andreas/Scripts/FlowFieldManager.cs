@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 using Util;
 
 #if UNITY_EDITOR
@@ -17,6 +18,9 @@ namespace FlowFieldSystem
         [Space(10)] [SerializeField] private bool _drawIndexes = false;
         [SerializeField] private bool _drawTiles = false;
         [SerializeField] private bool _drawChunks = true;
+        [SerializeField] private bool _reload = true;
+
+        private bool _prevReload;
 
         private const int tempWorldSize = 10;
         private const int tempWorldLength = tempWorldSize * tempWorldSize;
@@ -25,6 +29,7 @@ namespace FlowFieldSystem
 
         private void Start()
         {
+            _prevReload = _reload;
             // SetupTempFlowField();
             Debug.Log("Generating FlowField");
             GenerateFlowField();
@@ -41,6 +46,7 @@ namespace FlowFieldSystem
 
         public void GenerateFlowField()
         {
+            _field.Clear();
             //  ground
             var groundColliders = _ground.GetComponentsInChildren<Collider>();
 
@@ -55,13 +61,41 @@ namespace FlowFieldSystem
 
                 AddChunksInArea(sx, ex, sy, ey);
             }
+
+            var obsColliders = _obstacles.GetComponentsInChildren<Collider>();
+
+            foreach(var col in obsColliders)
+            {
+                var bounds = col.bounds;
+
+                GetRangesFromBounds(bounds, out int startX, out int endX, out int startY, out int endY);
+                
+                _field.SetBlocks(startX, endX, startY, endY, true);
+                
+            }
         }
+
+        private void GetRangesFromBounds(Bounds bounds, out int startX, out int endX, out int startY, out int endY)
+        {
+            int sx = (int)bounds.min.x;
+            int ex = (int)bounds.max.x;
+            int sy = (int)bounds.min.z;
+            int ey = (int)bounds.max.z;
+
+            CoordinateHelper.PositionToWorldCoords(sx, sy, _field.TileSize, out startX, out startY);
+            CoordinateHelper.PositionToWorldCoords(ex, ey, _field.TileSize, out endX, out endY);
+        }
+
 
         private void AddChunksInArea(int sx, int ex, int sy, int ey)
         {
+            CoordinateHelper.PositionToChunkCoords(sx, sy, _field.TileSize, _field.ChunkSize, out int startCx,
+                out int startCy);
+            CoordinateHelper.PositionToChunkCoords(ex, ey, _field.TileSize, _field.ChunkSize, out int endCx,
+                out int endCy);
 
-            CoordinateHelper.PositionToChunkCoords(sx, sy, _field.TileSize, _field.ChunkSize, out int startCx, out int startCy);
-            CoordinateHelper.PositionToChunkCoords(ex, ey, _field.TileSize, _field.ChunkSize, out int endCx, out int endCy);
+            endCy++;
+            endCx++;
 
             for(int cy = startCy; cy < endCy; cy++)
             for(int cx = startCx; cx < endCx; cx++)
@@ -70,11 +104,8 @@ namespace FlowFieldSystem
                 ch.IndexOffset = new Vector2Int(cx, cy);
 
                 _field.AddChunk(ch);
-
-                Debug.Log($"added chunk: {ch.IndexOffset}");
-
+                // Debug.Log($"added chunk: {ch.IndexOffset}");
             }
-            
         }
 
 
@@ -158,8 +189,15 @@ namespace FlowFieldSystem
         {
             if(_field == null || _field.GetChunks().Count == 0)
             {
-                SetupTempFlowField();
+                GenerateFlowField();
+                // SetupTempFlowField();
                 return;
+            }
+
+            if(_reload != _prevReload)
+            {
+                _prevReload = _reload;
+                GenerateFlowField();
             }
 
             DrawRect(_field.Bounds.position, _field.Bounds.size);
