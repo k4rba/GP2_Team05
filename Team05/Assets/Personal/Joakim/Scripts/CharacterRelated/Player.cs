@@ -1,5 +1,3 @@
-using System;
-using System.Collections;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,22 +10,28 @@ using UnityEditor;
 #endif
 
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
-    public Vector2 _moveDirection;
+    public Damage Damage;
+    public Healing Healing;
+    
+    public Vector2 moveDirection;
     private Vector2 _lookDirection;
     private Rigidbody _rb;
+    public int health;
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
-    public GameObject characterTypeHolder;
-    private float playerNumber;
+    private int _playerNumber;
+    private bool _switchedToCharacterMode = true;
+    public GameObject otherPlayer;
 
-    [field: SerializeField] public float Health { get; set; }
+    public Material HealthMaterial { get; set; }
+    [field: SerializeField] public HealthSystem Health { get; set; }
     [field: SerializeField] public float Energy { get; set; }
-
-    private bool switchedToCharacterMode = true;
     [field: SerializeField] public float AttackSpeed { get; set; }
 
+    //DEBUG ONLY
     public bool debugMode = false;
-    private GameObject debugObj;
+    private GameObject _debugObj;
+    //END OF DEBUG
 
     public enum CharacterType {
         Ranged,
@@ -37,86 +41,96 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public CharacterType cType;
 
 #if UNITY_EDITOR
-    private void ModeChanged ()
-    {
+    private void ModeChanged() {
         if (!EditorApplication.isPlayingOrWillChangePlaymode &&
-            EditorApplication.isPlaying ) 
-        {
+            EditorApplication.isPlaying) {
             Debug.Log("Exiting playmode.");
             debugMode = false;
-            
         }
     }
 #endif
-    
     private void Awake() {
+        Health = new HealthSystem();
+        health = Health._health;
+        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform); //todo: flowfield accepts 2 players
+        _playerNumber = PlayerJoinManager.Instance.playerNumber;
+        GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+        _rb = GetComponent<Rigidbody>();
+
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
-        
-        playerNumber = PlayerJoinManager.Instance.playerNumber;
-        name = "Player" + playerNumber;
-        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform);
-        GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
-        _rb = GetComponent<Rigidbody>();
-        switch (cType) {
+    }
+
+    // ReSharper disable Unity.PerformanceAnalysis
+    public void AssignPlayerToRole(Player.CharacterType type) {
+        switch (type) {
             case CharacterType.Ranged:
-                characterTypeHolder.GetComponent<PlayerAttackScheme>().characterType =
-                    PlayerAttackScheme.Character.Ranged;
-                playerAttackScheme = characterTypeHolder.GetComponent<PlayerAttackScheme>();
+                name = "RangedPlayer";
+                GetComponent<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
+                playerAttackScheme = GetComponent<PlayerAttackScheme>();
                 if (playerAttackScheme != null) playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
+                otherPlayer = GameObject.Find("MeleePlayer");
                 break;
             case CharacterType.Melee:
-                characterTypeHolder.GetComponent<PlayerAttackScheme>().characterType =
-                    PlayerAttackScheme.Character.Melee;
-                playerAttackScheme = characterTypeHolder.GetComponent<PlayerAttackScheme>();
+                name = "MeleePlayer)";
+                GetComponent<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
+                playerAttackScheme = GetComponent<PlayerAttackScheme>();
                 if (playerAttackScheme != null) playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
-                break;
-            default:
-                Debug.Log("default");
+                otherPlayer = GameObject.Find("RangedPlayer");
                 break;
         }
     }
 
-    public void MoveTowardsBetterHalf(Vector3 pos) {
-        transform.position = Vector3.MoveTowards(transform.position, new Vector3(pos.x, pos.y, pos.z), 2);
+    private void AssignPlayerHealthMaterial(int playerNumber) {
+        if (playerNumber == 1) {
+            HealthMaterial = Resources.Load<Material>("Player1Health");
+        }
+        else {
+            HealthMaterial = Resources.Load<Material>("Player2Health");
+        }
     }
 
     private void Update() {
-        
         //DEBUG ONLY
         if (debugMode == true) {
             switch (cType) {
                 case CharacterType.Melee: {
                     var objToFollow = GameObject.Find("RangedPlayer");
-                    debugObj = objToFollow;
+                    _debugObj = objToFollow;
                     break;
                 }
                 case CharacterType.Ranged: {
                     var objToFollow = GameObject.Find("MeleePlayer");
-                    debugObj = objToFollow;
+                    _debugObj = objToFollow;
                     break;
                 }
             }
 
-            if (debugObj == null) return;
+            if (_debugObj == null) return;
             transform.position = Vector3.MoveTowards(transform.position,
-                new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
-                    debugObj.transform.position.z), 2 * Time.deltaTime);
-
+                new Vector3(_debugObj.transform.position.x, _debugObj.transform.position.y,
+                    _debugObj.transform.position.z), 2 * Time.deltaTime);
         }
         //END OF DEBUG
-        
-        
-        if (CharacterManager.Instance.CheckIfAllLockedIn() && switchedToCharacterMode) {
+
+
+        if (CharacterManager.Instance.CheckIfAllLockedIn() && _switchedToCharacterMode) {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-            switchedToCharacterMode = false;
+            AssignPlayerSpecifics();
+            _switchedToCharacterMode = false;
+            
         }
+    }
+
+    private void AssignPlayerSpecifics() {
+        AssignPlayerToRole(cType);
+        AssignPlayerHealthMaterial(_playerNumber);
     }
 
     private void FixedUpdate() {
         // Debug.Log(_moveDirection);
-        _rb.velocity = new Vector3(_moveDirection.x * moveSpeed, 0, _moveDirection.y * moveSpeed);
+        _rb.velocity = new Vector3(moveDirection.x * moveSpeed, 0, moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(look), 0.15f);
@@ -139,7 +153,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnMove(InputAction.CallbackContext context) {
-        _moveDirection = context.ReadValue<Vector2>();
+        moveDirection = context.ReadValue<Vector2>();
     }
 
     public void OnLook(InputAction.CallbackContext context) {
@@ -147,5 +161,9 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             _lookDirection = context.ReadValue<Vector2>();
     }
 
-
+    public void OnGiveHealth(InputAction.CallbackContext context) {
+        if (context.performed) {
+            Health.TransferHealth(this, otherPlayer.GetComponent<Player>(), Healing, Damage);
+        }
+    }
 }

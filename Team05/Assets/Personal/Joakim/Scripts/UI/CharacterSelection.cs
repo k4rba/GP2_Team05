@@ -11,13 +11,21 @@ public class CharacterSelection : MonoBehaviour {
     public Vector2 selectDir;
     public int selectedDir;
     public int playerNumber = 0;
-    public GameObject selectionObject;
-    public GameObject meleeNode, rangedNode;
+    private GameObject selectionObject;
+    private GameObject meleeNode, rangedNode;
+    // public TextMeshProUGUI meleePlayerText, rangedPlayerText;
     private PlayerInput _playerInput;
-    
+
     public bool debugModeGameStarted;
 
+
+    private void Awake() {
+
+    }
+
     private void Start() {
+        // meleePlayerText = GameObject.Find("MeleePlayerTxt").GetComponent<TextMeshProUGUI>();
+        // rangedPlayerText = GameObject.Find("RangedPlayerTxt").GetComponent<TextMeshProUGUI>();
         playerNumber = PlayerJoinManager.Instance.playerNumber;
         switch (playerNumber) {
             case 1:
@@ -65,8 +73,7 @@ public class CharacterSelection : MonoBehaviour {
                         GameObject otherPlayerMeleePrefab = Resources.Load<GameObject>("Player");
                         var otherPlayerMelee = Instantiate(otherPlayerMeleePrefab, new Vector3(0, 0, 0),
                             Quaternion.identity);
-                        otherPlayerMelee.transform.Find("AttackTypeHolder").GetComponent<PlayerAttackScheme>()
-                                .characterType =
+                        otherPlayerMelee.GetComponent<PlayerAttackScheme>().characterType =
                             PlayerAttackScheme.Character.Melee;
                         otherPlayerMelee.GetComponent<Player>().cType = Player.CharacterType.Melee;
                         otherPlayerMelee.GetComponent<Player>().debugMode = true;
@@ -84,8 +91,7 @@ public class CharacterSelection : MonoBehaviour {
                         GameObject otherPlayerRangedPrefab = Resources.Load<GameObject>("Player");
                         var otherPlayerRanged = Instantiate(otherPlayerRangedPrefab, new Vector3(0, 0, 0),
                             Quaternion.identity);
-                        otherPlayerRanged.transform.Find("AttackTypeHolder").GetComponent<PlayerAttackScheme>()
-                                .characterType =
+                        otherPlayerRanged.GetComponent<PlayerAttackScheme>().characterType =
                             PlayerAttackScheme.Character.Ranged;
                         otherPlayerRanged.GetComponent<Player>().cType = Player.CharacterType.Ranged;
                         otherPlayerRanged.GetComponent<Player>().debugMode = true;
@@ -136,18 +142,30 @@ public class CharacterSelection : MonoBehaviour {
         if (!context.performed) return;
         switch (selectedDir) {
             case -1:
-                CharacterManager.Instance.rangedLockedIn = true;
-                GetComponent<Player>().cType = Player.CharacterType.Ranged;
-                GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
-                name = "RangedPlayer";
-                GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                if (!CharacterManager.Instance.rangedLockedIn) {
+                    CharacterManager.Instance.rangedLockedIn = true;
+                    // rangedPlayerText.text = "Player" + playerNumber.ToString();
+                    GetComponent<Player>().cType = Player.CharacterType.Ranged;
+                    GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
+                    GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                }
+                else {
+                    Debug.Log("Already Picked!");
+                }
+
                 break;
             case 1:
-                CharacterManager.Instance.meleeLockedIn = true;
-                GetComponent<Player>().cType = Player.CharacterType.Melee;
-                GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
-                name = "MeleePlayer";
-                GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                if (!CharacterManager.Instance.meleeLockedIn) {
+                    CharacterManager.Instance.meleeLockedIn = true;
+                    // meleePlayerText.text = "Player" + playerNumber.ToString();
+                    GetComponent<Player>().cType = Player.CharacterType.Melee;
+                    GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
+                    GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                }
+                else {
+                    Debug.Log("Already Picked!");
+                }
+
                 break;
         }
     }
