@@ -189,16 +189,13 @@ namespace FlowFieldSystem
 
         private void OnDrawGizmos()
         {
-
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 GenerateFlowField();
-                // SetupTempFlowField();
                 return;
             }
             
-            if(_field == null || _field.GetChunks().Count == 0)
-
+            if(_prevReload != _reload)
             {
                 _prevReload = _reload;
                 GenerateFlowField();
