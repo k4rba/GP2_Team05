@@ -10,8 +10,7 @@ namespace Andreas.Scripts
         [SerializeField] private FlowFieldManager _ffManager;
         [SerializeField] private EnemyManager _enemyManager;
         
-        [SerializeField] private float _radius = 2f;
-        [SerializeField] private Timer _spawnRate = 0.5f;
+        [SerializeField] private Timer _spawnRate = 1f;
 
         private bool _spawningEnabled;
 

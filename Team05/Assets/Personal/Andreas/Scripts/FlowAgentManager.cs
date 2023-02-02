@@ -8,7 +8,6 @@ namespace FlowFieldSystem
     {
         [SerializeField] private FlowFieldManager _ffManager;
         [SerializeField] private bool _agentsEnabled = true;
-        [SerializeField] private List<GameObject> _agents;
         [SerializeField] private EnemyManager _enemyManager;
 
         private List<IFlowAgent> _flowAgents;
@@ -16,12 +15,6 @@ namespace FlowFieldSystem
         private void Awake()
         {
             _flowAgents = new();
-
-            for(int i = 0; i < _agents.Count; i++)
-            {
-                var comp = _agents[i].GetComponent<IFlowAgent>();
-                AddAgent(comp);
-            }
             
             if(_ffManager == null)
             {
