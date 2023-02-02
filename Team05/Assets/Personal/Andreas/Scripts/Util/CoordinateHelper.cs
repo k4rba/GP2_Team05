@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 
-namespace Personal.Andreas.Scripts.Util
+namespace Util
 {
     public class CoordinateHelper
     {
@@ -22,6 +22,14 @@ namespace Personal.Andreas.Scripts.Util
             x = x >= 0 ? x / chunkSize : (x + 1) / chunkSize - 1;
             y = y >= 0 ? y / chunkSize : (y + 1) / chunkSize - 1;
             return GetHash(x, y);
+        }
+
+        public static Vector3 TileIndexToPosition(int i, int chunkSize, Vector2Int offset)
+        {
+            int tx = (i % chunkSize) + offset.x * chunkSize;
+            int ty = (i / chunkSize) + offset.y * chunkSize;
+
+            return new Vector3(tx, 0f, ty);
         }
 
         public static int GetHash(int x, int y)

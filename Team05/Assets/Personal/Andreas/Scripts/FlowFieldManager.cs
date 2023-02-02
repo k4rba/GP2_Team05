@@ -1,5 +1,6 @@
-﻿using Personal.Andreas.Scripts.Util;
+﻿using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -26,6 +27,13 @@ namespace FlowFieldSystem
             SetupTempFlowField();
         }
 
+        public VectorFlowField2D GetField() => _field;
+        
+        public List<FlowChunk> GetFlowChunks()
+        {
+            return _field.GetChunks();
+        }
+
         //  temporary testing
         private bool[] CreateRandomBlocks()
         {
@@ -34,7 +42,8 @@ namespace FlowFieldSystem
             var blocks = new bool[_field.ChunkLength];
             for(int i = 0; i < blocks.Length; i++)
             {
-                blocks[i] = fullyBlock ? true : Rng.Roll(5);
+                // blocks[i] = fullyBlock ? true : Rng.Roll(5);
+                blocks[i] = false;
             }
 
             return blocks;
@@ -96,6 +105,11 @@ namespace FlowFieldSystem
 
         private void OnDrawGizmos()
         {
+            if(_unit == null)
+            {
+                return;
+            }
+            
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 SetupTempFlowField();

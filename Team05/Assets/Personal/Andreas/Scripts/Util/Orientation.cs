@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace Personal.Andreas.Scripts.Util
+namespace Util
 {
     [Flags]
     public enum Orientation

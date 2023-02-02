@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Andreas.Scripts.EnemyData
 {
@@ -7,7 +6,23 @@ namespace Andreas.Scripts.EnemyData
         menuName = "GP2/EnemyData", order = 0)]
     public class EnemyData : ScriptableObject
     {
-        [Header("SFX")]
+        [Header("Stats")] 
+        public string Name;
+        public int Health;
+        public float MoveSpeed;
+        public float Damage;
+
+        [Space(10)] 
+        
+        [Tooltip("The visual size scaling of the enemy")]
+        public float SizeScale = 1f;
+
+        [Space(10)] 
+        
+        [Tooltip("The level or difficulty of the enemy.")]
+        public int Tier = 1;
+
+        [Header("SFX")] 
         public AudioClip OnDeath;
     }
 }

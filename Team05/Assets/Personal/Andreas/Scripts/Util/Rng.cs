@@ -1,6 +1,7 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 
-namespace Personal.Andreas.Scripts.Util
+namespace Util
 {
     public static class Rng
     {
@@ -19,5 +20,10 @@ namespace Personal.Andreas.Scripts.Util
 
         public static T Choose<T>(params T[] items) => items[Next(0, items.Length - 1)];
 
+        public static T RandomItem<T>(this IList<T> items)
+        {
+            return items[Next(items.Count - 1)];
+        }
+        
     }
 }

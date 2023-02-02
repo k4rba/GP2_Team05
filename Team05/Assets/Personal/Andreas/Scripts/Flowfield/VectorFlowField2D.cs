@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using Personal.Andreas.Scripts.Util;
+using Util;
 
 namespace FlowFieldSystem
 {
@@ -33,6 +33,8 @@ namespace FlowFieldSystem
             _chunks = new Dictionary<Vector2Int, FlowChunk>();
             _chunkList = new();
         }
+
+        public List<FlowChunk> GetFlowChunks() => _chunkList;
 
         private int GetHash(int x, int y)
         {
