@@ -1,5 +1,6 @@
 ﻿using System;
 using Andreas.Scripts.EnemyData;
+using Andreas.Scripts.StateMachine;
 using AudioSystem;
 using FlowFieldSystem;
 using UnityEngine;
@@ -8,11 +9,6 @@ using Random = UnityEngine.Random;
 
 namespace Personal.Andreas.Scripts.Actors
 {
-    [Serializable]
-    public class PlaySoundEvent : UnityEvent<string>
-    {
-    }
-    
     public class Enemy : Actor, IFlowAgent
     {
         public Vector3 FlowDirection { get; set; }
@@ -25,9 +21,13 @@ namespace Personal.Andreas.Scripts.Actors
         [SerializeField] private EnemyData _data;
 
         private Rigidbody _body;
-
+        private StateManager _stateManager;
+        public StateManager StateCommandManager;
+        
         private void Awake()
         {
+            _stateManager = new();
+            StateCommandManager = new();
             _body = gameObject.GetComponent<Rigidbody>();
         }
 
@@ -38,6 +38,12 @@ namespace Personal.Andreas.Scripts.Actors
         private void Start()
         {
             AudioManager.PlaySfx(_data.OnDeath.name);
+        }
+
+        private void Update()
+        {
+            _stateManager.Update(Time.deltaTime);
+            StateCommandManager.Update(Time.deltaTime);
         }
 
         private void Confused()

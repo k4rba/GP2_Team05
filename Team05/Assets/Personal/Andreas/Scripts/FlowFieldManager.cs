@@ -15,17 +15,17 @@ namespace FlowFieldSystem
     {
         [SerializeField] private GameObject _ground;
         [SerializeField] private GameObject _obstacles;
-        [Space(10)] [SerializeField] private VectorFlowField2D _field;
+        [Space(10)] 
+        [SerializeField] private VectorFlowField2D _field;
         [SerializeField] private Transform _unit;
-        [Space(10)] [SerializeField] private bool _drawIndexes = false;
+        [Space(10)] 
+        [SerializeField] private float _height = 0f;
+        [SerializeField] private bool _drawIndexes = false;
         [SerializeField] private bool _drawTiles = false;
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
         private bool _prevReload;
-
-        private const int tempWorldSize = 10;
-        private const int tempWorldLength = tempWorldSize * tempWorldSize;
 
         private Vector2Int prevPos;
 
@@ -108,49 +108,6 @@ namespace FlowFieldSystem
                 _field.AddChunk(ch);
                 // Debug.Log($"added chunk: {ch.IndexOffset}");
             }
-        }
-
-
-        //  temporary testing
-        private bool[] CreateRandomBlocks()
-        {
-            bool fullyBlock = Rng.Roll(20);
-
-            var blocks = new bool[_field.ChunkLength];
-            for(int i = 0; i < blocks.Length; i++)
-            {
-                // blocks[i] = fullyBlock ? true : Rng.Roll(5);
-                blocks[i] = false;
-            }
-
-            return blocks;
-        }
-
-        private void SetupTempFlowField()
-        {
-            _field ??= new VectorFlowField2D();
-
-            //  temporary
-            var chunks = new FlowChunk[tempWorldLength];
-
-            for(int i = 0; i < chunks.Length; i++)
-            {
-                var ch = new FlowChunk(_field.ChunkSize);
-                ch.IndexOffset = new Vector2Int(
-                    (i % tempWorldSize),
-                    (i / tempWorldSize));
-                ch.Blocks = CreateRandomBlocks();
-
-                //  random fields
-                for(int j = 0; j < ch.Field.Length; j++)
-                {
-                    ch.Field[j] = new Vector2(Rng.NextF(-1f, 1f), Rng.NextF(-1f, 1f)).normalized;
-                }
-
-                chunks[i] = ch;
-            }
-
-            _field.Setup(chunks);
         }
 
         private void Update()
@@ -240,14 +197,14 @@ namespace FlowFieldSystem
         private void DrawTile(Vector3 pos, Vector2 dir, int x, int y, bool block)
         {
             var finalDir = dir.ToVector3XZ();
-            var start = pos + new Vector3(_field.TileSize * .5f, 0, _field.TileSize * .5f);
+            var start = pos + new Vector3(_field.TileSize * .5f, _height, _field.TileSize * .5f);
             var end = start + finalDir * 0.35f;
 
             if(_drawTiles)
             {
                 var color = block ? Color.red : Color.green;
                 Handles.color = color;
-                Handles.DrawWireDisc(start, Vector3.up, 0.1f);
+                Handles.DrawWireDisc(start, Vector3.up, 0.075f);
                 if(!block && finalDir != Vector3.zero)
                 {
                     Gizmos.color = color;
@@ -270,10 +227,10 @@ namespace FlowFieldSystem
 
         private void DrawRect(Vector2 pos, Vector2 size)
         {
-            var topLeft = new Vector3(pos.x, 0, pos.y);
-            var topRight = new Vector3(pos.x + size.x, 0, pos.y);
-            var botRight = new Vector3(pos.x + size.x, 0, pos.y + size.y);
-            var botLeft = new Vector3(pos.x, 0, pos.y + size.y);
+            var topLeft = new Vector3(pos.x, _height, pos.y);
+            var topRight = new Vector3(pos.x + size.x, _height, pos.y);
+            var botRight = new Vector3(pos.x + size.x, _height, pos.y + size.y);
+            var botLeft = new Vector3(pos.x, _height, pos.y + size.y);
             Gizmos.DrawLine(topLeft, topRight);
             Gizmos.DrawLine(topRight, botRight);
             Gizmos.DrawLine(botRight, botLeft);
