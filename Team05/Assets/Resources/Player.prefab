@@ -198,13 +198,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _moveDirection: {x: 0, y: 0}
-  moveSpeed: 35.03
+  moveSpeed: 5
   playerAttackScheme: {fileID: 0}
   characterTypeHolder: {fileID: 714828357237576684}
   <Health>k__BackingField: 0
   <Energy>k__BackingField: 0
   <AttackSpeed>k__BackingField: 7.14
-  debugMode: 1
+  debugMode: 0
   cType: 1
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
@@ -224,7 +224,7 @@ MonoBehaviour:
   selectionObject: {fileID: 0}
   meleeNode: {fileID: 0}
   rangedNode: {fileID: 0}
-  debugMode: 0
+  debugModeGameStarted: 0
 --- !u!114 &714828357488824482
 MonoBehaviour:
   m_ObjectHideFlags: 0

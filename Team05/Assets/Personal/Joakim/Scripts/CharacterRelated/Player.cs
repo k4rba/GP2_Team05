@@ -98,6 +98,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     break;
                 }
             }
+
+            if (debugObj == null) return;
             transform.position = Vector3.MoveTowards(transform.position,
                 new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
                     debugObj.transform.position.z), 2 * Time.deltaTime);
@@ -138,7 +140,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveDirection = context.ReadValue<Vector2>();
-        Debug.Log("movement: " + _moveDirection);
     }
 
     public void OnLook(InputAction.CallbackContext context) {

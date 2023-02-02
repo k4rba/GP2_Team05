@@ -23,10 +23,14 @@ public class PlayerJoinManager : MonoBehaviour {
         playerNumber += 1;
         switch (playerNumber) {
             case 1:
+                if (GameObject.Find("Player2Selector") != null) {
                 GameObject.Find("Player1Selector").GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                }
                 break;
             case 2:
-                GameObject.Find("Player2Selector").GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                if (GameObject.Find("Player2Selector") != null) {
+                    GameObject.Find("Player2Selector").GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                }
                 break;
         }
     }
