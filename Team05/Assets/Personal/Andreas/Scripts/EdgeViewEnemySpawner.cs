@@ -10,13 +10,12 @@ namespace Andreas.Scripts
         [SerializeField] private FlowFieldManager _ffManager;
         [SerializeField] private EnemyManager _enemyManager;
         
+        [SerializeField] private bool _spawningEnabled;
         [SerializeField] private Timer _spawnRate = 1f;
-
-        private bool _spawningEnabled;
 
         private void Update()
         {
-            if(_spawnRate.UpdateTick())
+            if(_spawningEnabled && _spawnRate.UpdateTick())
             {
                 SpawnEnemy();
             }

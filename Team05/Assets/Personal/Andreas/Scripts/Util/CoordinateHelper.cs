@@ -39,6 +39,12 @@ namespace Util
             return hash;
         }
         
+        public static void PositionToChunkCoords(int px, int py, int tileSize, int chunkSize, out int cx, out int cy)
+        {
+            PositionToWorldCoords(px, py, tileSize, out int x, out int y);
+            WorldCoordsToChunkCoords(x, y, chunkSize, out cx, out cy);
+        }
+        
         public static void PositionToWorldCoords(int px, int py, int tileSize, out int x, out int y)
         {
             x = px / tileSize;
