@@ -21,14 +21,4 @@ public class CharacterManager : MonoBehaviour {
             return false;
         }
     }
-
-    public void DistributeCharacter(int playerNumber, string cType) {
-        if (cType == "Ranged") {
-            Debug.Log(playerNumber + " is ranged");
-        }
-
-        if (cType == "Melee") {
-            Debug.Log(playerNumber + " is melee");
-        }
-    }
 }

@@ -82,7 +82,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveDirection = context.ReadValue<Vector2>();
-        Debug.Log(_moveDirection);
     }
 
     public void OnLook(InputAction.CallbackContext context) {

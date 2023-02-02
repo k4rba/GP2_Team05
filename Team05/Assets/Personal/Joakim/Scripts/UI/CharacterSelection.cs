@@ -64,10 +64,6 @@ public class CharacterSelection : MonoBehaviour {
                 GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
                 name = "RangedPlayer";
                 GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
-                // CharacterManager.Instance.DistributeCharacter(playerNumber, "Ranged");
-                if (CharacterManager.Instance.CheckIfAllLockedIn()) {
-
-                }
                 break;
             case 1:
                 CharacterManager.Instance.meleeLockedIn = true;
@@ -75,10 +71,6 @@ public class CharacterSelection : MonoBehaviour {
                 GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
                 name = "MeleePlayer";
                 GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
-                // CharacterManager.Instance.DistributeCharacter(playerNumber, "Melee");
-                if (CharacterManager.Instance.CheckIfAllLockedIn()) {
-
-                }
                 break;
         }
     }
