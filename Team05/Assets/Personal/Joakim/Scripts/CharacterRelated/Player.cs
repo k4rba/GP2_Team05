@@ -4,6 +4,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
+using FlowFieldSystem;
 using Health;
 
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
@@ -13,6 +14,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
     public GameObject characterTypeHolder;
+    private float playerNumber;
 
     public float Health { get; set; }
     public float Energy { get; set; }
@@ -28,6 +30,9 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public CharacterType cType;
 
     private void Awake() {
+        playerNumber = PlayerJoinManager.Instance.playerNumber;
+        name = "Player" + playerNumber;
+        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform);
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
         switch (cType) {
