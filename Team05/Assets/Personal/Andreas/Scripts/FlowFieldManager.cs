@@ -3,9 +3,11 @@ using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Util;
 
-#if UNITY_EDITOR
+
+    #if UNITY_EDITOR
 using UnityEditor;
-#endif
+    #endif
+
 
 namespace FlowFieldSystem
 {
@@ -187,14 +189,16 @@ namespace FlowFieldSystem
 
         private void OnDrawGizmos()
         {
+
             if(_field == null || _field.GetChunks().Count == 0)
             {
                 GenerateFlowField();
                 // SetupTempFlowField();
                 return;
             }
+            
+            if(_field == null || _field.GetChunks().Count == 0)
 
-            if(_reload != _prevReload)
             {
                 _prevReload = _reload;
                 GenerateFlowField();

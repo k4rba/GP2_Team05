@@ -7,6 +7,10 @@ using AttackNamespace;
 using FlowFieldSystem;
 using Health;
 
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
+
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
     public Vector2 _moveDirection;
     private Vector2 _lookDirection;
@@ -16,11 +20,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public GameObject characterTypeHolder;
     private float playerNumber;
 
-    public float Health { get; set; }
-    public float Energy { get; set; }
+    [field: SerializeField] public float Health { get; set; }
+    [field: SerializeField] public float Energy { get; set; }
 
     private bool switchedToCharacterMode = true;
     [field: SerializeField] public float AttackSpeed { get; set; }
+
+    public bool debugMode = false;
+    private GameObject debugObj;
 
     public enum CharacterType {
         Ranged,
@@ -29,7 +36,24 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public CharacterType cType;
 
+#if UNITY_EDITOR
+    private void ModeChanged ()
+    {
+        if (!EditorApplication.isPlayingOrWillChangePlaymode &&
+            EditorApplication.isPlaying ) 
+        {
+            Debug.Log("Exiting playmode.");
+            debugMode = false;
+            
+        }
+    }
+#endif
+    
     private void Awake() {
+#if UNITY_EDITOR
+        EditorApplication.playmodeStateChanged += ModeChanged;
+#endif
+        
         playerNumber = PlayerJoinManager.Instance.playerNumber;
         name = "Player" + playerNumber;
         GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform);
@@ -54,7 +78,34 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
+    public void MoveTowardsBetterHalf(Vector3 pos) {
+        transform.position = Vector3.MoveTowards(transform.position, new Vector3(pos.x, pos.y, pos.z), 2);
+    }
+
     private void Update() {
+        
+        //DEBUG ONLY
+        if (debugMode == true) {
+            switch (cType) {
+                case CharacterType.Melee: {
+                    var objToFollow = GameObject.Find("RangedPlayer");
+                    debugObj = objToFollow;
+                    break;
+                }
+                case CharacterType.Ranged: {
+                    var objToFollow = GameObject.Find("MeleePlayer");
+                    debugObj = objToFollow;
+                    break;
+                }
+            }
+            transform.position = Vector3.MoveTowards(transform.position,
+                new Vector3(debugObj.transform.position.x, debugObj.transform.position.y,
+                    debugObj.transform.position.z), 2 * Time.deltaTime);
+
+        }
+        //END OF DEBUG
+        
+        
         if (CharacterManager.Instance.CheckIfAllLockedIn() && switchedToCharacterMode) {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             switchedToCharacterMode = false;
@@ -87,6 +138,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnMove(InputAction.CallbackContext context) {
         _moveDirection = context.ReadValue<Vector2>();
+        Debug.Log("movement: " + _moveDirection);
     }
 
     public void OnLook(InputAction.CallbackContext context) {

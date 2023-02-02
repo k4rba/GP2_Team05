@@ -19,6 +19,7 @@ public class PlayerJoinManager : MonoBehaviour {
     }
 
     public void OnJoin() {
+        Debug.Log("JOINED");
         playerNumber += 1;
         switch (playerNumber) {
             case 1:

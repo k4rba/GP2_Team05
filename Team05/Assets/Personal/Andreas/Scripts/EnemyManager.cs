@@ -19,7 +19,6 @@ namespace Personal.Andreas.Scripts
 
         public void SpawnEnemy(Vector3 position, GameObject prefab)
         {
-            Debug.Log($"spawned enemy at {position}");
             var enemy = Instantiate(prefab, position, quaternion.identity, _enemyContainer.transform);
             AddEnemy(enemy);
         }
