@@ -60,7 +60,7 @@ namespace Personal.Andreas.Scripts
             //  todo - smoothen
 
             var center = GetCenter();
-            center.z -= 5f;
+            center.z -= 8f;
             _camera.transform.position = center;
             _camera.transform.LookAt(center);
             

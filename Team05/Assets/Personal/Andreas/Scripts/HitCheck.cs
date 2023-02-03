@@ -13,8 +13,8 @@ namespace Andreas.Scripts {
         
         private void OnTriggerEnter(Collider other) {
 
-            if (other.gameObject == _target) {
-                //  do damage
+            if (!_didHit && other.gameObject == _target) {
+                //  do damage .. ONCE
                 _didHit = true;
                 Debug.Log("Did damage");
                 other.GetComponent<Player>().Health.InstantDamage(other.GetComponent<Player>(), 0.05f);

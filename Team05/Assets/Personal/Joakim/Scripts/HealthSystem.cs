@@ -11,21 +11,38 @@ namespace Health {
             _health = 0.25f;
             _health = Mathf.Clamp(_health, -0.5f, 0.5f);
         }
-        
+
         //max health = 0.5f, min = -0.5f
         public void TransferHealth(IDamagable self, IDamagable other) {
             if (self.Health._health >= -0.40f && other.Health._health < 0.5f) {
                 InstantHealing(other, 0.05f);
-                var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
-                var selfHealthMatFloat = self.HealthMaterial.GetFloat("_HP");
-                other.HealthMaterial.SetFloat("_HP", otherHealthMatFloat + 0.05f);
-                ClampHP(other.Health._health);
-                ClampHP(otherHealthMatFloat);
+
                 InstantDamage(self, 0.05f);
-                self.HealthMaterial.SetFloat("_HP", selfHealthMatFloat - 0.05f);
-                ClampHP(self.Health._health);
-                ClampHP(selfHealthMatFloat);
+
                 Debug.Log(self + " Transferred health to " + other);
+                
+                var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
+                Debug.Log($"TRANSFER: hp: {other.Health._health}   shader: {otherHealthMatFloat}");
+            }
+        }
+
+        public void InstantHealing(HealthSystem.IDamagable player, float value) {
+            player.Health._health = ClampHP(player.Health._health + value);
+            var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+            player.HealthMaterial.SetFloat("_HP", ClampHP(playerHealthMat + value));
+        }
+
+        public void InstantDamage(HealthSystem.IDamagable player, float value) {
+            if (player.Health._health >= -0.45f) {
+                player.Health._health = ClampHP(player.Health._health - value);
+                var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+                player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
+                
+                playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+                Debug.Log($"DAMAGE: hp: {player.Health._health}   shader: {playerHealthMat}");
+            }
+            else {
+                Die(player);
             }
         }
 
@@ -40,30 +57,7 @@ namespace Health {
         }
 
         private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);
-        
-        public void InstantHealing(HealthSystem.IDamagable player, float value) {
-            player.Health._health += value;
-            ClampHP(player.Health._health);
-            
-            var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
-            player.HealthMaterial.SetFloat("_HP", playerHealthMat + value);
-            ClampHP(playerHealthMat);
-        }
-        
-        public void InstantDamage(HealthSystem.IDamagable player, float value) {
-            if (player.Health._health >= -0.45f) {
-                player.Health._health -= value;
-                ClampHP(player.Health._health);
-            }
-            else {
-                Die(player);
-            }
 
-            var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
-            player.HealthMaterial.SetFloat("_HP", playerHealthMat - value);
-            ClampHP(playerHealthMat);
-            
-        }
 
         public interface IDamagable {
             public Material HealthMaterial { get; set; }
@@ -74,7 +68,6 @@ namespace Health {
 
     public class Healing {
         public void Hot(HealthSystem.IDamagable player, float value, float tickRate, float duration) {
-            
         }
     }
 

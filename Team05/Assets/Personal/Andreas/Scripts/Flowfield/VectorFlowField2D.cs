@@ -19,8 +19,8 @@ namespace FlowFieldSystem
         private Dictionary<Vector2Int, FlowChunk> _chunks;
         private List<Vector2Int> _visited;
 
-        private int _updateWidth = 50;
-        private int _updateHeight = 50;
+        private int _updateWidth = 32;
+        private int _updateHeight = 32;
 
         private int _maxDistance;
         private Rect _tileBounds;

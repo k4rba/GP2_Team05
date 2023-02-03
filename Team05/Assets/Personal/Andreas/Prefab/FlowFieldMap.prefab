@@ -44,7 +44,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 6fd4910d4da94d1cbc2cfcf87840d05b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _ground: {fileID: 0}
+  _obstacles: {fileID: 0}
   _unit: {fileID: 0}
+  _height: 0
   _drawIndexes: 0
-  _drawTiles: 1
+  _drawTiles: 0
   _drawChunks: 0
+  _reload: 1
+  AgentManager: {fileID: 0}
