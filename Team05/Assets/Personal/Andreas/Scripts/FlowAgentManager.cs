@@ -24,6 +24,7 @@ namespace Andreas.Scripts
             
             _enemyManager.OnEnemyAdded += EnemyManagerOnOnEnemyAdded;
         }
+        
 
         private void EnemyManagerOnOnEnemyAdded(GameObject enemyObj)
         {
