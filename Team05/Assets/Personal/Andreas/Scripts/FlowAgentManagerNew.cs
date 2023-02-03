@@ -5,7 +5,7 @@ using UnityEngine;
 
 namespace Andreas.Scripts
 {
-    public class FlowAgentManager : MonoBehaviour
+    public class FlowAgentManagerNew : MonoBehaviour
     {
         [SerializeField] private FlowFieldManager _ffManager;
         [SerializeField] private bool _agentsEnabled = true;
@@ -21,29 +21,30 @@ namespace Andreas.Scripts
             {
                 Debug.LogWarning("FlowFieldAgentManager is missing a FlowFieldManager");
             }
-            
+
             _enemyManager.OnEnemyAdded += EnemyManagerOnOnEnemyAdded;
         }
-        
+
 
         private void EnemyManagerOnOnEnemyAdded(GameObject enemyObj)
         {
             var agentComp = enemyObj.GetComponent<IFlowAgent>();
-            
-            if(agentComp==null)
+
+            if(agentComp == null)
             {
                 Debug.LogError("No IFlowAgent component found in Enemy on spawn");
                 return;
             }
-            
+
             AddAgent(agentComp);
         }
 
-        public void AddAgent(IFlowAgent agent) {
+        public void AddAgent(IFlowAgent agent)
+        {
             agent.Manager = _ffManager;
             _flowAgents.Add(agent);
         }
-        
+
         public void RemoveAgent(IFlowAgent agent)
         {
             _flowAgents.Remove(agent);

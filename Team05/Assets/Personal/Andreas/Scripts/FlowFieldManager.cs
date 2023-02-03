@@ -26,7 +26,7 @@ namespace FlowFieldSystem
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
-        public FlowAgentManager AgentManager;
+        public FlowAgentManagerNew AgentManager;
         
         private bool _prevReload;
 
