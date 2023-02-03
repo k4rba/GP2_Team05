@@ -36,9 +36,7 @@ namespace FlowFieldSystem
         {
             _prevReload = _reload;
             // SetupTempFlowField();
-            Debug.Log("Generating FlowField");
-            GenerateFlowField();
-            Debug.Log("FlowField generated");
+
         }
 
         public VectorFlowField2D GetField() => _field;
@@ -50,6 +48,18 @@ namespace FlowFieldSystem
 
         public Transform GetUnit() => _unit;
 
+        public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit, FlowAgentManagerNew agentManager) {
+            _ground = grounds;
+            _obstacles = obstacles;
+            _unit = unit;
+            AgentManager = agentManager;
+            
+            Debug.Log("Generating FlowField");
+            GenerateFlowField();
+            Debug.Log("FlowField generated");
+            
+            EdgeViewEnemySpawner.Get.AssignFlowField(this);
+        }
 
         public void GenerateFlowField()
         {

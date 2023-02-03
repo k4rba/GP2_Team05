@@ -1,3 +1,5 @@
+using System;
+using Andreas.Scripts;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -5,6 +7,7 @@ using AttackNamespace;
 using FlowFieldSystem;
 using Health;
 using Personal.Andreas.Scripts;
+using Personal.Andreas.Scripts.Actors;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -50,16 +53,47 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #endif
     private void Awake() {
         Health = new HealthSystem();
-        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>()
-            .SetUnit(transform); //todo: flowfield accepts 2 players
+        // GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>()
+            // .SetUnit(transform); //todo: flowfield accepts 2 players
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
-        gameObject.tag = _playerNumber == 1 ? "Player1": "Player2";
+        gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
+
 
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
+    }
+
+    private void Start() {
+        //  DONT LOOK
+        var grounds = GameObject.Find("Ground");
+        var obstacles = GameObject.Find("Obstacles");
+        var enemyManagerObj = GameObject.Find("EnemyManager");
+
+        var enemyManager = enemyManagerObj.GetComponent<EnemyManager>();
+        var ff = GetComponentInChildren<FlowFieldManager>();
+
+        var agentManager = enemyManagerObj.GetComponent<FlowAgentManagerNew>();
+        ff.SetupFromPlayer(grounds, obstacles, transform, agentManager);
+
+        switch (_playerNumber) {
+            case 1:
+                enemyManager.OnEnemyAdded += (o) => {
+                    var flowAgent = o.GetComponent<Enemy>();
+                    agentManager.AddAgent(flowAgent, ff);
+                    Debug.Log($"added enemy to {transform.name}");
+                };
+                break;
+            default:
+                enemyManager.OnEnemyAddedTwo += (o) => {
+                    var flowAgent = o.GetComponent<Enemy>();
+                    agentManager.AddAgent(flowAgent, ff);
+                    Debug.Log($"added enemy to {transform.name}");
+                };
+                break;
+        }
     }
 
     // ReSharper disable Unity.PerformanceAnalysis
@@ -90,7 +124,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void Update() {
-
         //DEBUG ONLY
         if (debugMode == true) {
             switch (cType) {
@@ -119,6 +152,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             AssignPlayerSpecifics();
             otherPlayer = GameObject.FindWithTag(_playerNumber == 1 ? "Player2" : "Player1");
             CameraTopDown.Get.SetPlayers(transform);
+            EdgeViewEnemySpawner.Get.EnableSpawning(true);
             _switchedToCharacterMode = false;
         }
     }
