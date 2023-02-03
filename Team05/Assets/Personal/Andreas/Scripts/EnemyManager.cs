@@ -25,13 +25,13 @@ namespace Personal.Andreas.Scripts
 
         public void AddEnemy(GameObject enemy)
         {
-            _enemies.Add(enemy);
+            // _enemies.Add(enemy);
             OnEnemyAdded?.Invoke(enemy);
         }
 
         public void RemoveEnemy(GameObject enemy)
         {
-            _enemies.Remove(enemy);
+            // _enemies.Remove(enemy);
         }
         
     }

@@ -39,8 +39,8 @@ namespace Andreas.Scripts
             AddAgent(agentComp);
         }
 
-        public void AddAgent(IFlowAgent agent)
-        {
+        public void AddAgent(IFlowAgent agent) {
+            agent.Manager = _ffManager;
             _flowAgents.Add(agent);
         }
         

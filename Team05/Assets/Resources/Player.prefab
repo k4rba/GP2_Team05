@@ -152,12 +152,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
-  health: 100
   moveSpeed: 15
   playerAttackScheme: {fileID: 0}
   otherPlayer: {fileID: 0}
+  <CurrentHealth>k__BackingField: 0
   <Energy>k__BackingField: 0
-  <AttackSpeed>k__BackingField: 7.14
+  <AttackSpeed>k__BackingField: 1
   debugMode: 0
   cType: 1
 --- !u!114 &5651366575927957283

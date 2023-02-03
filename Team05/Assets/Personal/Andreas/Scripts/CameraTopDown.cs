@@ -1,21 +1,33 @@
-﻿using UnityEngine;
+﻿using System;
+using System.Collections.Generic;
+using UnityEngine;
 
 namespace Personal.Andreas.Scripts
 {
-    public class CameraTopDown : MonoBehaviour
-    {
+    public class CameraTopDown : MonoBehaviour {
+        
+        public static CameraTopDown Get { get; private set; }
+        
         [SerializeField] private Camera _camera;
         
         //  points of interest
-        [SerializeField] private Transform[] _transforms;
-        
+        [SerializeField] private List<Transform> _transforms = new List<Transform>();
+
         [SerializeField] private float _heightOffset = 10f;
 
-        private bool _enabled;
+        private bool _enabled = true;
 
-        private void Start()
-        {
-            enabled = _transforms is { Length: > 0 };
+        private void Awake() {
+            Get = this;
+        }
+
+        private void Start() {
+            if (_transforms == null)
+                return;
+        }
+
+        public void SetPlayers(Transform player) {
+            _transforms.Add(player);
         }
 
         /// <summary>
@@ -25,12 +37,12 @@ namespace Personal.Andreas.Scripts
         {
             Vector3 retSum = Vector3.zero;
 
-            for(int i = 0; i < _transforms.Length; i++)
+            for(int i = 0; i < _transforms.Count; i++)
             {
                 retSum += _transforms[i].position;
             }
 
-            var length = _transforms.Length;
+            var length = _transforms.Count;
 
             retSum = new Vector3(
                 retSum.x / length, 
@@ -40,11 +52,15 @@ namespace Personal.Andreas.Scripts
             return retSum;
         }
 
-        private void Update()
-        {
+        private void Update() {
+
+            if (_transforms == null)
+                return;
+            
             //  todo - smoothen
 
             var center = GetCenter();
+            center.z -= 5f;
             _camera.transform.position = center;
             _camera.transform.LookAt(center);
             

@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Andreas.Scripts;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Util;
@@ -25,6 +26,8 @@ namespace FlowFieldSystem
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
+        public FlowAgentManager AgentManager;
+        
         private bool _prevReload;
 
         private Vector2Int prevPos;
@@ -44,6 +47,8 @@ namespace FlowFieldSystem
         {
             return _field.GetChunks();
         }
+
+        public Transform GetUnit() => _unit;
 
 
         public void GenerateFlowField()

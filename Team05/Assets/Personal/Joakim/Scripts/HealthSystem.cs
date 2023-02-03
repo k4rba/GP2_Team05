@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace Health {
     public class HealthSystem {
@@ -28,21 +29,40 @@ namespace Health {
             }
         }
 
+        public void ResetHealth(IDamagable player) {
+            player.Health._health = 0.25f;
+            player.HealthMaterial.SetFloat("_HP", 0.25f);
+        }
+
         public void Die(IDamagable damagable) {
-            if (damagable.Health._health <= -0.5f) {
-                //todo: dieeeee
-                Debug.Log(damagable + "Died :C");
-            }
+            Debug.Log(damagable + "Died :C");
+            SceneManager.LoadScene("MainScene");
         }
 
         private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);
-
+        
         public void InstantHealing(HealthSystem.IDamagable player, float value) {
             player.Health._health += value;
+            ClampHP(player.Health._health);
+            
+            var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+            player.HealthMaterial.SetFloat("_HP", playerHealthMat + value);
+            ClampHP(playerHealthMat);
         }
         
         public void InstantDamage(HealthSystem.IDamagable player, float value) {
-            player.Health._health -= value;
+            if (player.Health._health >= -0.45f) {
+                player.Health._health -= value;
+                ClampHP(player.Health._health);
+            }
+            else {
+                Die(player);
+            }
+
+            var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+            player.HealthMaterial.SetFloat("_HP", playerHealthMat - value);
+            ClampHP(playerHealthMat);
+            
         }
 
         public interface IDamagable {

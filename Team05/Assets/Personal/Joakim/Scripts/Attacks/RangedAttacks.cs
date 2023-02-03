@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AttackNamespace;
+using Personal.Andreas.Scripts.Actors;
 using Unity.VisualScripting;
 
 public class RangedAttacks : MonoBehaviour, Attack.IAttack {
@@ -15,7 +16,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     public void DoDamage(float value) {
         //todo: call this on collision with enemy
     }
-
 
     public enum RangedAttackType {
         BasicAttack,
@@ -34,6 +34,14 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
             case RangedAttackType.BasicAttack:
                 _rb.AddForce(transform.forward * ProjectileSpeed, ForceMode.Impulse);
                 break;
+        }
+    }
+
+    private void OnTriggerEnter(Collider other) {
+        var enemy = other.gameObject.GetComponent<Enemy>();
+        if (enemy != null) {
+            enemy.Die();
+            Destroy(enemy.gameObject);
         }
     }
 }

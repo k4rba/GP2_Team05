@@ -1,4 +1,5 @@
 ﻿using Andreas.Scripts.EnemyStates.EnemyModes;
+using Personal.Andreas.Scripts.Actors;
 
 namespace Andreas.Scripts.EnemyStates
 {
@@ -15,6 +16,8 @@ namespace Andreas.Scripts.EnemyStates
             base.Update(dt);
             
         }
-        
+
+        public EnemyStateIdle(Enemy enemy) : base(enemy) {
+        }
     }
 }
