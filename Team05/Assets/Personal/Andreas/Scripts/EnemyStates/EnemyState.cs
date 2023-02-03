@@ -6,11 +6,15 @@ namespace Andreas.Scripts.EnemyStates
 {
     public class EnemyState : State
     {
-        private Enemy _enemy;
+        protected Enemy Enemy;
+
+        public EnemyState(Enemy enemy) {
+            Enemy = enemy;
+        }
 
         protected void SetCommand(EnemyCommand com)
         {
-            _enemy.StateCommandManager.SetState(com);
+            // Enemy.StateCommandManager.SetState(com);
         }
 
     }

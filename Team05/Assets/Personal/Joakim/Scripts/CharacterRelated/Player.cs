@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 using AttackNamespace;
 using FlowFieldSystem;
 using Health;
+using Personal.Andreas.Scripts;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -117,6 +118,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             AssignPlayerSpecifics();
             otherPlayer = GameObject.FindWithTag(_playerNumber == 1 ? "Player2" : "Player1");
+            CameraTopDown.Get.SetPlayers(transform);
             _switchedToCharacterMode = false;
         }
     }
@@ -124,6 +126,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private void AssignPlayerSpecifics() {
         AssignPlayerToRole(cType);
         AssignPlayerHealthMaterial(_playerNumber);
+        Health.ResetHealth(this);
     }
 
     private void FixedUpdate() {

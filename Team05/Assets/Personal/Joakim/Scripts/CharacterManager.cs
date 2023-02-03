@@ -4,6 +4,7 @@ using UnityEngine.InputSystem;
 public class CharacterManager : MonoBehaviour {
     public bool rangedLockedIn, meleeLockedIn;
     public GameObject characterSelectionScreen;
+    public GameObject mainGameUI;
 
     public static CharacterManager Instance = null;
     private void Awake() {
@@ -16,6 +17,7 @@ public class CharacterManager : MonoBehaviour {
     public bool CheckIfAllLockedIn() {
         if (rangedLockedIn && meleeLockedIn) {
             characterSelectionScreen.SetActive(false);
+            mainGameUI.SetActive(true);
             return true;
         }
         else {

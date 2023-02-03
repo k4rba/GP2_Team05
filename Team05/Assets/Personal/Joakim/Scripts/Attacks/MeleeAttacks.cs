@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using AttackNamespace;
+using Personal.Andreas.Scripts.Actors;
 
 public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
     [field: SerializeField] public float BasicDamage { get; set; } //todo: implement something to actually damage
@@ -31,6 +32,14 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
             case MeleeAttackType.Basic:
                 StartCoroutine(DestroyAttackArea());
                 break;
+        }
+    }
+    
+    private void OnTriggerEnter(Collider other) {
+        var enemy = other.gameObject.GetComponent<Enemy>();
+        if (enemy != null) {
+            enemy.Die();
+            Destroy(enemy.gameObject);
         }
     }
 }

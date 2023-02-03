@@ -52,5 +52,16 @@ namespace Andreas.Scripts.StateMachine
                 ExitState(Current);
             }
         }
+        
+        public void FixedUpdate(float fixedDt)
+        {
+            //  add default state
+            if(Current == null)
+            {
+                return;
+            }
+            
+            Current.FixedUpdate(fixedDt);
+        }
     }
 }

@@ -18,5 +18,6 @@
         }
 
         public virtual void Update(float dt) { }
+        public virtual void FixedUpdate(float fixedDt) { }
     }
 }
