@@ -14,12 +14,7 @@ namespace Andreas.Scripts.StateMachine
             _queue = new();
         }
 
-        public void SetState(State state)
-        {
-            SetState(state, false);
-        }
-
-        public void SetState(State state, bool clearQueue)
+        public virtual void SetState(State state)
         {
             Current = state;
             Current.Init();

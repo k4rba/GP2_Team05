@@ -4,14 +4,13 @@ using Andreas.Scripts.StateMachine;
 using AudioSystem;
 using FlowFieldSystem;
 using UnityEngine;
-using UnityEngine.Events;
 using Random = UnityEngine.Random;
 
 namespace Personal.Andreas.Scripts.Actors
 {
     public class Enemy : Actor, IFlowAgent
     {
-        public Vector3 FlowDirection { get; set; }
+        public Vector2 FlowDirection;
         public Vector3 Position
         {
             get => transform.position;
@@ -42,8 +41,8 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Update()
         {
-            _stateManager.Update(Time.deltaTime);
-            StateCommandManager.Update(Time.deltaTime);
+            // _stateManager.Update(Time.deltaTime);
+            // StateCommandManager.Update(Time.deltaTime);
         }
 
         private void Confused()
@@ -55,10 +54,15 @@ namespace Personal.Andreas.Scripts.Actors
 
         public void Move(Vector2 direction)
         {
+            FlowDirection = direction;
+
             var tf = _body.transform;
 
+            // var direction = Enemy.FlowDirection;
+            
             if(direction == Vector2.zero)
             {
+                //  flow is zero
                 Confused();
                 return;
             }
@@ -71,6 +75,7 @@ namespace Personal.Andreas.Scripts.Actors
             var velocity = dir3 * (speed * Time.deltaTime);
             pos += velocity;
             _body.MovePosition(pos);
+            
         }
     }
 }

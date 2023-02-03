@@ -19,7 +19,7 @@ namespace Personal.Andreas.Scripts
 
         public void SpawnEnemy(Vector3 position, GameObject prefab)
         {
-            var enemy = Instantiate(prefab, position, quaternion.identity, _enemyContainer.transform);
+            var enemy = Instantiate(prefab, position, Quaternion.identity, _enemyContainer.transform);
             AddEnemy(enemy);
         }
 

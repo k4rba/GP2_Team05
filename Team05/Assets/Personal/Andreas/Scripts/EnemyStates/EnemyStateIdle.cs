@@ -7,7 +7,14 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
-            SetCommand(new EnemyCommandScanForPlayer());
+            
         }
+
+        public override void Update(float dt)
+        {
+            base.Update(dt);
+            
+        }
+        
     }
 }
