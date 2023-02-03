@@ -7,6 +7,7 @@ namespace Personal.Andreas.Scripts.Actors
     {
         public Material HealthMaterial { get; set; }
         public HealthSystem Health { get; set; }
+        public int CurrentHealth { get; set; }
         public float Energy { get; set; }
     }
 }
