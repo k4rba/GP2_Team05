@@ -4,21 +4,45 @@ using UnityEngine;
 
 namespace Health {
     public class HealthSystem {
-        public int _health;
+        public float _health;
 
         public HealthSystem() {
-            _health = 100;
-            _health = Mathf.Clamp(_health, 0, 100);
+            _health = 0.25f;
+            _health = Mathf.Clamp(_health, -0.5f, 0.5f);
         }
         
-        //Health material max health = -0.6, min health = 0.6
-        public void TransferHealth(IDamagable self, IDamagable other, Healing heal, Damage dmg) {
-            if (self.Health._health > 10 && other.Health._health <= 100) {
-                heal.InstantHealing(other, 10);
-                other.HealthMaterial.SetFloat("HP", other.HealthMaterial.GetFloat("HP") + 0.06f);
-                dmg.InstantDamage(self, 10);
-                self.HealthMaterial.SetFloat("HP", self.HealthMaterial.GetFloat("HP") - 0.06f);
+        //max health = 0.5f, min = -0.5f
+        public void TransferHealth(IDamagable self, IDamagable other) {
+            if (self.Health._health >= -0.40f && other.Health._health < 0.5f) {
+                InstantHealing(other, 0.05f);
+                var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
+                var selfHealthMatFloat = self.HealthMaterial.GetFloat("_HP");
+                other.HealthMaterial.SetFloat("_HP", otherHealthMatFloat + 0.05f);
+                ClampHP(other.Health._health);
+                ClampHP(otherHealthMatFloat);
+                InstantDamage(self, 0.05f);
+                self.HealthMaterial.SetFloat("_HP", selfHealthMatFloat - 0.05f);
+                ClampHP(self.Health._health);
+                ClampHP(selfHealthMatFloat);
+                Debug.Log(self + " Transferred health to " + other);
             }
+        }
+
+        public void Die(IDamagable damagable) {
+            if (damagable.Health._health <= -0.5f) {
+                //todo: dieeeee
+                Debug.Log(damagable + "Died :C");
+            }
+        }
+
+        private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);
+
+        public void InstantHealing(HealthSystem.IDamagable player, float value) {
+            player.Health._health += value;
+        }
+        
+        public void InstantDamage(HealthSystem.IDamagable player, float value) {
+            player.Health._health -= value;
         }
 
         public interface IDamagable {
@@ -29,17 +53,12 @@ namespace Health {
     }
 
     public class Healing {
-        public void InstantHealing(HealthSystem.IDamagable player, float value) {
-        }
-
         public void Hot(HealthSystem.IDamagable player, float value, float tickRate, float duration) {
+            
         }
     }
 
     public class Damage {
-        public void InstantDamage(HealthSystem.IDamagable player, float value) {
-        }
-
         public void Dot(HealthSystem.IDamagable player, float value, float tickRate, float duration) {
         }
     }

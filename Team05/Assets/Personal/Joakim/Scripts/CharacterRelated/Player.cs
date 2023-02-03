@@ -10,13 +10,9 @@ using UnityEditor;
 #endif
 
 public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
-    public Damage Damage;
-    public Healing Healing;
-    
     public Vector2 moveDirection;
     private Vector2 _lookDirection;
     private Rigidbody _rb;
-    public int health;
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
     private int _playerNumber;
@@ -24,12 +20,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public GameObject otherPlayer;
 
     public Material HealthMaterial { get; set; }
-    [field: SerializeField] public HealthSystem Health { get; set; }
+    public HealthSystem Health { get; set; }
+    [field: SerializeField] public int CurrentHealth { get; set; }
     [field: SerializeField] public float Energy { get; set; }
     [field: SerializeField] public float AttackSpeed { get; set; }
 
     //DEBUG ONLY
     public bool debugMode = false;
+
     private GameObject _debugObj;
     //END OF DEBUG
 
@@ -51,9 +49,10 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #endif
     private void Awake() {
         Health = new HealthSystem();
-        health = Health._health;
-        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>().SetUnit(transform); //todo: flowfield accepts 2 players
+        GameObject.Find("FlowFieldMap").GetComponent<FlowFieldManager>()
+            .SetUnit(transform); //todo: flowfield accepts 2 players
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
+        gameObject.tag = _playerNumber == 1 ? "Player1": "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
 
@@ -70,14 +69,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 GetComponent<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
                 playerAttackScheme = GetComponent<PlayerAttackScheme>();
                 if (playerAttackScheme != null) playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
-                otherPlayer = GameObject.Find("MeleePlayer");
                 break;
             case CharacterType.Melee:
                 name = "MeleePlayer)";
                 GetComponent<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
                 playerAttackScheme = GetComponent<PlayerAttackScheme>();
                 if (playerAttackScheme != null) playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
-                otherPlayer = GameObject.Find("RangedPlayer");
                 break;
         }
     }
@@ -92,6 +89,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void Update() {
+
         //DEBUG ONLY
         if (debugMode == true) {
             switch (cType) {
@@ -118,8 +116,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (CharacterManager.Instance.CheckIfAllLockedIn() && _switchedToCharacterMode) {
             GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
             AssignPlayerSpecifics();
+            otherPlayer = GameObject.FindWithTag(_playerNumber == 1 ? "Player2" : "Player1");
             _switchedToCharacterMode = false;
-            
         }
     }
 
@@ -163,7 +161,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public void OnGiveHealth(InputAction.CallbackContext context) {
         if (context.performed) {
-            Health.TransferHealth(this, otherPlayer.GetComponent<Player>(), Healing, Damage);
+            Health.TransferHealth(this, otherPlayer.GetComponent<Player>());
         }
     }
 }

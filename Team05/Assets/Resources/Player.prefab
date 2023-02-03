@@ -152,7 +152,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
-  health: 0
+  health: 100
   moveSpeed: 15
   playerAttackScheme: {fileID: 0}
   otherPlayer: {fileID: 0}
