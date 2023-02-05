@@ -11,6 +11,7 @@ namespace Andreas.Scripts.EnemyData
         public int Health;
         public float MoveSpeed;
         public float Damage;
+        public float AttackRange;
 
         [Space(10)] 
         

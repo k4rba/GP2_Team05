@@ -1288,13 +1288,18 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3783475989701815170, guid: c0b1576ad0597b44fbf6649e6074de5c,
         type: 3}
+      propertyPath: _drawTiles
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3783475989701815170, guid: c0b1576ad0597b44fbf6649e6074de5c,
+        type: 3}
       propertyPath: _obstacles
       value: 
       objectReference: {fileID: 363075742}
     - target: {fileID: 3783475989701815170, guid: c0b1576ad0597b44fbf6649e6074de5c,
         type: 3}
       propertyPath: _drawChunks
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3783475989701815170, guid: c0b1576ad0597b44fbf6649e6074de5c,
         type: 3}
@@ -1595,7 +1600,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fc0c211d2d5d00844bd460697c454b03, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _ffManager: {fileID: 1195378042}
   _enemyManager: {fileID: 2004165676988747578}
   _spawningEnabled: 0
   _spawnRate:

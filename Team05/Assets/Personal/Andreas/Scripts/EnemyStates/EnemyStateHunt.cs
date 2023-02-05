@@ -1,10 +1,13 @@
-﻿using Unity.VisualScripting;
-using Health;
-using Personal.Andreas.Scripts.Actors;
+﻿using Personal.Andreas.Scripts.Actors;
 using UnityEngine;
+using Util;
 
 namespace Andreas.Scripts.EnemyStates {
     public class EnemyStateHunt : EnemyState {
+        
+        public EnemyStateHunt(Enemy enemy) : base(enemy) {
+        }
+        
         public override void Update(float dt) {
             base.Update(dt);
             if (IsCloseForAttack()) {
@@ -19,11 +22,12 @@ namespace Andreas.Scripts.EnemyStates {
 
         private void EnterAttack() {
             Enemy.StateManager.SetState(new EnemyStateAttack(Enemy));
-            Debug.Log("ATTACK ENTER");
         }
 
         private bool IsCloseForAttack() {
-            float attackRange = 1.1f;
+
+            // float attackRange = 1.1f;
+            float attackRange = Enemy.Data.AttackRange;
 
             var unit = Enemy.Manager.GetUnit();
 
@@ -32,7 +36,7 @@ namespace Andreas.Scripts.EnemyStates {
         }
 
         private void Confused() {
-            var rotationDir = new Vector3(0, Random.Range(200, 1000), 0);
+            var rotationDir = new Vector3(0, Random.Range(100, 2000), 0);
             var rotationEuler = Quaternion.Euler(rotationDir * Time.fixedDeltaTime);
             Enemy.Body.MoveRotation(Enemy.Body.rotation * rotationEuler);
         }
@@ -48,16 +52,15 @@ namespace Andreas.Scripts.EnemyStates {
             }
 
             //  todo - take speed from some stat collection
-            float speed = 5f;
+            // float speed = 5f;
+            float speed = Enemy.Data.MoveSpeed;
 
             var pos = tf.position;
-            var dir3 = new Vector3(direction.x, 0, direction.y);
+            var dir3 = direction.ToVector3XZ();
             var velocity = dir3 * (speed * Time.deltaTime);
-            pos += velocity;
-            body.MovePosition(pos);
+            body.MovePosition(pos + velocity);
         }
 
-        public EnemyStateHunt(Enemy enemy) : base(enemy) {
-        }
+
     }
 }

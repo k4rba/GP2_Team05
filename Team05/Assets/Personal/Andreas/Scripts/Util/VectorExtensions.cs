@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace Util
@@ -27,5 +28,14 @@ namespace Util
         {
             return new Vector3(vec.x, 0, vec.y);
         }
+
+        public static float FastDistance(this Vector3 v1, Vector3 v2)
+        {
+            var xD = v1.x - v2.x;
+            var yD = v1.y - v2.y;
+            var zD = v1.z - v2.z;
+            return MathF.Sqrt(xD * xD + yD * yD + zD * zD);
+        }
     }
+    
 }

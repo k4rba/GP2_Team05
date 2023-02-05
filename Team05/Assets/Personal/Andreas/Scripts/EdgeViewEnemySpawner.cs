@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using FlowFieldSystem;
 using Personal.Andreas.Scripts;
@@ -16,14 +15,11 @@ namespace Andreas.Scripts {
         [SerializeField] private Timer _spawnRate = 5f;
 
         private List<FlowFieldManager> _fields = new();
-
-
-        public List<FlowFieldManager> GetFields => _fields;
+        public List<FlowFieldManager> Fields => _fields;
 
         public void AssignFlowField(FlowFieldManager ff) {
             _fields.Add(ff);
         }
-
 
         private void Awake() {
             Get = this;

@@ -45,7 +45,7 @@ namespace Andreas.Scripts {
 
         private void Update() {
             if (_agentsEnabled) {
-                var ffs = EdgeViewEnemySpawner.Get.GetFields;
+                var ffs = EdgeViewEnemySpawner.Get.Fields;
                 
                 for (int j = 0; j < ffs.Count; j++) {
                     var field = ffs[j];
@@ -57,7 +57,7 @@ namespace Andreas.Scripts {
                             continue;
                         
                         var direction = field.GetDirection(agent.Position);
-                        agent.Move(direction);
+                        agent.FlowDirectionUpdated(direction);
                     }
                 }
             }

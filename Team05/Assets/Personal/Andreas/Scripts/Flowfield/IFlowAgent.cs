@@ -1,5 +1,4 @@
-﻿using Andreas.Scripts;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace FlowFieldSystem
 {
@@ -7,6 +6,6 @@ namespace FlowFieldSystem
     {
         Vector3 Position { get; set; }
         FlowFieldManager Manager { get; set; }
-        void Move(Vector2 direction);
+        void FlowDirectionUpdated(Vector2 direction);
     }
 }

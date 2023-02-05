@@ -1,11 +1,13 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Andreas.Scripts;
 using UnityEngine;
 using UnityEngine.Rendering.Universal;
 using Util;
+using Debug = UnityEngine.Debug;
 
 
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
     #endif
 
@@ -35,8 +37,6 @@ namespace FlowFieldSystem
         private void Start()
         {
             _prevReload = _reload;
-            // SetupTempFlowField();
-
         }
 
         public VectorFlowField2D GetField() => _field;
@@ -55,8 +55,10 @@ namespace FlowFieldSystem
             AgentManager = agentManager;
             
             Debug.Log("Generating FlowField");
+            var sw = Stopwatch.StartNew();
             GenerateFlowField();
-            Debug.Log("FlowField generated");
+            sw.Stop();
+            Debug.Log($"FlowField generated - {sw.Elapsed.TotalMilliseconds}ms");
             
             EdgeViewEnemySpawner.Get.AssignFlowField(this);
         }
@@ -121,7 +123,6 @@ namespace FlowFieldSystem
                 ch.IndexOffset = new Vector2Int(cx, cy);
 
                 _field.AddChunk(ch);
-                // Debug.Log($"added chunk: {ch.IndexOffset}");
             }
         }
 

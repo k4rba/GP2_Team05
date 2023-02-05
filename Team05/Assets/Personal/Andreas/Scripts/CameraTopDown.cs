@@ -37,6 +37,9 @@ namespace Personal.Andreas.Scripts
         {
             Vector3 retSum = Vector3.zero;
 
+            if(_transforms.Count <= 0)
+                return retSum;
+
             for(int i = 0; i < _transforms.Count; i++)
             {
                 retSum += _transforms[i].position;
@@ -60,6 +63,10 @@ namespace Personal.Andreas.Scripts
             //  todo - smoothen
 
             var center = GetCenter();
+
+            if(center == Vector3.zero)
+                return;
+            
             center.z -= 8f;
             _camera.transform.position = center;
             _camera.transform.LookAt(center);
