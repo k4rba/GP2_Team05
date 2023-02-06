@@ -16,8 +16,5 @@ namespace Andreas.Scripts.EnemyStates
             base.Update(dt);
             
         }
-
-        public EnemyStateIdle(Enemy enemy) : base(enemy) {
-        }
     }
 }

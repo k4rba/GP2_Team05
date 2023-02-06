@@ -8,8 +8,7 @@ namespace Andreas.Scripts.EnemyStates
     {
         protected Enemy Enemy;
 
-        public EnemyState(Enemy enemy) {
-            Enemy = enemy;
+        public EnemyState() {
         }
 
         public void InitEnemyState(Enemy enemy)
