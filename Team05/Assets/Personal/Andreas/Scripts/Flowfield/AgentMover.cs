@@ -13,8 +13,6 @@ namespace Andreas.Scripts.Flowfield
             Agent = GetComponent<FlowFollowerAgent>();
         }
 
-        public virtual void Move()
-        {
-        }
+        public abstract void Move();
     }
 }

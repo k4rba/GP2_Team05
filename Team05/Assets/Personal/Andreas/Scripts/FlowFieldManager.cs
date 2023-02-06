@@ -44,8 +44,7 @@ namespace FlowFieldSystem
 
         public Transform GetUnit() => _unit;
 
-        public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit,
-            FlowAgentUpdater agentUpdater)
+        public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit)
         {
             _ground = grounds;
             _obstacles = obstacles;

@@ -63,12 +63,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         //  DONT LOOK
         var grounds = GameManager.Instance.WorldManager.Grounds;
         var obstacles = GameManager.Instance.WorldManager.Obstacles;
-
-        var enemyManager = GameManager.Instance.EnemyManager;
         var playerFlowFieldManager = GetComponentInChildren<FlowFieldManager>();
-        
-        var agentManager = enemyManager.gameObject.GetComponent<FlowAgentUpdater>();
-        playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform, agentManager);
+        playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform);
     }
     
     public void AssignPlayerToRole(Player.CharacterType type) {
