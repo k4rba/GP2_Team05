@@ -66,7 +66,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         var enemyManager = enemyManagerObj.GetComponent<EnemyManager>();
         var ff = GetComponentInChildren<FlowFieldManager>();
 
-        var agentManager = enemyManagerObj.GetComponent<FlowAgentManagerNew>();
+        var agentManager = enemyManagerObj.GetComponent<FlowAgentUpdater>();
         ff.SetupFromPlayer(grounds, obstacles, transform, agentManager);
 
         switch (_playerNumber) {
@@ -103,7 +103,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
-                break;
         }
     }
 
@@ -118,7 +117,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private void HoldBasic() {
         if (playerAttackScheme != null) playerAttackScheme.BasicAttacksList[0]();
     }
-
 
     public void OnBasicAttack(InputAction.CallbackContext context) {
         if (context.performed) {

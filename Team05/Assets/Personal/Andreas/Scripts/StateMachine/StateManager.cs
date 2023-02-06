@@ -31,7 +31,7 @@ namespace Andreas.Scripts.StateMachine
             }
         }
 
-        public void Update(float dt)
+        public virtual void Update(float dt)
         {
             
             //  add default state
@@ -53,7 +53,7 @@ namespace Andreas.Scripts.StateMachine
             }
         }
         
-        public void FixedUpdate(float fixedDt)
+        public virtual  void FixedUpdate(float fixedDt)
         {
             //  add default state
             if(Current == null)

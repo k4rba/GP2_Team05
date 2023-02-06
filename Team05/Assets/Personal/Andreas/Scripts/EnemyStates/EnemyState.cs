@@ -12,6 +12,11 @@ namespace Andreas.Scripts.EnemyStates
             Enemy = enemy;
         }
 
+        public void InitEnemyState(Enemy enemy)
+        {
+            Enemy = enemy;
+        }
+
         protected void SetCommand(EnemyCommand com)
         {
             // Enemy.StateCommandManager.SetState(com);

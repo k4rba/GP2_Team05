@@ -1,14 +1,14 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
 using Andreas.Scripts;
 using UnityEngine;
-using UnityEngine.Rendering.Universal;
+using UnityEngine.Serialization;
 using Util;
+using Debug = UnityEngine.Debug;
 
-
-    #if UNITY_EDITOR
+#if UNITY_EDITOR
 using UnityEditor;
-    #endif
-
+#endif
 
 namespace FlowFieldSystem
 {
@@ -16,18 +16,18 @@ namespace FlowFieldSystem
     {
         [SerializeField] private GameObject _ground;
         [SerializeField] private GameObject _obstacles;
-        [Space(10)] 
+        [Space(10)]
         [SerializeField] private VectorFlowField2D _field;
         [SerializeField] private Transform _unit;
-        [Space(10)] 
+        [Space(10)]
         [SerializeField] private float _height = 0f;
         [SerializeField] private bool _drawIndexes = false;
         [SerializeField] private bool _drawTiles = false;
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
-        public FlowAgentManagerNew AgentManager;
-        
+        [FormerlySerializedAs("AgentManager")] public FlowAgentUpdater agentUpdater;
+
         private bool _prevReload;
 
         private Vector2Int prevPos;
@@ -35,8 +35,6 @@ namespace FlowFieldSystem
         private void Start()
         {
             _prevReload = _reload;
-            // SetupTempFlowField();
-
         }
 
         public VectorFlowField2D GetField() => _field;
@@ -48,17 +46,28 @@ namespace FlowFieldSystem
 
         public Transform GetUnit() => _unit;
 
-        public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit, FlowAgentManagerNew agentManager) {
+        public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit,
+            FlowAgentUpdater agentUpdater)
+        {
             _ground = grounds;
             _obstacles = obstacles;
             _unit = unit;
-            AgentManager = agentManager;
-            
+            this.agentUpdater = agentUpdater;
+
             Debug.Log("Generating FlowField");
+#if UNITY_EDITOR
+            var sw = Stopwatch.StartNew();
+#endif
             GenerateFlowField();
-            Debug.Log("FlowField generated");
-            
-            EdgeViewEnemySpawner.Get.AssignFlowField(this);
+#if UNITY_EDITOR
+            sw.Stop();
+            Debug.Log($"FlowField generated - {sw.Elapsed.TotalMilliseconds}ms");
+#else
+            Debug.Log($"FlowField generated");
+#endif
+
+            // var spawner = EnemyManager.Get.Spawner;
+            // spawner.AssignFlowField(this);
         }
 
         public void GenerateFlowField()
@@ -86,9 +95,8 @@ namespace FlowFieldSystem
                 var bounds = col.bounds;
 
                 GetRangesFromBounds(bounds, out int startX, out int endX, out int startY, out int endY);
-                
+
                 _field.SetBlocks(startX, endX, startY, endY, true);
-                
             }
         }
 
@@ -121,7 +129,6 @@ namespace FlowFieldSystem
                 ch.IndexOffset = new Vector2Int(cx, cy);
 
                 _field.AddChunk(ch);
-                // Debug.Log($"added chunk: {ch.IndexOffset}");
             }
         }
 
@@ -139,6 +146,7 @@ namespace FlowFieldSystem
         {
             if(_unit == null)
                 return;
+            
             var pos = _unit.transform.position;
 
             CoordinateHelper.PositionToWorldCoords(pos.x, pos.z, _field.TileSize, out int startX, out int startY);
@@ -166,7 +174,7 @@ namespace FlowFieldSystem
                 GenerateFlowField();
                 return;
             }
-            
+
             if(_prevReload != _reload)
             {
                 _prevReload = _reload;

@@ -15,8 +15,6 @@ namespace Personal.Andreas.Scripts
 
         [SerializeField] private float _heightOffset = 10f;
 
-        private bool _enabled = true;
-
         private void Awake() {
             Get = this;
         }
@@ -36,6 +34,9 @@ namespace Personal.Andreas.Scripts
         public Vector3 GetCenter()
         {
             Vector3 retSum = Vector3.zero;
+
+            if(_transforms.Count <= 0)
+                return retSum;
 
             for(int i = 0; i < _transforms.Count; i++)
             {
@@ -60,6 +61,10 @@ namespace Personal.Andreas.Scripts
             //  todo - smoothen
 
             var center = GetCenter();
+
+            if(center == Vector3.zero)
+                return;
+            
             center.z -= 8f;
             _camera.transform.position = center;
             _camera.transform.LookAt(center);
