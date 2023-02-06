@@ -1,6 +1,5 @@
 ﻿using Andreas.Scripts.StateMachine;
 using Personal.Andreas.Scripts.Actors;
-using UnityEngine;
 
 namespace Andreas.Scripts.EnemyStates
 {

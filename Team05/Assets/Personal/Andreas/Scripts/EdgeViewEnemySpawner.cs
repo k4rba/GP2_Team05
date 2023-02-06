@@ -8,11 +8,11 @@ namespace Andreas.Scripts
 {
     public class EdgeViewEnemySpawner : MonoBehaviour
     {
+        [SerializeField] private EnemyManager _enemyManager;
         [SerializeField] private bool _spawningEnabled = false;
         [SerializeField] private Timer _spawnRate = 5f;
 
         private List<FlowFieldManager> _fields = new();
-        public List<FlowFieldManager> Fields => _fields;
 
         public void AssignFlowField(FlowFieldManager ff)
         {
@@ -72,8 +72,7 @@ namespace Andreas.Scripts
             if(FindSpawnPosition(out Vector3 position))
             {
                 var prefab = PrefabManager.Get.Glob;
-                var enemyManager = EnemyManager.Get;
-                enemyManager.SpawnEnemy(position, prefab);
+                _enemyManager.SpawnEnemy(position, prefab);
             }
         }
     }

@@ -29,7 +29,7 @@ namespace Andreas.Scripts.EnemyStates {
             // float attackRange = 1.1f;
             float attackRange = Enemy.Data.AttackRange;
 
-            var unit = Enemy.FlowManager.GetUnit();
+            var unit = Enemy.FlowField.GetUnit();
 
             var distance = Vector3.Distance(Enemy.transform.position, unit.transform.position);
             return distance < attackRange;

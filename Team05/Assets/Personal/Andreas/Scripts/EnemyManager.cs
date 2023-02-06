@@ -10,29 +10,14 @@ namespace Personal.Andreas.Scripts
 {
     public class EnemyManager : MonoBehaviour
     {
-        public static EnemyManager Get { get; private set; }
+        public event Action<GameObject> OnEnemyAdded;
+        public event Action<GameObject> OnEnemyAddedTwo;
         
         public EdgeViewEnemySpawner Spawner;
 
-        public event Action<GameObject> OnEnemyAdded;
-        public event Action<GameObject> OnEnemyAddedTwo;
-
+        [SerializeField] private GameData _gameData;
         [SerializeField] private GameObject _enemyContainer;
-        private List<GameObject> _enemies;
-
-        private void Awake()
-        {
-            if(Get == null)
-            {
-                Get = this;
-                DontDestroyOnLoad(this);
-            }
-            else
-            {
-                Destroy(this);
-                return;
-            }
-        }
+        private List<Enemy> _enemies;
 
         private void Start()
         {
@@ -47,20 +32,20 @@ namespace Personal.Andreas.Scripts
         public void SpawnEnemy(Vector3 position, GameObject prefab)
         {
             var enemy = Instantiate(prefab, position, Quaternion.identity, _enemyContainer.transform);
-            AddEnemy(enemy);
+            AddEnemy(enemy.GetComponent<Enemy>());
         }
 
-        public void AddEnemy(GameObject enemy)
+        public void AddEnemy(Enemy enemy)
         {
             // _enemies.Add(enemy);
 
             if(Rng.Bool)
             {
-                OnEnemyAdded?.Invoke(enemy);
+                OnEnemyAdded?.Invoke(enemy.gameObject);
             }
             else
             {
-                OnEnemyAddedTwo?.Invoke(enemy);
+                OnEnemyAddedTwo?.Invoke(enemy.gameObject);
             }
         }
 

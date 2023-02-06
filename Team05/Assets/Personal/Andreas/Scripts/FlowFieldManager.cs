@@ -1,8 +1,8 @@
 ﻿using System.Collections.Generic;
 using System.Diagnostics;
 using Andreas.Scripts;
-using Personal.Andreas.Scripts;
 using UnityEngine;
+using UnityEngine.Serialization;
 using Util;
 using Debug = UnityEngine.Debug;
 
@@ -26,7 +26,7 @@ namespace FlowFieldSystem
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
-        public FlowAgentManagerNew AgentManager;
+        [FormerlySerializedAs("AgentManager")] public FlowAgentUpdater agentUpdater;
 
         private bool _prevReload;
 
@@ -47,12 +47,12 @@ namespace FlowFieldSystem
         public Transform GetUnit() => _unit;
 
         public void SetupFromPlayer(GameObject grounds, GameObject obstacles, Transform unit,
-            FlowAgentManagerNew agentManager)
+            FlowAgentUpdater agentUpdater)
         {
             _ground = grounds;
             _obstacles = obstacles;
             _unit = unit;
-            AgentManager = agentManager;
+            this.agentUpdater = agentUpdater;
 
             Debug.Log("Generating FlowField");
 #if UNITY_EDITOR
@@ -66,8 +66,8 @@ namespace FlowFieldSystem
             Debug.Log($"FlowField generated");
 #endif
 
-            var spawner = EnemyManager.Get.Spawner;
-            spawner.AssignFlowField(this);
+            // var spawner = EnemyManager.Get.Spawner;
+            // spawner.AssignFlowField(this);
         }
 
         public void GenerateFlowField()
