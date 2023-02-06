@@ -5,16 +5,16 @@ using UnityEngine.SceneManagement;
 
 namespace Health {
     public class HealthSystem {
-        public float _health;
+        public float Health;
 
         public HealthSystem() {
-            _health = 0.25f;
-            _health = Mathf.Clamp(_health, -0.5f, 0.5f);
+            Health = 0.25f;
+            Health = Mathf.Clamp(Health, -0.5f, 0.5f);
         }
 
         //max health = 0.5f, min = -0.5f
         public void TransferHealth(IDamagable self, IDamagable other) {
-            if (self.Health._health >= -0.40f && other.Health._health < 0.5f) {
+            if (self.Health.Health >= -0.40f && other.Health.Health < 0.5f) {
                 InstantHealing(other, 0.05f);
 
                 InstantDamage(self, 0.05f);
@@ -22,24 +22,24 @@ namespace Health {
                 Debug.Log(self + " Transferred health to " + other);
                 
                 var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
-                Debug.Log($"TRANSFER: hp: {other.Health._health}   shader: {otherHealthMatFloat}");
+                Debug.Log($"TRANSFER: hp: {other.Health.Health}   shader: {otherHealthMatFloat}");
             }
         }
 
         public void InstantHealing(HealthSystem.IDamagable player, float value) {
-            player.Health._health = ClampHP(player.Health._health + value);
+            player.Health.Health = ClampHP(player.Health.Health + value);
             var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
             player.HealthMaterial.SetFloat("_HP", ClampHP(playerHealthMat + value));
         }
 
         public void InstantDamage(HealthSystem.IDamagable player, float value) {
-            if (player.Health._health >= -0.45f) {
-                player.Health._health = ClampHP(player.Health._health - value);
+            if (player.Health.Health >= -0.45f) {
+                player.Health.Health = ClampHP(player.Health.Health - value);
                 var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
                 player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
                 
                 playerHealthMat = player.HealthMaterial.GetFloat("_HP");
-                Debug.Log($"DAMAGE: hp: {player.Health._health}   shader: {playerHealthMat}");
+                Debug.Log($"DAMAGE: hp: {player.Health.Health}   shader: {playerHealthMat}");
             }
             else {
                 Die(player);
@@ -47,7 +47,7 @@ namespace Health {
         }
 
         public void ResetHealth(IDamagable player) {
-            player.Health._health = 0.25f;
+            player.Health.Health = 0.25f;
             player.HealthMaterial.SetFloat("_HP", 0.25f);
         }
 
