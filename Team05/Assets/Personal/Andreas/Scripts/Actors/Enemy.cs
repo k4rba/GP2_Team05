@@ -10,7 +10,7 @@ namespace Personal.Andreas.Scripts.Actors
 {
     public class Enemy : Actor, IFlowAgent
     {
-        public FlowFieldManager Manager { get; set; }
+        public FlowFieldManager FlowManager { get; set; }
         
         [NonSerialized] public Vector2 FlowDirection;
         public Vector3 Position
@@ -36,7 +36,7 @@ namespace Personal.Andreas.Scripts.Actors
         }
 
         public void Die() {
-            Manager.AgentManager.RemoveAgent(this);
+            FlowManager.AgentManager.RemoveAgent(this);
         }
         
         private void Update()
@@ -65,7 +65,7 @@ namespace Personal.Andreas.Scripts.Actors
         private void AttackInvoke() {
                         
             var enPos = transform.position;
-            var unit = Manager.GetUnit();
+            var unit = FlowManager.GetUnit();
             var dir = (unit.transform.position - enPos).normalized;
 
             var boxOffsetRange = 1.5f;

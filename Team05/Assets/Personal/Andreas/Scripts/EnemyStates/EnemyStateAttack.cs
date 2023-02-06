@@ -41,9 +41,8 @@ namespace Andreas.Scripts.EnemyStates
         }
         
         private bool IsCloseForAttack() {
-            // float attackRange = 1.1f;
             float attackRange = Enemy.Data.AttackRange;
-            var unit = Enemy.Manager.GetUnit();
+            var unit = Enemy.FlowManager.GetUnit();
 
             var distance = Enemy.transform.position.FastDistance(unit.transform.position);
             return distance < attackRange;

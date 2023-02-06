@@ -152,7 +152,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             AssignPlayerSpecifics();
             otherPlayer = GameObject.FindWithTag(_playerNumber == 1 ? "Player2" : "Player1");
             CameraTopDown.Get.SetPlayers(transform);
-            EdgeViewEnemySpawner.Get.EnableSpawning(true);
+            EnemyManager.Get.Spawner.EnableSpawning(true);
             _switchedToCharacterMode = false;
         }
     }

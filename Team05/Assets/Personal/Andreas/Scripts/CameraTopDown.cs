@@ -15,8 +15,6 @@ namespace Personal.Andreas.Scripts
 
         [SerializeField] private float _heightOffset = 10f;
 
-        private bool _enabled = true;
-
         private void Awake() {
             Get = this;
         }
