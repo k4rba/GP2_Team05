@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using Util;
 
 namespace Andreas.Scripts
@@ -29,7 +28,7 @@ namespace Andreas.Scripts
             if(distance < 2f)
                 return;
             
-            float speed = 3f;
+            float speed = 5f;
             var direction = (_target.position - pos).normalized;
             pos += direction * (speed * Time.fixedDeltaTime);
             _rigidbody.MovePosition(pos);

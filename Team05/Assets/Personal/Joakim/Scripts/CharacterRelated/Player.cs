@@ -1,5 +1,6 @@
 using System;
 using Andreas.Scripts;
+using Andreas.Scripts.Flowfield;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -68,23 +69,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         
         var agentManager = enemyManager.gameObject.GetComponent<FlowAgentUpdater>();
         playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform, agentManager);
-        
-        switch (_playerNumber) {
-            case 1:
-                enemyManager.OnEnemyAdded += (o) => {
-                    var flowAgent = o.GetComponent<Enemy>();
-                    agentManager.AddAgent(flowAgent, playerFlowFieldManager);
-                    Debug.Log($"added enemy to {transform.name}");
-                };
-                break;
-            default:
-                enemyManager.OnEnemyAddedTwo += (o) => {
-                    var flowAgent = o.GetComponent<Enemy>();
-                    agentManager.AddAgent(flowAgent, playerFlowFieldManager);
-                    Debug.Log($"added enemy to {transform.name}");
-                };
-                break;
-        }
     }
     
     public void AssignPlayerToRole(Player.CharacterType type) {

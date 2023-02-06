@@ -1,4 +1,4 @@
-﻿using Personal.Andreas.Scripts.Actors;
+﻿using Andreas.Scripts.Flowfield;
 using UnityEngine;
 using Util;
 
@@ -39,7 +39,7 @@ namespace Andreas.Scripts.EnemyStates
         
         private bool IsCloseForAttack() {
             float attackRange = Enemy.Data.AttackRange;
-            var unit = Enemy.FlowField.GetUnit();
+            var unit = Enemy.FlowAgent.Target;
 
             var distance = Enemy.transform.position.FastDistance(unit.transform.position);
             return distance < attackRange;

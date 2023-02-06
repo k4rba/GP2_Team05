@@ -26,8 +26,6 @@ namespace FlowFieldSystem
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
-        public FlowAgentUpdater agentUpdater;
-
         private bool _prevReload;
 
         private Vector2Int prevPos;
@@ -52,7 +50,6 @@ namespace FlowFieldSystem
             _ground = grounds;
             _obstacles = obstacles;
             _unit = unit;
-            this.agentUpdater = agentUpdater;
 
             Debug.Log("Generating FlowField");
 #if UNITY_EDITOR
