@@ -59,14 +59,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void Start() {
-
-        //  DONT LOOK
         var grounds = GameManager.Instance.WorldManager.Grounds;
         var obstacles = GameManager.Instance.WorldManager.Obstacles;
         var playerFlowFieldManager = GetComponentInChildren<FlowFieldManager>();
         playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform);
     }
-    
+
     public void AssignPlayerToRole(Player.CharacterType type) {
         playerAttackScheme = GetComponent<PlayerAttackScheme>();
         switch (type) {
@@ -84,7 +82,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 }
 
                 break;
-
         }
     }
 
