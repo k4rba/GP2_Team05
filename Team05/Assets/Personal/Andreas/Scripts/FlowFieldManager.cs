@@ -26,7 +26,7 @@ namespace FlowFieldSystem
         [SerializeField] private bool _drawChunks = true;
         [SerializeField] private bool _reload = true;
 
-        [FormerlySerializedAs("AgentManager")] public FlowAgentUpdater agentUpdater;
+        public FlowAgentUpdater agentUpdater;
 
         private bool _prevReload;
 
@@ -110,7 +110,6 @@ namespace FlowFieldSystem
             CoordinateHelper.PositionToWorldCoords(sx, sy, _field.TileSize, out startX, out startY);
             CoordinateHelper.PositionToWorldCoords(ex, ey, _field.TileSize, out endX, out endY);
         }
-
 
         private void AddChunksInArea(int sx, int ex, int sy, int ey)
         {

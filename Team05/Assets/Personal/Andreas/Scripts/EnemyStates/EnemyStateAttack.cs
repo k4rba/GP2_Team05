@@ -9,9 +9,6 @@ namespace Andreas.Scripts.EnemyStates
         private static GameObject _prefAttackBox;
         private float _waitTime = 1.5f;
         
-        public EnemyStateAttack(Enemy enemy) : base(enemy) {
-        }
-        
         public override void Init() {
             base.Init();
 
@@ -51,7 +48,7 @@ namespace Andreas.Scripts.EnemyStates
         public override void Exit() {
             base.Exit();
             Enemy.CancelAttack();
-            Enemy.StateManager.SetState(new EnemyStateHunt(Enemy));
+            Enemy.StateManager.SetState(new EnemyStateHunt());
         }
 
     }

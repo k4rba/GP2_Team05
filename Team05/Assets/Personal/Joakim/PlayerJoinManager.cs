@@ -1,10 +1,6 @@
 using System;
-using System.Net.Mime;
 using TMPro;
 using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Image = UnityEngine.UIElements.Image;
 
 public class PlayerJoinManager : MonoBehaviour {
 
@@ -24,7 +20,7 @@ public class PlayerJoinManager : MonoBehaviour {
         switch (playerNumber) {
             case 1:
                 if (GameObject.Find("Player2Selector") != null) {
-                GameObject.Find("Player1Selector").GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
+                    GameObject.Find("Player1Selector").GetComponentInChildren<TextMeshProUGUI>().color = Color.green;
                 }
                 break;
             case 2:

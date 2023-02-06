@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using Andreas.Scripts;
-using FlowFieldSystem;
 using Personal.Andreas.Scripts.Actors;
 using UnityEngine;
 using Util;
@@ -15,7 +14,6 @@ namespace Personal.Andreas.Scripts
         
         public EdgeViewEnemySpawner Spawner;
 
-        [SerializeField] private GameData _gameData;
         [SerializeField] private GameObject _enemyContainer;
         private List<Enemy> _enemies;
 
@@ -24,9 +22,9 @@ namespace Personal.Andreas.Scripts
             _enemies = new();
 
             //  add temp flowfield
-            var fieldObj = GameObject.Find("FlowFieldMap");
-            var field = fieldObj.GetComponent<FlowFieldManager>();
-            Spawner.AssignFlowField(field);
+            // var fieldObj = GameObject.Find("FlowFieldMap");
+            // var field = fieldObj.GetComponent<FlowFieldManager>();
+            // Spawner.AssignFlowField(field);
         }
 
         public void SpawnEnemy(Vector3 position, GameObject prefab)

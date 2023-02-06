@@ -4,27 +4,19 @@ using UnityEngine;
 
 namespace Personal.Andreas.Scripts
 {
-    public class CameraTopDown : MonoBehaviour {
-        
-        public static CameraTopDown Get { get; private set; }
+    public class CameraTopDownController : MonoBehaviour {
         
         [SerializeField] private Camera _camera;
-        
         //  points of interest
-        [SerializeField] private List<Transform> _transforms = new List<Transform>();
-
+        [SerializeField] private List<Transform> _transforms = new();
         [SerializeField] private float _heightOffset = 10f;
-
-        private void Awake() {
-            Get = this;
-        }
 
         private void Start() {
             if (_transforms == null)
                 return;
         }
 
-        public void SetPlayers(Transform player) {
+        public void SetTransforms(Transform player) {
             _transforms.Add(player);
         }
 

@@ -33,7 +33,7 @@ namespace Personal.Andreas.Scripts.Actors
         private void Start()
         {
             AudioManager.PlaySfx(Data.OnDeath.name);
-            StateManager.SetState(new EnemyStateHunt(this));
+            StateManager.SetState(new EnemyStateHunt());
         }
 
         public void Die() {

@@ -58,29 +58,29 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void Start() {
+
         //  DONT LOOK
-        var grounds = GameObject.Find("Ground");
-        var obstacles = GameObject.Find("Obstacles");
-        var enemyManagerObj = GameObject.Find("EnemyManager");
+        var grounds = GameManager.Instance.WorldManager.Grounds;
+        var obstacles = GameManager.Instance.WorldManager.Obstacles;
 
-        var enemyManager = enemyManagerObj.GetComponent<EnemyManager>();
-        var ff = GetComponentInChildren<FlowFieldManager>();
-
-        var agentManager = enemyManagerObj.GetComponent<FlowAgentUpdater>();
-        ff.SetupFromPlayer(grounds, obstacles, transform, agentManager);
-
+        var enemyManager = GameManager.Instance.EnemyManager;
+        var playerFlowFieldManager = GetComponentInChildren<FlowFieldManager>();
+        
+        var agentManager = enemyManager.gameObject.GetComponent<FlowAgentUpdater>();
+        playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform, agentManager);
+        
         switch (_playerNumber) {
             case 1:
                 enemyManager.OnEnemyAdded += (o) => {
                     var flowAgent = o.GetComponent<Enemy>();
-                    agentManager.AddAgent(flowAgent, ff);
+                    agentManager.AddAgent(flowAgent, playerFlowFieldManager);
                     Debug.Log($"added enemy to {transform.name}");
                 };
                 break;
             default:
                 enemyManager.OnEnemyAddedTwo += (o) => {
                     var flowAgent = o.GetComponent<Enemy>();
-                    agentManager.AddAgent(flowAgent, ff);
+                    agentManager.AddAgent(flowAgent, playerFlowFieldManager);
                     Debug.Log($"added enemy to {transform.name}");
                 };
                 break;
@@ -102,6 +102,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
+
+                break;
 
         }
     }

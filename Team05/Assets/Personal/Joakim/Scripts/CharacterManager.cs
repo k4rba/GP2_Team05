@@ -1,7 +1,7 @@
+using System;
 using System.Collections.Generic;
 using Andreas.Scripts;
-using Personal.Andreas.Scripts;
-using UnityEditor;
+using FlowFieldSystem;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -11,13 +11,13 @@ public class CharacterManager : MonoBehaviour {
     public GameObject mainGameUI;
     public List<Player> Players = new List<Player>();
 
-    public static CharacterManager Instance = null;
+    // public static CharacterManager Instance = null;
 
     private void Awake() {
-        if (Instance == null)
-            Instance = this;
-        else if (Instance != this)
-            Destroy(gameObject);
+        // if (Instance == null)
+            // Instance = this;
+        // else if (Instance != this)
+            // Destroy(gameObject);
     }
 
     public void CheckIfAllAreLockedIn() {
@@ -35,9 +35,12 @@ public class CharacterManager : MonoBehaviour {
                 else if (player._playerNumber == 2) {
                     player.otherPlayer = GameObject.FindWithTag("Player1");
                 }
-                CameraTopDown.Get.SetPlayers(player.transform);
-                EdgeViewEnemySpawner.Get.EnableSpawning(true);
+                GameManager.Instance.CameraController.SetTransforms(player.transform);
+                var spawner =GameManager.Instance.EnemyManager.Spawner; 
+                spawner.EnableSpawning(true);
+                spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
         }
     }
+
 }

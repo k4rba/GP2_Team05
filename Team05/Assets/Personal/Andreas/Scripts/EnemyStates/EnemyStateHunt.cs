@@ -1,12 +1,15 @@
-﻿using Personal.Andreas.Scripts.Actors;
-using UnityEngine;
+﻿using UnityEngine;
 using Util;
 
 namespace Andreas.Scripts.EnemyStates {
-    public class EnemyStateHunt : EnemyState {
+    public class EnemyStateHunt : EnemyState
+    {
+        private Transform _target;
         
-        public EnemyStateHunt(Enemy enemy) : base(enemy) {
-        }
+        // public EnemyStateHunt(Transform target) : base()
+        // {
+            // _target = target;
+        // }
         
         public override void Update(float dt) {
             base.Update(dt);
@@ -21,7 +24,7 @@ namespace Andreas.Scripts.EnemyStates {
         }
 
         private void EnterAttack() {
-            Enemy.StateManager.SetState(new EnemyStateAttack(Enemy));
+            Enemy.StateManager.SetState(new EnemyStateAttack());
         }
 
         private bool IsCloseForAttack() {
