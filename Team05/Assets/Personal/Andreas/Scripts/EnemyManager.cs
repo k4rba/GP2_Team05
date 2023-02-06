@@ -20,11 +20,6 @@ namespace Personal.Andreas.Scripts
         private void Start()
         {
             _enemies = new();
-
-            //  add temp flowfield
-            // var fieldObj = GameObject.Find("FlowFieldMap");
-            // var field = fieldObj.GetComponent<FlowFieldManager>();
-            // Spawner.AssignFlowField(field);
         }
 
         public void SpawnEnemy(Vector3 position, GameObject prefab)

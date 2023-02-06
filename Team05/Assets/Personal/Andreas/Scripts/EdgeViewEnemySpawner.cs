@@ -55,7 +55,13 @@ namespace Andreas.Scripts
             {
                 var rndChunk = chunks.RandomItem();
 
-                int rndTileIndex = Rng.Next(field.ChunkLength);
+                int rndTileIndex = Rng.Next(field.ChunkLength - 1);
+
+                if(rndTileIndex >= rndChunk.Blocks.Length)
+                {
+                    Debug.Log("FindSpawnPosition - rndTileIndex out of bounds");
+                    continue;
+                }
 
                 var rndTileBlock = rndChunk.Blocks[rndTileIndex];
                 if(rndTileBlock)
