@@ -53,13 +53,12 @@ namespace Personal.Andreas.Scripts
             return retSum;
         }
 
-        private void Update()
+        private void FixedUpdate()
         {
             if(_transforms == null)
                 return;
-
+            
             _destination = GetCenter();
-
             MoveCamera();
         }
 
