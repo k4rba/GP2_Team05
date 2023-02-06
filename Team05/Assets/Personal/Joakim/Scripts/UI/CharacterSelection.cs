@@ -86,6 +86,7 @@ public class CharacterSelection : MonoBehaviour
                     GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                     GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
+                    GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                 }
                 else
                 {
@@ -101,6 +102,7 @@ public class CharacterSelection : MonoBehaviour
                     GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                     GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
+                    GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                 }
                 else
                 {
@@ -110,7 +112,7 @@ public class CharacterSelection : MonoBehaviour
                 break;
         }
 
-        GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
+
     }
 
     private void Update()

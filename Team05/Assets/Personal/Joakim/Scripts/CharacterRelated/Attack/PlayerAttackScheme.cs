@@ -5,10 +5,9 @@ using UnityEngine;
 
 public class PlayerAttackScheme : MonoBehaviour {
     public delegate void BasicAttacks();
-
     public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
-    
     private GameObject _basicAttack;
+    public List<GameObject> ActiveProjectiles = new List<GameObject>();
 
     public enum Character {
         Ranged,
@@ -19,9 +18,12 @@ public class PlayerAttackScheme : MonoBehaviour {
 
     public void BasicRangedAttack() {
         var playerTransform = transform;
-        var basicAttack =
-            Instantiate(_basicAttack,
-                playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+        if (ActiveProjectiles.Count == 0) { //todo: might change depending on powerUps how many projectiles are out
+            var basicAttack =
+                Instantiate(_basicAttack,
+                    playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+            ActiveProjectiles.Add(basicAttack);
+        }
     }
 
     public void BasicMeleeAttack() {
