@@ -1,22 +1,30 @@
 ﻿using System;
 using System.Collections.Generic;
 using UnityEngine;
+using Util;
 
 namespace Personal.Andreas.Scripts
 {
-    public class CameraTopDownController : MonoBehaviour {
-        
+    public class CameraTopDownController : MonoBehaviour
+    {
         [SerializeField] private Camera _camera;
+
         //  points of interest
         [SerializeField] private List<Transform> _transforms = new();
+        [SerializeField] private float _speed = 1f;
         [SerializeField] private float _heightOffset = 10f;
+        [SerializeField] private float _distance = 8f;
 
-        private void Start() {
-            if (_transforms == null)
+        private Vector3 _destination;
+
+        private void Start()
+        {
+            if(_transforms == null)
                 return;
         }
 
-        public void SetTransforms(Transform player) {
+        public void SetTransforms(Transform player)
+        {
             _transforms.Add(player);
         }
 
@@ -38,29 +46,38 @@ namespace Personal.Andreas.Scripts
             var length = _transforms.Count;
 
             retSum = new Vector3(
-                retSum.x / length, 
-                retSum.y / length + _heightOffset, 
-                retSum.z / length);
+                retSum.x / length,
+                retSum.y / length + _heightOffset,
+                retSum.z / length - _distance);
 
             return retSum;
         }
 
-        private void Update() {
-
-            if (_transforms == null)
+        private void Update()
+        {
+            if(_transforms == null)
                 return;
-            
-            //  todo - smoothen
 
-            var center = GetCenter();
+            _destination = GetCenter();
 
-            if(center == Vector3.zero)
+            MoveCamera();
+        }
+
+        private void MoveCamera()
+        {
+            if(_destination == Vector3.zero)
                 return;
+
+            var camPos = transform.position;
+            var distance = _destination.FastDistance(camPos);
             
-            center.z -= 8f;
-            _camera.transform.position = center;
-            _camera.transform.LookAt(center);
+            var direction = (_destination - camPos).normalized;
+            var position = camPos + direction * (distance * _speed * Time.deltaTime);
+
+            position.y = _destination.y + _heightOffset;
             
+            _camera.transform.position = position;
+            // _camera.transform.LookAt(_destination);
         }
     }
 }

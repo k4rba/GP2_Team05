@@ -651,7 +651,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _camera: {fileID: 330585545}
   _transforms: []
-  _heightOffset: 10
+  _speed: 4
+  _heightOffset: 4.5
+  _distance: 7
 --- !u!1 &363075742
 GameObject:
   m_ObjectHideFlags: 0

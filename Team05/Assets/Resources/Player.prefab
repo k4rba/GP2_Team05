@@ -154,7 +154,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   moveDirection: {x: 0, y: 0}
-  moveSpeed: 15
+  moveSpeed: 6
   playerAttackScheme: {fileID: 0}
   _playerNumber: 0
   otherPlayer: {fileID: 0}
