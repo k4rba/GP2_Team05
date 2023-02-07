@@ -163,6 +163,9 @@ MonoBehaviour:
   <CurrentHealth>k__BackingField: 0
   <Energy>k__BackingField: 0
   <AttackSpeed>k__BackingField: 1
+  <AbilityACooldown>k__BackingField: 0
+  <AbilityXCooldown>k__BackingField: 0
+  <AbilityBCooldown>k__BackingField: 0
   cType: 1
 --- !u!114 &5651366575927957283
 MonoBehaviour:
@@ -176,6 +179,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f0a1186ab1db00648a4bd7dbd501f9fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  ActiveProjectiles: []
   characterType: 0
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
@@ -362,6 +366,54 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: e55ada96-32f5-4345-a98d-3b3322f9cbb9
     m_ActionName: Player/TransferHealth[/XInputControllerWindows/leftTrigger,/XInputControllerWindows1/leftTrigger]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnAbilityB
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 97e0d233-ae6a-4ab4-9c28-c167e01249a6
+    m_ActionName: Player/New action
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnAbilityA
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 1731058e-0440-440f-b95b-283c036e6f2e
+    m_ActionName: Player/SpecialA[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 714828357488824483}
+        m_TargetAssemblyTypeName: Player, Assembly-CSharp
+        m_MethodName: OnAbilityX
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f8082e3b-3fb2-447d-abf2-86442862a60c
+    m_ActionName: Player/SpecialX[/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
