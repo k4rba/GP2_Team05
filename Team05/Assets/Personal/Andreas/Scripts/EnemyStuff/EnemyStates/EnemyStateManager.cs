@@ -18,8 +18,20 @@ namespace Andreas.Scripts.EnemyStates
             {
                 enState.InitEnemyState(Enemy);
             }
-            
+
             base.SetState(state);
+        }
+
+        public override void Update(float dt)
+        {
+            //  TODO - set a default state
+            if(Current == null)
+            {
+                SetState(new EnemyStateIdle());
+            }
+            
+            base.Update(dt);
+            
         }
     }
 }
