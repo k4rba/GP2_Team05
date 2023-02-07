@@ -1,14 +1,20 @@
-﻿using System;
-using System.Collections.Generic;
-using Unity.Mathematics;
+﻿using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Serialization;
 
 namespace Andreas.Scripts
 {
     public class DynamicRope : MonoBehaviour
     {
-        [SerializeField] private Rigidbody start, end;
+        
+        [Header("Start")]
+        [SerializeField] private Transform startTf;
+        [SerializeField] private Rigidbody startBody;
+        [Space(5)]
+        [Header("End")]
+        [SerializeField] private Transform endTf;
+        [SerializeField] private Rigidbody endBody;
+        [Space(5)]
+        
         [SerializeField] private GameObject prefSegment;
         [SerializeField] private int segmentCount;
 
@@ -31,6 +37,19 @@ namespace Andreas.Scripts
             }
         }
 
+        private void FixedUpdate()
+        {
+            if(_segments.Count <= 0)
+                return;
+            
+            var firstSeg = _segments[0].GetComponent<Rigidbody>();
+            firstSeg.MovePosition(startTf.position);
+
+            var lastSeg = _segments[segmentCount - 1].GetComponent<Rigidbody>();
+            lastSeg.MovePosition(endTf.position);
+
+        }
+
         private void Clear()
         {
             for(int i = 0; i < _segments.Count; i++)
@@ -46,7 +65,7 @@ namespace Andreas.Scripts
             Clear();
 
             var pos = transform.position;
-            var parentPos = start.position;
+            var parentPos = startTf.transform.position;
             
             var startPos = parentPos;
             
@@ -63,15 +82,20 @@ namespace Andreas.Scripts
                 var joint = seg.GetComponent<CharacterJoint>();
                 if(i == 0)
                 {
-                    // Destroy(joint);
-                    // seg.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-                    joint.connectedBody = start;
+                    joint.connectedBody = startBody;
                 }
                 else
                 {
                     var parent = _segments[i - 1];
                     joint.connectedBody = parent.GetComponent<Rigidbody>();
                 }
+
+                if(i == segmentCount - 1)
+                {
+                    // joint.anchor = end.position;
+                }
+
+                seg.transform.position = segPos;
             }
         }
     }

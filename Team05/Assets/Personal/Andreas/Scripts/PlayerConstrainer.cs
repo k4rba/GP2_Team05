@@ -11,11 +11,15 @@ namespace Andreas.Scripts
         private void FixedUpdate()
         {
             var vert = Input.GetAxisRaw("Horizontal");
-            var dir = new Vector3(0, 0, vert);
+            var hori = Input.GetAxisRaw("Vertical");
+            
+            var dir = new Vector3(vert, 0, hori);
             float speed = 4f;
             var pos = _body.position;
-            var newPos = pos + dir * (speed * Time.fixedDeltaTime);
+            var vel = dir * (speed * Time.fixedDeltaTime);
+            var newPos = pos + vel;
             _body.MovePosition(newPos);
+            // _body.AddForce(vel, ForceMode.VelocityChange);
         }
     }
 }
