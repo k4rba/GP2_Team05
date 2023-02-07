@@ -135,7 +135,7 @@ GameObject:
   - component: {fileID: 76985021}
   - component: {fileID: 76985023}
   - component: {fileID: 76985022}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -173,7 +173,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 94
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &76985022
 MonoBehaviour:
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 76985019}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 7fb44363bae64bc993461ca4b669c501, type: 3}
   m_Name: 
@@ -724,7 +724,7 @@ MonoBehaviour:
   end: {fileID: 992428598}
   prefSegment: {fileID: 4993217796242494683, guid: f400375343082ca438623ea865d34e5b,
     type: 3}
-  segmentCount: 10
+  segmentCount: 15
   segmentSize: 0.15
   generate: 1
 --- !u!4 &406636912
@@ -1226,7 +1226,6 @@ GameObject:
   - component: {fileID: 739586879}
   - component: {fileID: 739586882}
   - component: {fileID: 739586881}
-  - component: {fileID: 739586880}
   m_Layer: 0
   m_Name: Capsule
   m_TagString: Untagged
@@ -1249,20 +1248,6 @@ Transform:
   m_Father: {fileID: 76985020}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!136 &739586880
-CapsuleCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 739586878}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  m_Radius: 0.5
-  m_Height: 2
-  m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
 --- !u!23 &739586881
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -1544,7 +1529,7 @@ Rigidbody:
   m_UseGravity: 0
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 14
+  m_Constraints: 126
   m_CollisionDetection: 0
 --- !u!1 &992973264
 GameObject:
