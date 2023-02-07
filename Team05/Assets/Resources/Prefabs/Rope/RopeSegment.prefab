@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 4993217796242494501}
   - component: {fileID: 4993217796242494500}
   - component: {fileID: 284608768065656636}
-  - component: {fileID: 7468717695436526972}
+  - component: {fileID: 505894171322603656}
   m_Layer: 0
   m_Name: RopeSegment
   m_TagString: Untagged
@@ -30,7 +30,7 @@ Transform:
   m_GameObject: {fileID: 4993217796242494683}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.1, z: 0.05}
+  m_LocalScale: {x: 0.1, y: 0.12, z: 0.1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
@@ -96,7 +96,7 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.4
+  m_Radius: 0.5
   m_Height: 1.7
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
@@ -116,7 +116,7 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
---- !u!144 &7468717695436526972
+--- !u!144 &505894171322603656
 CharacterJoint:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -126,33 +126,33 @@ CharacterJoint:
   m_ConnectedBody: {fileID: 0}
   m_ConnectedArticulationBody: {fileID: 0}
   m_Anchor: {x: 0, y: 1, z: 0}
-  m_Axis: {x: 1, y: 0, z: 0}
+  m_Axis: {x: 0, y: 1, z: 0}
   m_AutoConfigureConnectedAnchor: 1
   m_ConnectedAnchor: {x: 0, y: 0, z: 0}
   serializedVersion: 2
-  m_SwingAxis: {x: 0, y: 1, z: 0}
+  m_SwingAxis: {x: 1, y: 0, z: 1}
   m_TwistLimitSpring:
-    spring: 0
-    damper: 0
+    spring: 1
+    damper: 1
   m_LowTwistLimit:
-    limit: -20
+    limit: -45
     bounciness: 0
-    contactDistance: 0
+    contactDistance: 5
   m_HighTwistLimit:
-    limit: 70
+    limit: 45
     bounciness: 0
-    contactDistance: 0
+    contactDistance: 5
   m_SwingLimitSpring:
-    spring: 0
-    damper: 0
+    spring: 1
+    damper: 1
   m_Swing1Limit:
-    limit: 40
+    limit: 140
     bounciness: 0
-    contactDistance: 0
+    contactDistance: 5
   m_Swing2Limit:
-    limit: 40
+    limit: 140
     bounciness: 0
-    contactDistance: 0
+    contactDistance: 5
   m_EnableProjection: 0
   m_ProjectionDistance: 0.1
   m_ProjectionAngle: 180
