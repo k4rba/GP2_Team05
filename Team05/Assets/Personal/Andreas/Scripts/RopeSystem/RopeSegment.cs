@@ -2,13 +2,13 @@
 
 namespace Andreas.Scripts
 {
-    [RequireComponent(typeof(Rigidbody))]
     public class RopeSegment : MonoBehaviour
     {
-    }
-
-    [RequireComponent(typeof(HingeJoint))]
-    public class RopeHinge : MonoBehaviour
-    {
+        private void Awake()
+        {
+            var body = GetComponent<Rigidbody>();
+            body.centerOfMass = Vector3.zero;
+            body.inertiaTensor = Vector3.one;
+        }
     }
 }

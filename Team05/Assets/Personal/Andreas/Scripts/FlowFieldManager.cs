@@ -72,7 +72,7 @@ namespace FlowFieldSystem
 
             if(_ground == null)
             {
-                Debug.LogWarning("'_ground' not assigned");
+                // Debug.LogWarning("'_ground' not assigned");
                 return;
             }
             

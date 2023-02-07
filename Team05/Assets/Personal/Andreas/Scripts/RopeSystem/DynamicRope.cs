@@ -9,16 +9,17 @@ namespace Andreas.Scripts
     public class DynamicRope : MonoBehaviour
     {
         [SerializeField] private Rigidbody start, end;
-        [SerializeField] private int segmentCount;
+        private Collider _collider;
         [SerializeField] private GameObject prefSegment;
+        [SerializeField] private int segmentCount;
+
+        [SerializeField] private float segmentSize = 1f;
+        [SerializeField] private bool generate;
 
         private List<GameObject> _segments;
-
-        [SerializeField] private bool generate;
-        [SerializeField] private float segmentSize = 1f;
-
         private void Awake()
         {
+            _collider = GetComponent<Collider>();
             _segments = new();
         }
 
@@ -39,6 +40,12 @@ namespace Andreas.Scripts
             }
 
             _segments.Clear();
+        }
+
+        private void OnCollisionEnter(Collision collision)
+        {
+            Physics.IgnoreCollision(_collider, collision.collider);
+            Physics.IgnoreLayerCollision(9, 9);
         }
 
         private void GenerateRope()
