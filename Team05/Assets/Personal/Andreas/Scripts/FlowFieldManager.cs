@@ -69,6 +69,13 @@ namespace FlowFieldSystem
         public void GenerateFlowField()
         {
             _field.Clear();
+
+            if(_ground == null)
+            {
+                // Debug.LogWarning("'_ground' not assigned");
+                return;
+            }
+            
             //  ground
             var groundColliders = _ground.GetComponentsInChildren<Collider>();
 
@@ -84,6 +91,7 @@ namespace FlowFieldSystem
                 AddChunksInArea(sx, ex, sy, ey);
             }
 
+            //  obstacles
             var obsColliders = _obstacles.GetComponentsInChildren<Collider>();
 
             foreach(var col in obsColliders)
