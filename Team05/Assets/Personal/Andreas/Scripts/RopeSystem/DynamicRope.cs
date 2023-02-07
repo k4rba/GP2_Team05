@@ -60,6 +60,7 @@ namespace Andreas.Scripts
             for(int i = 0; i < segmentCount; i++)
             {
                 var segPos = new Vector3(startPos.x, startPos.y - (i * segmentSize), startPos.z);
+                
                 var seg = Instantiate(prefSegment, segPos, Quaternion.identity, transform);
                 seg.transform.eulerAngles = new Vector3(0, 0, 0);
                 _segments.Add(seg);
