@@ -1,4 +1,5 @@
 using System;
+using System.Collections;
 using Andreas.Scripts;
 using Andreas.Scripts.Flowfield;
 using JetBrains.Annotations;
@@ -29,6 +30,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     [field: SerializeField] public int CurrentHealth { get; set; }
     [field: SerializeField] public float Energy { get; set; }
     [field: SerializeField] public float AttackSpeed { get; set; }
+
+    [field: SerializeField] public float AbilityACooldown { get; set; }
+    [field: SerializeField] public float AbilityXCooldown { get; set; }
+    [field: SerializeField] public float AbilityBCooldown { get; set; }
+    private bool _bOnCd, _aOnCd, _xOnCd;
 
     public enum CharacterType {
         Ranged,
@@ -70,6 +76,9 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         switch (type) {
             case CharacterType.Ranged:
                 name = "RangedPlayer";
+                AbilityBCooldown = 8;
+                AbilityXCooldown = 15;
+                AbilityACooldown = 10;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
@@ -104,6 +113,53 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         else if (context.canceled) {
             CancelInvoke(nameof(HoldBasic));
         }
+    }
+
+    public void OnAbilityB(InputAction.CallbackContext context) {
+        if (context.performed && !_bOnCd) {
+            if (playerAttackScheme != null) {
+                playerAttackScheme.BasicAttacksList[1]();
+                _bOnCd = !_bOnCd;
+                StartCoroutine(StartAbilityBCooldown());
+            }
+        }
+    }
+
+    IEnumerator StartAbilityBCooldown() {
+        yield return new WaitForSeconds(AbilityBCooldown);
+        _bOnCd = !_bOnCd;
+    }
+
+    public void OnAbilityX(InputAction.CallbackContext context) {
+        if (context.performed && !_xOnCd) {
+            if (playerAttackScheme != null) {
+                playerAttackScheme.BasicAttacksList[2]();
+                _xOnCd = !_xOnCd;
+                StartCoroutine(StartAbilityXCooldown());
+            }
+
+        }
+    }
+
+    IEnumerator StartAbilityXCooldown() {
+
+        yield return new WaitForSeconds(AbilityXCooldown);
+        _xOnCd = !_xOnCd;
+    }
+
+    public void OnAbilityA(InputAction.CallbackContext context) {
+        if (context.performed && !_aOnCd) {
+            if (playerAttackScheme != null) {
+                playerAttackScheme.BasicAttacksList[3]();
+                _aOnCd = !_aOnCd;
+                StartCoroutine(StartAbilityACooldown());
+            }
+        }
+    }
+
+    IEnumerator StartAbilityACooldown() {
+        yield return new WaitForSeconds(AbilityACooldown);
+        _aOnCd = !_aOnCd;
     }
 
     public void OnMove(InputAction.CallbackContext context) {
