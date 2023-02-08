@@ -32,7 +32,6 @@ namespace Andreas.Scripts.EnemyStates
 
         private bool IsCloseForAttack()
         {
-            // float attackRange = 1.1f;
             float attackRange = Enemy.Data.AttackRange;
             var target = Enemy.FlowAgent.Target;
 
