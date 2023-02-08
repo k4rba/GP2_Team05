@@ -42,11 +42,12 @@ namespace Andreas.Scripts
             if(_segments.Count <= 0)
                 return;
             
-            var firstSeg = _segments[0].GetComponent<Rigidbody>();
-            firstSeg.MovePosition(startTf.position);
+            var firstSeg = _segments[0];
+            // firstSeg.MovePosition(startTf.position);
 
-            var lastSeg = _segments[segmentCount - 1].GetComponent<Rigidbody>();
-            lastSeg.MovePosition(endTf.position);
+            var lastSeg = _segments[segmentCount - 1];
+            // lastSeg.GetComponent<Rigidbody>().MovePosition(endTf.position);
+            // lastSeg.GetComponent<CharacterJoint>().connectedAnchor = Vector3.zero;
 
         }
 
@@ -92,7 +93,7 @@ namespace Andreas.Scripts
 
                 if(i == segmentCount - 1)
                 {
-                    // joint.anchor = end.position;
+                    // joint.connectedAnchor = Vector3.zero;
                 }
 
                 seg.transform.position = segPos;
