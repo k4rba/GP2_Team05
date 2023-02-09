@@ -620,7 +620,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
   m_LocalRotation: {x: 0.46132585, y: -0, z: -0, w: 0.8872308}
-  m_LocalPosition: {x: 2.5, y: 20.8, z: -22.3}
+  m_LocalPosition: {x: 2.5, y: 4.7, z: -11}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -667,7 +667,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 330585543}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: c31ae08cc2df4fa8a4bd7d30e3c675ba, type: 3}
   m_Name: 
@@ -675,7 +675,7 @@ MonoBehaviour:
   _camera: {fileID: 330585545}
   _transforms: []
   _speed: 1
-  _heightOffset: 10
+  _heightOffset: 3.63
   _distance: 8
 --- !u!1 &363075742
 GameObject:
