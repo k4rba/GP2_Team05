@@ -127,7 +127,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     IEnumerator StunBallBounce() {
         for (int i = 0; i < stunBallNearbyEnemies.Count; i++) {
             numberOfBounces++;
-            Instantiate(_stunBallHitFX, stunBallNearbyEnemies[i].position, Quaternion.identity);
+            Instantiate(_stunBallHitFX, new Vector3(stunBallNearbyEnemies[i].position.x, stunBallNearbyEnemies[i].position.y + 2.5f, stunBallNearbyEnemies[i].position.z), Quaternion.identity);
             stunBallNearbyEnemies[i].gameObject.GetComponent<Enemy>().StateManager.SetState(new EnemyStateStunned(1));
             Debug.Log("Swag: " + i);
             if (i + 1 >= stunBallNearbyEnemies.Count || numberOfBounces == 6) {
