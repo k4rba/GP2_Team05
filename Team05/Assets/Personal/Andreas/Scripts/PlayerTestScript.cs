@@ -12,8 +12,13 @@ namespace Andreas.Scripts
 
         [SerializeField] private bool _playerOne;
 
+        [SerializeField] private float _speed= 15f;
+
         private void FixedUpdate()
         {
+
+            // _body.velocity *= 0.1f;
+            
             if(_enabledInput)
             {
                 if(_playerOne)
@@ -25,9 +30,8 @@ namespace Andreas.Scripts
 
         void Move(Vector3 dir)
         {
-            float speed = 5f;
             var pos = _body.position;
-            var vel = dir * (speed * Time.fixedDeltaTime);
+            var vel = dir * (_speed * Time.fixedDeltaTime);
             var newPos = pos + vel;
 
             // _body.MovePosition(newPos);
@@ -44,7 +48,10 @@ namespace Andreas.Scripts
         {
             if(Input.GetKey(KeyCode.LeftArrow) || Input.GetKey(KeyCode.RightArrow) ||
                Input.GetKey(KeyCode.UpArrow) || Input.GetKey(KeyCode.DownArrow))
+            {
+                Debug.Log("returning");   
                 return;
+            }
             
             var dir = new Vector3(Input.GetAxisRaw("Horizontal"), 0, Input.GetAxisRaw("Vertical")).normalized;
             Move(dir);
