@@ -10,24 +10,24 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf6b92054b9b45e995abcf0703baea63, type: 3}
-  m_Name: GlogData
+  m_Name: BlobbyData
   m_EditorClassIdentifier: 
-  Name: Glog
-  Health: 10
-  MoveSpeed: 3.5
+  Name: Blobby
+  Health: 1
+  MoveSpeed: 8
   DamageMultiplier: 1
   AttackLibrary:
     Attacks:
-    - Type: 3
+    - Type: 2
       Damage: 1
       Range: 8
-      Cooldown: 5
-      CastTime: 3
-    - Type: 1
-      Damage: 1
-      Range: 1.2
       Cooldown: 0
-      CastTime: 1
+      CastTime: 0.5
+    - Type: 4
+      Damage: 1
+      Range: 8
+      Cooldown: 0
+      CastTime: 0.5
   SizeScale: 1
   Tier: 1
   OnDeath: {fileID: 8300000, guid: 45d4a853ec1d0f344bf70593caef371c, type: 3}

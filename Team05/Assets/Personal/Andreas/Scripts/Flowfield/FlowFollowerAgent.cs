@@ -33,7 +33,7 @@ namespace Andreas.Scripts
         {
             _mover = mover;
         }
-        
+
         private void Update()
         {
             if(!IsEnabled)
@@ -49,6 +49,9 @@ namespace Andreas.Scripts
 
         private void FixedUpdate()
         {
+            if(!IsEnabled)
+                return;
+
             Move();
         }
 
@@ -56,7 +59,7 @@ namespace Andreas.Scripts
         {
             if(_target == null)
                 return;
-            
+
             var position = Body.position;
             FlowDirection = _target.GetFieldManagerManager.GetDirection(position);
         }

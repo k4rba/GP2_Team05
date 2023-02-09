@@ -9,13 +9,15 @@ namespace Personal.Andreas.Scripts
 {
     public class EnemyManager : MonoBehaviour
     {
+        public List<Enemy> Enemies => _enemies;
+        
         public event Action<GameObject> OnEnemyAdded;
         public event Action<GameObject> OnEnemyAddedTwo;
         
         public EdgeViewEnemySpawner Spawner;
 
-        [SerializeField] private GameObject _enemyContainer;
         private List<Enemy> _enemies;
+        [SerializeField] private GameObject _enemyContainer;
 
         private void Start()
         {
@@ -30,7 +32,7 @@ namespace Personal.Andreas.Scripts
 
         public void AddEnemy(Enemy enemy)
         {
-            // _enemies.Add(enemy);
+            _enemies.Add(enemy);
 
             if(Rng.Bool)
             {
@@ -42,9 +44,9 @@ namespace Personal.Andreas.Scripts
             }
         }
 
-        public void RemoveEnemy(GameObject enemy)
+        public void RemoveEnemy(Enemy enemy)
         {
-            // _enemies.Remove(enemy);
+            _enemies.Remove(enemy);
         }
     }
 }

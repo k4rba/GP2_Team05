@@ -24,6 +24,8 @@ namespace Personal.Andreas.Scripts.Actors
         public EnemyData Data;
         public EnemyStateManager StateManager;
 
+        public string State;
+
         private void Awake()
         {
             StateManager = new(this);
@@ -45,6 +47,7 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Update()
         {
+            Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
         }
 
@@ -54,7 +57,7 @@ namespace Personal.Andreas.Scripts.Actors
         }
 
         private GameObject _hitBox;
-
+        
         public void DoAttack(GameObject hitBox)
         {
             _hitBox = hitBox;
