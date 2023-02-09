@@ -13,10 +13,11 @@ namespace Andreas.Scripts
         public PlayerJoinManager PlayerJoinManager;
         public CameraTopDownController CameraController;
         public WorldManager WorldManager;
+        public RopeManager RopeManager;
         
         private void Awake()
         {
-            InputSystem.DisableDevice(Keyboard.current);
+            // InputSystem.DisableDevice(Keyboard.current);
             if(Instance == null)
             {
                 Instance = this;
