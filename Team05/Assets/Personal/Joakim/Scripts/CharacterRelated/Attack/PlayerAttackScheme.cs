@@ -6,6 +6,7 @@ public class PlayerAttackScheme : MonoBehaviour {
 
     public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
     private GameObject _basicAttack, _specialBAbility, _specialXAbility, _specialAAbility;
+    private GameObject _rangedBAbilityFX;
     private GameObject _specialXAbility2;
     public List<GameObject> ActiveProjectiles = new List<GameObject>();
     private bool StunChargedProjectile;
@@ -44,6 +45,7 @@ public class PlayerAttackScheme : MonoBehaviour {
             var currentProjectilePosition = ActiveProjectiles[0].transform.position;
             var tetherBlast =
                 Instantiate(_specialBAbility, currentProjectilePosition, Quaternion.identity);
+                Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
         }
     }
 
@@ -92,6 +94,7 @@ public class PlayerAttackScheme : MonoBehaviour {
                 _specialBAbility = Resources.Load<GameObject>("RangedSpecialB");
                 _specialXAbility = Resources.Load<GameObject>("RangedSpecialX");
                 _specialAAbility = Resources.Load<GameObject>("RangedSpecialA");
+                _rangedBAbilityFX = Resources.Load<GameObject>("BallExplodeFX");
                 BasicAttacksList.Add(BasicRangedAttack);
                 BasicAttacksList.Add(RangedAbilityB);
                 BasicAttacksList.Add(RangedAbilityX);
