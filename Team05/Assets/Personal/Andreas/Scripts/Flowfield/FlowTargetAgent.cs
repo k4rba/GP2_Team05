@@ -1,6 +1,8 @@
-﻿using FlowFieldSystem;
+﻿using System.Diagnostics;
+using FlowFieldSystem;
 using UnityEngine;
 using Util;
+using Debug = UnityEngine.Debug;
 
 namespace Andreas.Scripts.Flowfield
 {
@@ -24,8 +26,12 @@ namespace Andreas.Scripts.Flowfield
                 if(point != prevPos)
                 {
                     prevPos = point;
+                    var sw = Stopwatch.StartNew();
                     field.UpdateField(new Vector2(position.x, position.z));
+                    sw.Stop();
+                    // Debug.Log($"field update: {sw.Elapsed.TotalMilliseconds}ms");
                 }
+                
             }
         }
     }

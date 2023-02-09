@@ -12,6 +12,8 @@ namespace Andreas.Scripts
         [SerializeField] private bool _spawningEnabled = false;
         [SerializeField] private Timer _spawnRate = 5f;
 
+        private int maxEnemyCount = 999;
+
         private List<FlowFieldManager> _fields = new();
 
         public void AssignFlowField(FlowFieldManager ff)
@@ -73,11 +75,22 @@ namespace Andreas.Scripts
             return true;
         }
 
+        private static string[] enemyPrefabNames =
+        {
+            "Glog", "Blobby"
+        };
+        
         private void SpawnEnemy()
         {
+            if(_enemyManager.Enemies.Count >= maxEnemyCount)
+            {
+                return;
+            }
+            
             if(FindSpawnPosition(out Vector3 position))
             {
-                var prefab = PrefabManager.Get.Glob;
+                var randomEnemyPrefab = enemyPrefabNames.RandomItem();
+                var prefab = FastResources.Load<GameObject>($"Prefabs/Enemies/{randomEnemyPrefab}");
                 _enemyManager.SpawnEnemy(position, prefab);
             }
         }

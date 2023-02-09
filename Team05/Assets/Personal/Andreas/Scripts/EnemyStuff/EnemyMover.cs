@@ -26,9 +26,17 @@ namespace Andreas.Scripts.EnemyStuff
             var body = Agent.Body;
             var bodyPos = body.position;
             var dir = Agent.FlowDirection.ToVector3XZ();
+
+            if(dir == Vector3.zero)
+                return;
+            
             var velocity = dir * (Speed * Time.deltaTime);
             body.MovePosition(bodyPos + velocity);
-            body.transform.rotation = Quaternion.LookRotation(body.velocity);
+
+            if(velocity == Vector3.zero)
+                return;
+            
+            body.transform.rotation = Quaternion.LookRotation(velocity);
         }
     }
 }
