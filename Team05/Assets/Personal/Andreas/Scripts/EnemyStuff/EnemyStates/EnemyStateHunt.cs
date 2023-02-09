@@ -1,12 +1,13 @@
-﻿using UnityEngine;
-
+﻿
 namespace Andreas.Scripts.EnemyStates
 {
-    public class EnemyStateHunt : EnemyState
+    public class EnemyStateHunt : EnemyStateTarget
     {
+        
         public override void Start()
         {
             base.Start();
+            RandomizeAttack();
             Enemy.FlowAgent.IsEnabled = true;
         }
 
@@ -27,17 +28,10 @@ namespace Andreas.Scripts.EnemyStates
 
         private void EnterAttack()
         {
-            Enemy.StateManager.SetState(new EnemyStateAttack());
+            Enemy.StateManager.SetState(
+                new EnemyStateWait(0.5f, new EnemyStateAttack(Attack)));
         }
 
-        private bool IsCloseForAttack()
-        {
-            // float attackRange = 1.1f;
-            float attackRange = Enemy.Data.AttackRange;
-            var target = Enemy.FlowAgent.Target;
 
-            var distance = Vector3.Distance(Enemy.transform.position, target.transform.position);
-            return distance < attackRange;
-        }
     }
 }

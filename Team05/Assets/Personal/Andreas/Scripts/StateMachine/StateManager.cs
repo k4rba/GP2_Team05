@@ -16,6 +16,11 @@ namespace Andreas.Scripts.StateMachine
 
         public virtual void SetState(State state)
         {
+            if(Current != null)
+            {
+                ExitState(Current);
+            }
+
             Current = state;
             Current.Init();
         }
@@ -25,15 +30,14 @@ namespace Andreas.Scripts.StateMachine
             if(!state.IsExited)
                 state.Exit();
 
-            if(_queue.Count > 0)
-            {
-                SetState(_queue.Dequeue());
-            }
+            // if(_queue.Count > 0)
+            // {
+                // SetState(_queue.Dequeue());
+            // }
         }
 
         public virtual void Update(float dt)
         {
-            
             //  add default state
             if(Current == null)
             {
@@ -50,17 +54,18 @@ namespace Andreas.Scripts.StateMachine
             if(Current.IsExited)
             {
                 ExitState(Current);
+                Current = null;
             }
         }
-        
-        public virtual  void FixedUpdate(float fixedDt)
+
+        public virtual void FixedUpdate(float fixedDt)
         {
             //  add default state
             if(Current == null)
             {
                 return;
             }
-            
+
             Current.FixedUpdate(fixedDt);
         }
     }

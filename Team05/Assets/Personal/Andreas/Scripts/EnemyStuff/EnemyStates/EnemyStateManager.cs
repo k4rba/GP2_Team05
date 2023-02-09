@@ -19,6 +19,8 @@ namespace Andreas.Scripts.EnemyStates
                 enState.InitEnemyState(Enemy);
             }
 
+            Enemy.State = state.ToString();
+
             base.SetState(state);
         }
 

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Andreas.Scripts.EnemyStuff;
+using UnityEngine;
 
 namespace Andreas.Scripts.EnemyData
 {
@@ -10,8 +11,11 @@ namespace Andreas.Scripts.EnemyData
         public string Name;
         public int Health;
         public float MoveSpeed;
-        public float Damage;
-        public float AttackRange;
+        
+        [Tooltip("The damage multiplier of the Enemy. This scales multiplicative with the enemy attacks (AttackDamage * DamageMultiplier)")]
+        public float DamageMultiplier = 1f;
+
+        public AttackLibrary AttackLibrary;
 
         [Space(10)] 
         

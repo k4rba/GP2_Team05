@@ -14,6 +14,8 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
+
+            Debug.Log("IDLE");
             
         }
 
@@ -29,6 +31,7 @@ namespace Andreas.Scripts.EnemyStates
 
         private void EnterHunt(FlowTargetAgent target)
         {
+            Debug.Log("exit hunt");
             Enemy.FlowAgent.SetTarget(target);
             Enemy.StateManager.SetState(new EnemyStateHunt());
         }

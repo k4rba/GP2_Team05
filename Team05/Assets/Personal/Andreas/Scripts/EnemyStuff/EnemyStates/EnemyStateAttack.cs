@@ -1,55 +1,41 @@
-﻿using Andreas.Scripts.Flowfield;
+﻿using Andreas.Scripts.EnemyStuff.EnemyAttacks;
 using UnityEngine;
-using Util;
 
 namespace Andreas.Scripts.EnemyStates
 {
-    public class EnemyStateAttack : EnemyState {
-
-        private static GameObject _prefAttackBox;
-        private float _waitTime = 1.5f;
-        
-        public override void Init() {
-            base.Init();
-
-            if (_prefAttackBox == null) {
-                LoadPrefab();
-            }
+    public class EnemyStateAttack : EnemyStateTarget
+    {
+        public EnemyStateAttack(EnemyAttackBase attack)
+        {
+            Attack = attack;
         }
 
-        private void LoadPrefab() {
-            
-            _prefAttackBox = FastResources.Load<GameObject>("EnemyAttackBox");
-        }
-
-        public override void Start() {
+        public override void Start()
+        {
             base.Start();
-            Enemy.DoAttack(_prefAttackBox);
+            Debug.Log("enter attack");
+
+            Attack.Start();
         }
 
-        public override void Update(float dt) {
+        public override void Update(float dt)
+        {
             base.Update(dt);
 
-            _waitTime -= dt;
-            
-            if (_waitTime < 0f && !IsCloseForAttack()) {
+            Attack.Update();
+            if(Attack.Attacked)
+            {
                 Exit();
             }
         }
-        
-        private bool IsCloseForAttack() {
-            float attackRange = Enemy.Data.AttackRange;
-            var unit = Enemy.FlowAgent.Target;
 
-            var distance = Enemy.transform.position.FastDistance(unit.transform.position);
-            return distance < attackRange;
-        }
-
-        public override void Exit() {
+        public override void Exit()
+        {
             base.Exit();
-            Enemy.CancelAttack();
-            Enemy.StateManager.SetState(new EnemyStateHunt());
+            Debug.Log("exit attack");
+            Enemy.StateManager.SetState(new EnemyStateWait(0.5f));
+            // Enemy.CancelAttack();
+            // Enemy.StateManager.SetState(new EnemyStateHunt());
         }
-
     }
 }
