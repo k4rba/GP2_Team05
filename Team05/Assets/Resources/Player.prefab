@@ -116,6 +116,7 @@ GameObject:
   - component: {fileID: 714828357488824671}
   - component: {fileID: 714828357488824670}
   - component: {fileID: -4315833718996814727}
+  - component: {fileID: 3373715374849181714}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -181,6 +182,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveProjectiles: []
+  DashAreaZ: 1
   characterType: 0
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
@@ -513,6 +515,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _fieldManager: {fileID: 3611744946782614318}
+--- !u!114 &3373715374849181714
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714828357488824669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 10c16fb8b6d044c3b343f6eff040b567, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &714828357503984146
 GameObject:
   m_ObjectHideFlags: 0
