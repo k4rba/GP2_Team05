@@ -1,5 +1,6 @@
 ﻿using Personal.Andreas.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Andreas.Scripts
 {
@@ -15,6 +16,7 @@ namespace Andreas.Scripts
         
         private void Awake()
         {
+            InputSystem.DisableDevice(Keyboard.current);
             if(Instance == null)
             {
                 Instance = this;

@@ -1,15 +1,15 @@
-using System;
 using System.Collections.Generic;
-using Unity.Mathematics;
-using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerAttackScheme : MonoBehaviour {
     public delegate void BasicAttacks();
+
     public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
     private GameObject _basicAttack, _specialBAbility, _specialXAbility, _specialAAbility;
+    private GameObject _specialXAbility2;
     public List<GameObject> ActiveProjectiles = new List<GameObject>();
     private bool StunChargedProjectile;
+    public float DashAreaZ = 1;
 
     public enum Character {
         Ranged,
@@ -67,6 +67,24 @@ public class PlayerAttackScheme : MonoBehaviour {
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
     }
 
+    public void MeleeAbilityB() {
+        var playerTransform = transform;
+        var shieldDome = Instantiate(_specialBAbility,
+            playerTransform.position, Quaternion.identity);
+    }
+
+    public void MeleeAbilityX() {
+        var playertransform = transform;
+        var rotation = playertransform.rotation;
+        var dashHitBox = Instantiate(_specialXAbility2, playertransform.position, rotation, playertransform.transform);
+    }
+    
+    public void MeleeAbilityA() {
+        var playerTransform = transform;
+        var shieldSlam = Instantiate(_specialAAbility,
+            playerTransform.position  + (playerTransform.forward), playerTransform.rotation);
+    }
+
     public void InitializeAttack() {
         switch (characterType) {
             case Character.Ranged:
@@ -81,7 +99,14 @@ public class PlayerAttackScheme : MonoBehaviour {
                 break;
             case Character.Melee:
                 _basicAttack = Resources.Load<GameObject>("MeleeHit");
+                _specialBAbility = Resources.Load<GameObject>("MeleeShieldDome");
+                _specialXAbility = Resources.Load<GameObject>("DashArea");
+                _specialXAbility2 = Resources.Load<GameObject>("DashHitBox");
+                _specialAAbility = Resources.Load<GameObject>("MeleeShieldSlam");
                 BasicAttacksList.Add(BasicMeleeAttack);
+                BasicAttacksList.Add(MeleeAbilityB);
+                BasicAttacksList.Add(MeleeAbilityX);
+                BasicAttacksList.Add(MeleeAbilityA);
                 break;
         }
     }

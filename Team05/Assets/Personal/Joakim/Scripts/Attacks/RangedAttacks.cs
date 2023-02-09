@@ -157,7 +157,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         foreach (var enemy in enemyList) {
             stunBallNearbyEnemies.Add(enemy.transform);
         }
-
         StartCoroutine(StunBallBounce());
     }
 
