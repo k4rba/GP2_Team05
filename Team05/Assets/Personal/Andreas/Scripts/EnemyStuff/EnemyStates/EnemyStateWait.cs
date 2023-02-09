@@ -22,7 +22,7 @@ namespace Andreas.Scripts.EnemyStates
         {
             base.Start();
 
-            Debug.Log($"enter wait THEN '{_nextState}'");
+            // Debug.Log($"enter wait THEN '{_nextState}'");
         }
 
         public override void Update(float dt)
@@ -43,7 +43,7 @@ namespace Andreas.Scripts.EnemyStates
             base.Exit();
             _exited = true;
 
-            Debug.Log($"exit wait THEN '{_nextState}'");
+            // Debug.Log($"exit wait THEN '{_nextState}'");
             
             if(_nextState != null)
             {

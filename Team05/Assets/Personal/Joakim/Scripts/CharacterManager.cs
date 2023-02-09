@@ -11,6 +11,10 @@ public class CharacterManager : MonoBehaviour {
     public GameObject mainGameUI;
     public List<Player> Players = new List<Player>();
 
+
+    [SerializeField] private Transform _spawnPoint;
+        
+
     // public static CharacterManager Instance = null;
 
     private void Awake() {
@@ -29,6 +33,9 @@ public class CharacterManager : MonoBehaviour {
                 player.AssignPlayerToRole(player.cType);
                 player.HealthMaterial = Resources.Load<Material>("Player" + player._playerNumber + "Health");
                 player.Health.ResetHealth(player);
+
+                player.transform.position = _spawnPoint.position;
+                
                 if (player._playerNumber == 1) {
                     player.otherPlayer = GameObject.FindWithTag("Player2");
                 }

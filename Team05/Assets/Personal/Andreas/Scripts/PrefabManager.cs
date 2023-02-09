@@ -9,9 +9,6 @@ namespace Andreas.Scripts
     {
         public static PrefabManager Get { get; private set; }
 
-        public GameObject Glob;
-        public GameObject Blobby;
-        
         public void Awake()
         {
             if(Get == null)

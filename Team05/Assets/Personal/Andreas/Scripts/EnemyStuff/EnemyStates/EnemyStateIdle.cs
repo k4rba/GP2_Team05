@@ -1,7 +1,4 @@
-﻿using Andreas.Scripts.EnemyStates.EnemyModes;
-using Andreas.Scripts.Flowfield;
-using Personal.Andreas.Scripts.Actors;
-using UnityEngine;
+﻿using Andreas.Scripts.Flowfield;
 using Util;
 
 namespace Andreas.Scripts.EnemyStates
@@ -15,7 +12,7 @@ namespace Andreas.Scripts.EnemyStates
         {
             base.Start();
 
-            Debug.Log("IDLE");
+            // Debug.Log("IDLE");
             
         }
 
@@ -31,7 +28,7 @@ namespace Andreas.Scripts.EnemyStates
 
         private void EnterHunt(FlowTargetAgent target)
         {
-            Debug.Log("exit hunt");
+            // Debug.Log("exit hunt");
             Enemy.FlowAgent.SetTarget(target);
             Enemy.StateManager.SetState(new EnemyStateHunt());
         }
@@ -51,7 +48,7 @@ namespace Andreas.Scripts.EnemyStates
                 if(distance < aggroRange)
                 {
                     EnterHunt(p.GetComponent<FlowTargetAgent>());
-                    Debug.Log($"aggro on player: {p.name}");
+                    // Debug.Log($"aggro on player: {p.name}");
                     return;
                 }
             }

@@ -22,7 +22,7 @@ namespace Health {
                 Debug.Log(self + " Transferred health to " + other);
                 
                 var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
-                Debug.Log($"TRANSFER: hp: {other.Health.Health}   shader: {otherHealthMatFloat}");
+                // Debug.Log($"TRANSFER: hp: {other.Health.Health}   shader: {otherHealthMatFloat}");
             }
         }
 
@@ -39,7 +39,7 @@ namespace Health {
                 player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
                 
                 playerHealthMat = player.HealthMaterial.GetFloat("_HP");
-                Debug.Log($"DAMAGE: hp: {player.Health.Health}   shader: {playerHealthMat}");
+                // Debug.Log($"DAMAGE: hp: {player.Health.Health}   shader: {playerHealthMat}");
             }
             else {
                 Die(player);

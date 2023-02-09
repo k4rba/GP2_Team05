@@ -10,7 +10,7 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
         {
             base.OnAttacked();
             
-            Debug.Log("attacked");
+            // Debug.Log("attacked");
             
             var enPos = Enemy.transform.position;
             var unit = Enemy.FlowAgent.Target;

@@ -17,7 +17,7 @@ namespace Andreas.Scripts
                 return;
             }
 
-            Debug.Log("Projectile hit!");
+            // Debug.Log("Projectile hit!");
 
             OnHit?.Invoke(proj);
 
