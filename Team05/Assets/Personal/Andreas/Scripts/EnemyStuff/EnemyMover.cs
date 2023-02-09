@@ -19,7 +19,7 @@ namespace Andreas.Scripts.EnemyStuff
         {
             if(Agent.FlowDirection == Vector2.zero)
             {
-                Confused();
+                // Confused();
                 return;
             }
 

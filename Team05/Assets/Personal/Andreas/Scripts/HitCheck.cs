@@ -16,12 +16,12 @@ namespace Andreas.Scripts {
             if (!_didHit && other.gameObject == _target) {
                 //  do damage .. ONCE
                 _didHit = true;
-                Debug.Log("Did damage");
+                // Debug.Log("Did damage");
                 other.GetComponent<Player>().Health.InstantDamage(other.GetComponent<Player>(), 0.05f);
                 Destroy(gameObject);
             }
             else {
-                Debug.Log("Did no damage");
+                // Debug.Log("Did no damage");
             }
         }
 
