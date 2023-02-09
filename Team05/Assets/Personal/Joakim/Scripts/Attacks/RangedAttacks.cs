@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net;
+using Andreas.Scripts.EnemyStates;
 using UnityEngine;
 using AttackNamespace;
 using Personal.Andreas.Scripts.Actors;
@@ -127,7 +128,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         for (int i = 0; i < stunBallNearbyEnemies.Count; i++) {
             numberOfBounces++;
             Instantiate(_stunBallHitFX, stunBallNearbyEnemies[i].position, Quaternion.identity);
-            Destroy(stunBallNearbyEnemies[i].gameObject);
+            stunBallNearbyEnemies[i].gameObject.GetComponent<Enemy>().StateManager.SetState(new EnemyStateStunned(1));
             Debug.Log("Swag: " + i);
             if (i + 1 >= stunBallNearbyEnemies.Count || numberOfBounces == 6) {
                 Destroy(gameObject);
@@ -155,7 +156,9 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
             .Where(t => Vector3.Distance(t.transform.position, transform.position) < distance)
             .ToList();
         foreach (var enemy in enemyList) {
-            stunBallNearbyEnemies.Add(enemy.transform);
+            if (enemy.transform != null) {
+                stunBallNearbyEnemies.Add(enemy.transform);
+            }
         }
         StartCoroutine(StunBallBounce());
     }

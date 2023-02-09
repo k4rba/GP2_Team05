@@ -1,6 +1,8 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using Andreas.Scripts;
+using Andreas.Scripts.EnemyStates;
 using UnityEngine;
 using AttackNamespace;
 using Personal.Andreas.Scripts.Actors;
@@ -89,8 +91,14 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
     private void OnTriggerEnter(Collider other) {
         var enemy = other.gameObject.GetComponent<Enemy>();
         if (enemy != null && meleeAttackType != MeleeAttackType.MeleeDome) {
-            enemy.Die();
-            Destroy(enemy.gameObject);
+            //enemy.Die();
+            //Destroy(enemy.gameObject);
+        }
+
+        if (enemy != null && meleeAttackType == MeleeAttackType.ShieldDash) {
+            var dir = (enemy.Body.position - other.transform.position).normalized;
+            enemy.StateManager.SetState(new EnemyStateKnock(dir, 10f));
+            Debug.Log("Stunned");
         }
     }
 }

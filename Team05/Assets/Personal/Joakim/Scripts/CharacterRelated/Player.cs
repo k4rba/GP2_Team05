@@ -43,6 +43,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private GameObject dashArea;
 
+    private ProjectileReceiver _projectileReceiver;
+
     public enum CharacterType {
         Ranged,
         Melee
@@ -66,10 +68,17 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
 
+        _projectileReceiver = GetComponent<ProjectileReceiver>();
+        _projectileReceiver.OnHit += Projectile_OnHit;
+
 
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
+    }
+
+    private void Projectile_OnHit(Projectile proj) {
+        Health.InstantDamage(this, proj.Damage);
     }
 
     private void Start() {
