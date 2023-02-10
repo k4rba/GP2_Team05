@@ -111,8 +111,6 @@ public class CharacterSelection : MonoBehaviour
 
                 break;
         }
-
-
     }
 
     private void Update()
