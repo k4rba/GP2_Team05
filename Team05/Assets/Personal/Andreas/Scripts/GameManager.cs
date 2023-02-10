@@ -1,5 +1,6 @@
 ﻿using Personal.Andreas.Scripts;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace Andreas.Scripts
 {
@@ -12,9 +13,11 @@ namespace Andreas.Scripts
         public PlayerJoinManager PlayerJoinManager;
         public CameraTopDownController CameraController;
         public WorldManager WorldManager;
+        public RopeManager RopeManager;
         
         private void Awake()
         {
+            // InputSystem.DisableDevice(Keyboard.current);
             if(Instance == null)
             {
                 Instance = this;

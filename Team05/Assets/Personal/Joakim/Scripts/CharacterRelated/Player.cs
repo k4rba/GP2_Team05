@@ -8,6 +8,7 @@ using UnityEngine.InputSystem;
 using AttackNamespace;
 using FlowFieldSystem;
 using Health;
+using DG.Tweening;
 using Personal.Andreas.Scripts;
 using Personal.Andreas.Scripts.Actors;
 
@@ -36,6 +37,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     [field: SerializeField] public float AbilityBCooldown { get; set; }
     private bool _bOnCd, _aOnCd, _xOnCd;
 
+    private bool _shieldDashHold;
+    private float _shieldDashTime;
+    private float shieldDashButtonActive;
+
+    private GameObject dashArea;
+
+    private ProjectileReceiver _projectileReceiver;
+
     public enum CharacterType {
         Ranged,
         Melee
@@ -52,16 +61,24 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 #endif
     private void Awake() {
+        dashArea = Resources.Load<GameObject>("DashArea");
         Health = new HealthSystem();
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
         gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
 
+        _projectileReceiver = GetComponent<ProjectileReceiver>();
+        _projectileReceiver.OnHit += Projectile_OnHit;
+
 
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
+    }
+
+    private void Projectile_OnHit(Projectile proj) {
+        Health.InstantDamage(this, proj.Damage);
     }
 
     private void Start() {
@@ -86,6 +103,9 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 break;
             case CharacterType.Melee:
                 name = "MeleePlayer)";
+                AbilityBCooldown = 15;
+                AbilityXCooldown = 8;
+                AbilityACooldown = 5;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
@@ -95,11 +115,34 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void FixedUpdate() {
-        _rb.velocity = new Vector3(moveDirection.x * moveSpeed, 0, moveDirection.y * moveSpeed);
+        _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(look), 0.15f);
         }
+    }
+
+    private void Update() {
+        if (_shieldDashHold) {
+            var dashBox = GameObject.Find("DashArea(Clone)");
+            dashBox.transform.rotation = transform.rotation;
+            dashBox.GetComponent<Rigidbody>().AddForce(transform.forward * (1.2f * Time.deltaTime), ForceMode.Impulse);
+            _shieldDashTime += Time.deltaTime;
+            if (_shieldDashTime >= 2.5f) {
+                playerAttackScheme.BasicAttacksList[2]();
+                Dash();
+                _shieldDashHold = false;
+            }
+        }
+    }
+
+    public void Dash() {
+        var dashBox = GameObject.Find("DashArea(Clone)");
+        transform.DOMove(dashBox.transform.position, 0.5f).OnComplete(() => {
+            var dashBox = GameObject.Find("DashArea(Clone)");
+            Destroy(dashBox);
+            _shieldDashTime = 0;
+        });
     }
 
     private void HoldBasic() {
@@ -131,18 +174,34 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnAbilityX(InputAction.CallbackContext context) {
-        if (context.performed && !_xOnCd) {
+        if (context.performed && !_xOnCd && cType == CharacterType.Ranged) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[2]();
                 _xOnCd = !_xOnCd;
                 StartCoroutine(StartAbilityXCooldown());
             }
+        }
 
+        if (!_xOnCd && cType == CharacterType.Melee) {
+            if (playerAttackScheme != null) {
+                if (context.performed) {
+                    var dashBox = Instantiate(dashArea, transform.position + transform.forward, transform.rotation);
+                    Debug.Log("instanced dashbox");
+                    _shieldDashHold = true;
+                }
+                if (context.canceled && _shieldDashHold) {
+                    playerAttackScheme.BasicAttacksList[2]();
+                    var dashBox = GameObject.Find("DashArea(Clone)");
+                    Dash();
+                    _shieldDashHold = false;
+                    _xOnCd = !_xOnCd;
+                    StartCoroutine(StartAbilityXCooldown());
+                }
+            }
         }
     }
 
     IEnumerator StartAbilityXCooldown() {
-
         yield return new WaitForSeconds(AbilityXCooldown);
         _xOnCd = !_xOnCd;
     }
@@ -163,11 +222,13 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnMove(InputAction.CallbackContext context) {
-        moveDirection = context.ReadValue<Vector2>();
+        if (!_shieldDashHold) {
+            moveDirection = context.ReadValue<Vector2>();
+        }
     }
 
     public void OnLook(InputAction.CallbackContext context) {
-        if (context.performed)
+        if (context.performed && !_shieldDashHold)
             _lookDirection = context.ReadValue<Vector2>();
     }
 

@@ -1,18 +1,13 @@
-using System;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class RealRope : MonoBehaviour
 {
-
     [SerializeField] private GameObject _segmentPrefab;
-
-    // [SerializeField] private int _segmentCount = 10;
     [SerializeField] private bool generate = true;
 
-
-    [SerializeField] private GameObject start;
-    [SerializeField] private GameObject end;
+    [SerializeField] private GameObject _start;
+    [SerializeField] private GameObject _end;
     
     private List<GameObject> _segments;
 
@@ -21,15 +16,20 @@ public class RealRope : MonoBehaviour
         _segments = new();
     }
 
+    public void SetRoots(GameObject start, GameObject end)
+    {
+        _start = start;
+        _end = end;
+    }
 
     private void Update()
     {
 
-        if(generate)
-        {
-            GenerateRope();
-            generate = false;
-        }
+        // if(generate)
+        // {
+            // GenerateRope();
+            // generate = false;
+        // }
         
     }
 
@@ -46,17 +46,17 @@ public class RealRope : MonoBehaviour
 
     private int CalculateSegmentCount()
     {
-        var distance = Vector3.Distance(start.transform.position, end.transform.position);
+        var distance = Vector3.Distance(_start.transform.position, _end.transform.position);
         var prefabSizeY = _segmentPrefab.transform.localScale.y;
         return (int)(distance / (prefabSizeY * 2f)) + 1;
     }
 
-    private void GenerateRope()
+    public void GenerateRope()
     {
         Clear();
 
-        var startPos = start.transform.position;
-        var endPos = end.transform.position;
+        var startPos = _start.transform.position;
+        var endPos = _end.transform.position;
         
         int count = CalculateSegmentCount();
 
@@ -80,15 +80,15 @@ public class RealRope : MonoBehaviour
             }
             else
             {
-                hinge.connectedBody = start.GetComponent<Rigidbody>();
-                hinge.anchor = start.transform.InverseTransformPoint(pos);
+                hinge.connectedBody = _start.GetComponent<Rigidbody>();
+                hinge.anchor = _start.transform.InverseTransformPoint(pos);
             }
 
             prev = seg;
 
         }
 
-        var endHinge = end.GetComponent<HingeJoint>();
+        var endHinge = _end.GetComponent<HingeJoint>();
         endHinge.connectedBody = prev.GetComponent<Rigidbody>();
         endHinge.anchor = Vector3.zero;
 
