@@ -1,9 +1,19 @@
 fileFormatVersion: 2
-guid: 57e57852d80bed3409d6fd8739ee05c1
+guid: 5ee5e5268d9dc5f40b22cffb8f645bc0
 ModelImporter:
   serializedVersion: 21300
   internalIDToNameTable: []
-  externalObjects: {}
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: eyes
+    second: {fileID: 2100000, guid: 9d80a34f9fd0bde488e3bab32e5c2985, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: gunnar
+    second: {fileID: 2100000, guid: a5674498f44a0bf409e3a1d0841e22c3, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
