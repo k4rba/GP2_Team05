@@ -1,5 +1,7 @@
 ﻿// DAzBjax (2015), if you have same questions contact me at DAzBjax.Unity@mail.ru 
 
+#if UNITY_EDITOR
+
 using UnityEngine;
 using System.Collections;
 using UnityEditor;
@@ -214,3 +216,5 @@ public class DAX_MultiObjectsRenamer : EditorWindow
 	
 	}
 }
+
+#endif
