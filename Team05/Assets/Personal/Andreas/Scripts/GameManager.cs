@@ -1,4 +1,6 @@
-﻿using Personal.Andreas.Scripts;
+﻿using System;
+using AudioSystem;
+using Personal.Andreas.Scripts;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +32,16 @@ namespace Andreas.Scripts
                 Destroy(gameObject);
                 return;
             }
+        }
+
+        private void Start()
+        {
+            var msuic = new GameObject("Music");
+            var source = msuic.AddComponent<AudioSource>();
+            source.clip = AudioManager.GetSoundClip("skalar_banan_men_bananen_blev_till_kiseloxid");
+            source.loop = true;
+            source.volume = 0.25f;
+            source.Play();
         }
     }
 }
