@@ -62,6 +62,7 @@ public class CharacterManager : MonoBehaviour
             Destroy(hinge);
             var p2Con = Players[1].transform.Find("TetherConnector").gameObject;
 
+            GameManager.Instance.DollyManager.AssignTargets(Players[0].gameObject, Players[1].gameObject);
             GameManager.Instance.RopeManager.SetRopeEnds(p1Con, p2Con);
         }
     }
