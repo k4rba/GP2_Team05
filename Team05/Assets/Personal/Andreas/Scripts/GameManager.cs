@@ -14,6 +14,7 @@ namespace Andreas.Scripts
         public CameraTopDownController CameraController;
         public WorldManager WorldManager;
         public RopeManager RopeManager;
+        public DollyCamManager DollyManager;
         
         private void Awake()
         {
