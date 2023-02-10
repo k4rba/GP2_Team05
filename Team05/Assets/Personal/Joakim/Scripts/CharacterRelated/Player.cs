@@ -249,8 +249,29 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnLook(InputAction.CallbackContext context) {
-        if (context.performed && !_shieldDashHold)
+        if(context.performed && !_shieldDashHold) {
+            
             _lookDirection = context.ReadValue<Vector2>();
+        
+            var cam = Camera.main.transform;
+            var input = context.ReadValue<Vector2>();
+            
+            var forward = cam.forward;
+            var right = cam.right;
+            
+            forward.y = 0;
+            right.y = 0;
+            
+            forward = forward.normalized;
+            right = right.normalized;
+            
+            var fwInput = input.y * forward;
+            var riInput = input.x * right;
+            
+            var camMove = fwInput + riInput;
+            
+            _lookDirection = new Vector2(camMove.x, camMove.z);
+        }
     }
 
     public void OnGiveHealth(InputAction.CallbackContext context) {
