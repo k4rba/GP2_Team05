@@ -25,7 +25,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     public float distToPlayer;
     private bool _moveBackToPlayer;
     private bool _rotateAroundPlayer;
-    public List<Transform> stunBallNearbyEnemies = new List<Transform>();
+    public List<Enemy> stunBallNearbyEnemies = new List<Enemy>();
     private GameObject _stunBallHitFX;
     private bool _triggered;
     public int numberOfBounces = 6;
@@ -124,31 +124,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         Destroy(gameObject);
     }
 
-    IEnumerator StunBallBounce() {
-        for (int i = 0; i < stunBallNearbyEnemies.Count; i++) {
-            numberOfBounces++;
-            Instantiate(_stunBallHitFX, new Vector3(stunBallNearbyEnemies[i].position.x, stunBallNearbyEnemies[i].position.y + 2.5f, stunBallNearbyEnemies[i].position.z), Quaternion.identity);
-            stunBallNearbyEnemies[i].gameObject.GetComponent<Enemy>().StateManager.SetState(new EnemyStateStunned(1));
-            Debug.Log("Swag: " + i);
-            if (i + 1 >= stunBallNearbyEnemies.Count || numberOfBounces == 6) {
-                Destroy(gameObject);
-                StopCoroutine(StunBallBounce());
-            }
-            else {
-                transform.DOMove(stunBallNearbyEnemies[i + 1].position, 0.5f);
-            }
-
-            if (i+1 >= stunBallNearbyEnemies.Count) {
-                StopCoroutine(StunBallBounce());
-                yield return null;
-            }
-            else {
-                yield return new WaitUntil(() =>
-                    Vector3.Distance(transform.position, stunBallNearbyEnemies[i + 1].position) < 1.2f);
-            }
-        }
-    }
-
     private void CheckForNearbyEnemies() {
         var distance = 10;
         var enemyList = FindObjectsOfType(typeof(Enemy))
@@ -157,10 +132,20 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
             .ToList();
         foreach (var enemy in enemyList) {
             if (enemy.transform != null) {
-                stunBallNearbyEnemies.Add(enemy.transform);
+                stunBallNearbyEnemies.Add(enemy);
             }
         }
-        StartCoroutine(StunBallBounce());
+
+        int targetCount = (int)MathF.Min(6, stunBallNearbyEnemies.Count);
+        for (int i = 0; i < targetCount; i++) {
+            Instantiate(_stunBallHitFX,
+                new Vector3(stunBallNearbyEnemies[i].transform.position.x,
+                    stunBallNearbyEnemies[i].transform.position.y + 2.5f,
+                    stunBallNearbyEnemies[i].transform.position.z), Quaternion.identity);
+            stunBallNearbyEnemies[i].StateManager.SetState(new EnemyStateStunned(2));
+        }
+
+        Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {

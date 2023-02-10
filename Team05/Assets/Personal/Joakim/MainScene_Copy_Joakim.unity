@@ -676,7 +676,7 @@ MonoBehaviour:
   _camera: {fileID: 330585545}
   _transforms: []
   _speed: 1
-  _heightOffset: 3.63
+  _heightOffset: 9.94
   _distance: 8
 --- !u!1 &363075742
 GameObject:
@@ -1945,7 +1945,7 @@ MonoBehaviour:
   _enemyManager: {fileID: 2004165676988747578}
   _spawningEnabled: 0
   _spawnRate:
-    _time: 1
+    _time: 0.2
 --- !u!4 &2004165676988747557
 Transform:
   m_ObjectHideFlags: 0
