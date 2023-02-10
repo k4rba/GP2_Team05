@@ -156,8 +156,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 838eab8fa9a6e164799d16aa78ee817f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BasicDamage>k__BackingField: 0
+  <BasicDamage>k__BackingField: 1
   <SpecialDamage>k__BackingField: 0
   <ProjectileSpeed>k__BackingField: 0
   <AttackSize>k__BackingField: 3.09
   meleeAttackType: 0
+  player: {fileID: 0}

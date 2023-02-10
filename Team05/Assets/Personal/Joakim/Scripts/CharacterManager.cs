@@ -53,11 +53,16 @@ public class CharacterManager : MonoBehaviour
 
                 GameManager.Instance.CameraController.SetTransforms(player.transform);
                 var spawner = GameManager.Instance.EnemyManager.Spawner;
-                spawner.EnableSpawning(true);
+                spawner.EnableSpawning(false);
                 spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
 
-            // GameManager.Instance.RopeManager.SetRopeEnds(Players[0].gameObject, Players[1].gameObject);
+            var p1Con = Players[0].transform.Find("TetherConnector").gameObject;
+            var hinge = p1Con.GetComponent<HingeJoint>();
+            Destroy(hinge);
+            var p2Con = Players[1].transform.Find("TetherConnector").gameObject;
+
+            GameManager.Instance.RopeManager.SetRopeEnds(p1Con, p2Con);
         }
     }
 }

@@ -28,6 +28,8 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Awake()
         {
+            Health.Health = 3;
+            
             StateManager = new(this);
             Body = gameObject.GetComponent<Rigidbody>();
             FlowAgent = GetComponent<FlowFollowerAgent>();
@@ -41,8 +43,18 @@ namespace Personal.Andreas.Scripts.Actors
             StateManager.SetState(new EnemyStateIdle());
         }
 
+        public void TakeDamage(int damage)
+        {
+            Health.Health -= damage;
+            if(Health.Health <= 0)
+            {
+                Die();
+            }
+        }
+        
         public void Die()
         {
+            Destroy(gameObject);
         }
 
         private void Update()

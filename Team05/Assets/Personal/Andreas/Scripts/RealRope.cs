@@ -25,11 +25,11 @@ public class RealRope : MonoBehaviour
     private void Update()
     {
 
-        // if(generate)
-        // {
-            // GenerateRope();
-            // generate = false;
-        // }
+        if(generate)
+        {
+            GenerateRope();
+            generate = false;
+        }
         
     }
 
