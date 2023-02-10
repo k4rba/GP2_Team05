@@ -1054,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 3453695321526875531, guid: 49aa56c5112cf574881b9c57bb00cf9e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3453695321604360404, guid: 49aa56c5112cf574881b9c57bb00cf9e,
         type: 3}
@@ -1272,6 +1272,11 @@ PrefabInstance:
         type: 3}
       propertyPath: m_PlaneDistance
       value: 4.4
+      objectReference: {fileID: 0}
+    - target: {fileID: 8437173474161351798, guid: 07ea67fa2dd97e44f831b36cbbf2c84f,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
       objectReference: {fileID: 0}
     - target: {fileID: 8437173474161351799, guid: 07ea67fa2dd97e44f831b36cbbf2c84f,
         type: 3}
