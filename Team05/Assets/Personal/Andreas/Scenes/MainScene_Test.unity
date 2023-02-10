@@ -4497,8 +4497,8 @@ MonoBehaviour:
   _segmentPrefab: {fileID: 2294831922121376150, guid: 18fa57598c1f7d8458990a93b61473e6,
     type: 3}
   generate: 1
-  start: {fileID: 76985019}
-  end: {fileID: 1674366470}
+  _start: {fileID: 76985019}
+  _end: {fileID: 1674366470}
 --- !u!4 &2102174543
 Transform:
   m_ObjectHideFlags: 0

@@ -99,7 +99,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
-
+                transform.Find("Jose").gameObject.SetActive(true);
                 break;
             case CharacterType.Melee:
                 name = "MeleePlayer)";
@@ -109,7 +109,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
-
+                transform.Find("Bronk").gameObject.SetActive(true);
                 break;
         }
     }

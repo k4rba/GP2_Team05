@@ -143,21 +143,28 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
                     stunBallNearbyEnemies[i].transform.position.y + 2.5f,
                     stunBallNearbyEnemies[i].transform.position.z), Quaternion.identity);
             stunBallNearbyEnemies[i].StateManager.SetState(new EnemyStateStunned(2));
+
+            var enemy = stunBallNearbyEnemies[i];
+            int finalDamage = (int)Mathf.Min(1, BasicDamage);
+            enemy.TakeDamage(finalDamage);
         }
 
         Destroy(gameObject);
     }
 
     private void OnTriggerEnter(Collider other) {
+        if(BasicDamage < 1) {
+                return;
+            }
+            
         if (rangedAttackType != RangedAttackType.StunBall) {
             var enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy != null) {
-                enemy.Die();
-                Destroy(enemy.gameObject);
+                int finalDamage = (int)Mathf.Min(1, BasicDamage);
+                enemy.TakeDamage(finalDamage);
             }
         }
         else if (rangedAttackType == RangedAttackType.StunBall && !_triggered) {
-            Debug.Log("Entered Triggerino");
             _triggered = !_triggered;
             GetComponent<Collider>().enabled = false;
             CheckForNearbyEnemies();

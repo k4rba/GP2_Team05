@@ -17,7 +17,8 @@ namespace Andreas.Scripts
         
         private void Awake()
         {
-            InputSystem.DisableDevice(Keyboard.current);
+            // InputSystem.DisableDevice(Keyboard.current);
+            
             if(Instance == null)
             {
                 Instance = this;
