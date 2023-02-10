@@ -114,13 +114,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
-    private void FixedUpdate() {
-        _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
-        var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
-        if (_lookDirection.x != 0 && _lookDirection.y != 0) {
-            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(look), 0.15f);
-        }
-    }
+
 
     private void Update() {
         if (_shieldDashHold) {
@@ -221,9 +215,36 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         _aOnCd = !_aOnCd;
     }
 
+    private void FixedUpdate() {
+        _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
+        var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
+        if (_lookDirection.x != 0 && _lookDirection.y != 0) {
+            transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(look), 0.15f);
+        }
+    }
+    
     public void OnMove(InputAction.CallbackContext context) {
-        if (!_shieldDashHold) {
-            moveDirection = context.ReadValue<Vector2>();
+        if (!_shieldDashHold)
+        {
+            var cam = Camera.main.transform;
+            var input = context.ReadValue<Vector2>();
+
+            var forward = cam.forward;
+            var right = cam.right;
+
+            forward.y = 0;
+            right.y = 0;
+
+            forward = forward.normalized;
+            right = right.normalized;
+
+            var fwInput = input.y * forward;
+            var riInput = input.x * right;
+
+            var camMove = fwInput + riInput;
+
+            moveDirection = new Vector2(camMove.x, camMove.z);
+
         }
     }
 
