@@ -42,7 +42,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SpecialB",
+                    "name": "SpecialLeftBumper",
                     "type": "Button",
                     "id": "97e0d233-ae6a-4ab4-9c28-c167e01249a6",
                     "expectedControlType": "Button",
@@ -51,21 +51,12 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SpecialA",
+                    "name": "SpecialRightBumper",
                     "type": "Button",
                     "id": "1731058e-0440-440f-b95b-283c036e6f2e",
                     "expectedControlType": "Button",
                     "processors": "",
                     "interactions": "Press",
-                    "initialStateCheck": false
-                },
-                {
-                    "name": "SpecialX",
-                    "type": "Button",
-                    "id": "f8082e3b-3fb2-447d-abf2-86442862a60c",
-                    "expectedControlType": "Button",
-                    "processors": "",
-                    "interactions": "Hold(duration=0.1)",
                     "initialStateCheck": false
                 }
             ],
@@ -117,33 +108,22 @@
                 {
                     "name": "",
                     "id": "289e39a2-2d95-49c9-b7fa-af12e7573568",
-                    "path": "<Gamepad>/buttonEast",
+                    "path": "<Gamepad>/leftShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SpecialB",
+                    "action": "SpecialLeftBumper",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
                     "id": "7d6aa173-9cba-4431-b102-bda4cb49d7c7",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<Gamepad>/rightShoulder",
                     "interactions": "",
                     "processors": "",
                     "groups": "Gamepad",
-                    "action": "SpecialA",
-                    "isComposite": false,
-                    "isPartOfComposite": false
-                },
-                {
-                    "name": "",
-                    "id": "26980b3f-e032-4dd3-8826-dc183f3034b7",
-                    "path": "<Gamepad>/buttonWest",
-                    "interactions": "",
-                    "processors": "",
-                    "groups": "Gamepad",
-                    "action": "SpecialX",
+                    "action": "SpecialRightBumper",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
