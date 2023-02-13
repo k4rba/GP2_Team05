@@ -5,13 +5,14 @@ using Andreas.Scripts.EnemyStates;
 using Andreas.Scripts.EnemyStuff;
 using AudioSystem;
 using UnityEngine;
+using UnityEngine.AI;
 
 namespace Personal.Andreas.Scripts.Actors
 {
-    [RequireComponent(typeof(FlowFollowerAgent))]
+    [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : Actor
     {
-        public FlowFollowerAgent FlowAgent;
+        [NonSerialized] public NavMeshAgent NavAgent;
 
         public Vector3 Position
         {
@@ -29,13 +30,20 @@ namespace Personal.Andreas.Scripts.Actors
         private void Awake()
         {
             Health.Health = 3;
-            
+
             StateManager = new(this);
             Body = gameObject.GetComponent<Rigidbody>();
-            FlowAgent = GetComponent<FlowFollowerAgent>();
-            var enemyMover = gameObject.AddComponent<EnemyMover>();
-            FlowAgent.SetMover(enemyMover);
+            
+            NavAgent = GetComponent<NavMeshAgent>();
+            UpdateNavAgentStats();
         }
+
+        public void UpdateNavAgentStats()
+        {
+            NavAgent.speed = Data.MoveSpeed;
+            NavAgent.acceleration = Data.MoveSpeedAcceleration;
+            NavAgent.angularSpeed = Data.TurnSpeed;
+        } 
 
         private void Start()
         {
@@ -51,7 +59,7 @@ namespace Personal.Andreas.Scripts.Actors
                 Die();
             }
         }
-        
+
         public void Die()
         {
             Destroy(gameObject);
@@ -66,35 +74,6 @@ namespace Personal.Andreas.Scripts.Actors
         private void FixedUpdate()
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
-        }
-
-        private GameObject _hitBox;
-        
-        public void DoAttack(GameObject hitBox)
-        {
-            _hitBox = hitBox;
-            float attackSpeed = 2f;
-            InvokeRepeating(nameof(AttackInvoke), 0, attackSpeed);
-        }
-
-        private void AttackInvoke()
-        {
-            var enPos = transform.position;
-            var unit = FlowAgent.Target;
-            var dir = (unit.transform.position - enPos).normalized;
-
-            var boxOffsetRange = 1.5f;
-
-            var boxPosition = enPos + dir * boxOffsetRange;
-
-            var box = Instantiate(_hitBox, boxPosition, Quaternion.identity);
-            var hitCheck = box.GetComponent<HitCheck>();
-            hitCheck.Set(unit.gameObject);
-        }
-
-        public void CancelAttack()
-        {
-            CancelInvoke(nameof(AttackInvoke));
         }
     }
 }

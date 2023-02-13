@@ -5,9 +5,9 @@ namespace Andreas.Scripts.EnemyStates
 {
     public class EnemyStateAttack : EnemyStateTarget
     {
-        public EnemyStateAttack(EnemyAttackBase attack)
+        public EnemyStateAttack(GameObject target, EnemyAttackBase attack) 
+            : base(target, attack)
         {
-            Attack = attack;
         }
 
         public override void Start()

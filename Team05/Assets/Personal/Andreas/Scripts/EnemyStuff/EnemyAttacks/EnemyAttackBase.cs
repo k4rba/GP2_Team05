@@ -7,17 +7,11 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
     {
         public float CastTimer;
         public Enemy Enemy;
-        public Transform Target => Enemy.FlowAgent.Target.transform;
+        public Transform Target;
         
         public bool Attacked;
 
         public EnemyAttackData Data;
-
-        public EnemyAttackBase() { }
-        public EnemyAttackBase(Enemy enemy)
-        {
-            Enemy = enemy;
-        }
 
         public virtual void Start()
         {

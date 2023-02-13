@@ -13,7 +13,8 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             // Debug.Log("attacked");
             
             var enPos = Enemy.transform.position;
-            var unit = Enemy.FlowAgent.Target;
+            // var unit = Enemy.FlowAgent.Target;
+            var unit = Target;
             var dir = (unit.transform.position - enPos).normalized;
 
             var boxOffsetRange = 1.5f;

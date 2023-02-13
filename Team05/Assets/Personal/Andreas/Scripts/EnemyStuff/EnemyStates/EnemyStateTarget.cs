@@ -6,7 +6,19 @@ namespace Andreas.Scripts.EnemyStates
 {
     public abstract class EnemyStateTarget : EnemyState
     {
+        protected GameObject Target;
         protected EnemyAttackBase Attack;
+
+        protected EnemyStateTarget(GameObject target)
+        {
+            Target = target;
+        }
+
+        protected EnemyStateTarget(GameObject target, EnemyAttackBase attack)
+        {
+            Target = target;
+            Attack = attack;
+        }
 
         private EnemyAttackBase CreateAttack(EnemyAttackData data)
         {
@@ -37,6 +49,7 @@ namespace Andreas.Scripts.EnemyStates
                 return null;
             }
 
+            attack.Target = Target.transform;
             attack.Data = data;
             attack.Enemy = Enemy;
 
@@ -52,7 +65,8 @@ namespace Andreas.Scripts.EnemyStates
         protected bool IsCloseForAttack()
         {
             float attackRange = Attack.Data.Range;
-            var target = Enemy.FlowAgent.Target;
+            // var target = Enemy.FlowAgent.Target;
+            var target = Target;
 
             var distance = Vector3.Distance(Enemy.transform.position, target.transform.position);
             return distance < attackRange;
