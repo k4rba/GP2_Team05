@@ -33,7 +33,7 @@ namespace Personal.Andreas.Scripts.Actors
 
             StateManager = new(this);
             Body = gameObject.GetComponent<Rigidbody>();
-            
+
             NavAgent = GetComponent<NavMeshAgent>();
             UpdateNavAgentStats();
         }
@@ -43,12 +43,21 @@ namespace Personal.Andreas.Scripts.Actors
             NavAgent.speed = Data.MoveSpeed;
             NavAgent.acceleration = Data.MoveSpeedAcceleration;
             NavAgent.angularSpeed = Data.TurnSpeed;
-        } 
+        }
 
         private void Start()
         {
             AudioManager.PlaySfx(Data.OnDeath.name);
-            StateManager.SetState(new EnemyStateIdle());
+
+            //  temp
+            if(Data.Name.Equals("Rat"))
+            {
+                StateManager.SetState(new EnemyStateRatRoam());
+            }
+            else
+            {
+                StateManager.SetState(new EnemyStateIdle());
+            }
         }
 
         public void TakeDamage(int damage)
@@ -60,6 +69,15 @@ namespace Personal.Andreas.Scripts.Actors
             }
         }
 
+        private void RotateTowardsDirection()
+        {
+            var direction = Body.velocity;
+            if(direction == Vector3.zero)
+                return;
+            // transform.Rotate(direction);
+            transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+        }
+
         public void Die()
         {
             Destroy(gameObject);
@@ -69,6 +87,7 @@ namespace Personal.Andreas.Scripts.Actors
         {
             Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
+            RotateTowardsDirection();
         }
 
         private void FixedUpdate()
