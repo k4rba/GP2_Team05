@@ -27,7 +27,6 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         Special,
         MeleeDome,
         ShieldSlam,
-        ShieldDash
     }
 
     public MeleeAttackType meleeAttackType;
@@ -55,9 +54,6 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
             case MeleeAttackType.ShieldSlam:
                 ShieldSlam();
                 break;
-            case MeleeAttackType.ShieldDash:
-                ShieldDash();
-                break;
         }
     }
     
@@ -67,15 +63,6 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
 
     public void ShieldDome() {
         StartCoroutine(ShieldDomeDuration());
-    }
-
-    public void ShieldDash() {
-        StartCoroutine(DashHitBoxDuration());
-    }
-
-    IEnumerator DashHitBoxDuration() {
-        yield return new WaitForSeconds(0.5f);
-        Destroy(gameObject);
     }
 
     IEnumerator ShieldDomeDuration() {
@@ -103,12 +90,7 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         if (enemy != null && meleeAttackType == MeleeAttackType.ShieldSlam) {
             enemy.StateManager.SetState(new EnemyStateStunned(10f));
         }
-        
-        if (enemy != null && meleeAttackType == MeleeAttackType.ShieldDash) {
-            var dir = (enemy.Body.position - other.transform.position).normalized;
-            enemy.StateManager.SetState(new EnemyStateKnock(dir, 10f));
-        }
-        
+
         int finalDamage = (int)Mathf.Min(1, BasicDamage);
         enemy.TakeDamage(finalDamage);
     }
