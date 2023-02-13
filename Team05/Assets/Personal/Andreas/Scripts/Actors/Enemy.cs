@@ -47,8 +47,6 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Start()
         {
-            AudioManager.PlaySfx(Data.OnDeath.name);
-
             //  temp
             if(Data.Name.Equals("Rat"))
             {

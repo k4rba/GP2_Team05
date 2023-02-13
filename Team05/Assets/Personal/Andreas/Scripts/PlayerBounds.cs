@@ -5,12 +5,16 @@ namespace Andreas.Scripts
 {
     public class PlayerBounds : MonoBehaviour
     {
+        private float MaxDistance => Data.MaxDistance;
+        private float Power => Data.Power;
+        
+        public PlayerBoundsData Data;
+        
         private Rigidbody _self;
         private Rigidbody _other;
 
-        [SerializeField] private float _maxDistance = 2f;
-
         private bool _ready;
+        private bool _wasOutOfBounds;
 
         private void Awake()
         {
@@ -27,17 +31,27 @@ namespace Andreas.Scripts
         {
             if(!_ready)
                 return;
-            
+
             var self = transform.position;
             var other = _other.position;
             var distance = Vector3.Distance(self, other);
 
-            if(distance > _maxDistance)
+            if(distance > MaxDistance)
             {
-                var diff = distance - _maxDistance;
+                var diff = distance - MaxDistance;
                 var dir = (other - self).normalized;
-                Debug.Log(diff);
-                _self.MovePosition(self + new Vector3(dir.x, 0, dir.z) * diff);
+
+                var pushPower = diff * 0.1f * Power;
+                _self.AddForce(dir * pushPower, ForceMode.VelocityChange);
+                _wasOutOfBounds = true;
+            }
+            else
+            {
+                if(_wasOutOfBounds)
+                {
+                    _self.velocity = Vector3.zero;
+                    _wasOutOfBounds = false;
+                }
             }
         }
     }

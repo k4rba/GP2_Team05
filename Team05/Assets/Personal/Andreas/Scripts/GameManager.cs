@@ -46,12 +46,5 @@ namespace Andreas.Scripts
             source.Play();
         }
 
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                AudioManager.PlaySfx("attack_basic_attack_ranged2");
-            }
-        }
     }
 }
