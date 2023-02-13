@@ -88,17 +88,28 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         Destroy(gameObject);
     }
 
-    private void OnTriggerEnter(Collider other) {
-        var enemy = other.gameObject.GetComponent<Enemy>();
-        if (enemy != null && meleeAttackType != MeleeAttackType.MeleeDome) {
-            //enemy.Die();
-            //Destroy(enemy.gameObject);
-        }
+    private void OnTriggerEnter(Collider other)
+    {
 
+        //  ignore skill if low dmg
+        if(BasicDamage < 1)
+            return;
+        
+        var enemy = other.gameObject.GetComponent<Enemy>();
+
+        if(enemy == null)
+            return;
+
+        if (enemy != null && meleeAttackType == MeleeAttackType.ShieldSlam) {
+            enemy.StateManager.SetState(new EnemyStateStunned(10f));
+        }
+        
         if (enemy != null && meleeAttackType == MeleeAttackType.ShieldDash) {
             var dir = (enemy.Body.position - other.transform.position).normalized;
             enemy.StateManager.SetState(new EnemyStateKnock(dir, 10f));
-            Debug.Log("Stunned");
         }
+        
+        int finalDamage = (int)Mathf.Min(1, BasicDamage);
+        enemy.TakeDamage(finalDamage);
     }
 }

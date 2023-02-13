@@ -444,6 +444,7 @@ MonoBehaviour:
   PlayerJoinManager: {fileID: 1271460411}
   CameraController: {fileID: 330585548}
   WorldManager: {fileID: 1490788176}
+  RopeManager: {fileID: 0}
 --- !u!1 &310411963
 GameObject:
   m_ObjectHideFlags: 0
@@ -675,7 +676,7 @@ MonoBehaviour:
   _camera: {fileID: 330585545}
   _transforms: []
   _speed: 1
-  _heightOffset: 3.63
+  _heightOffset: 9.94
   _distance: 8
 --- !u!1 &363075742
 GameObject:
@@ -1053,7 +1054,7 @@ PrefabInstance:
     - target: {fileID: 3453695321526875531, guid: 49aa56c5112cf574881b9c57bb00cf9e,
         type: 3}
       propertyPath: m_IsActive
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3453695321604360404, guid: 49aa56c5112cf574881b9c57bb00cf9e,
         type: 3}
@@ -1272,6 +1273,11 @@ PrefabInstance:
       propertyPath: m_PlaneDistance
       value: 4.4
       objectReference: {fileID: 0}
+    - target: {fileID: 8437173474161351798, guid: 07ea67fa2dd97e44f831b36cbbf2c84f,
+        type: 3}
+      propertyPath: m_AdditionalShaderChannelsFlag
+      value: 25
+      objectReference: {fileID: 0}
     - target: {fileID: 8437173474161351799, guid: 07ea67fa2dd97e44f831b36cbbf2c84f,
         type: 3}
       propertyPath: m_Pivot.x
@@ -1470,6 +1476,37 @@ GameObject:
     type: 3}
   m_PrefabInstance: {fileID: 1257981657}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1544335372
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1544335373}
+  m_Layer: 0
+  m_Name: GameObject (1)
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1544335373
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1544335372}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -3.28, y: -2.4, z: -12.7}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 7
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1678239351
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1547,6 +1584,16 @@ PrefabInstance:
       propertyPath: _spawnPoint
       value: 
       objectReference: {fileID: 1883099144}
+    - target: {fileID: 6660823545508957832, guid: aef838521fce3dc4796038513f5f0a7b,
+        type: 3}
+      propertyPath: _spawnPoint1
+      value: 
+      objectReference: {fileID: 1883099144}
+    - target: {fileID: 6660823545508957832, guid: aef838521fce3dc4796038513f5f0a7b,
+        type: 3}
+      propertyPath: _spawnPoint2
+      value: 
+      objectReference: {fileID: 1544335373}
     - target: {fileID: 6660823545508957832, guid: aef838521fce3dc4796038513f5f0a7b,
         type: 3}
       propertyPath: characterSelectionScreen
@@ -1903,7 +1950,7 @@ MonoBehaviour:
   _enemyManager: {fileID: 2004165676988747578}
   _spawningEnabled: 0
   _spawnRate:
-    _time: 1
+    _time: 0.2
 --- !u!4 &2004165676988747557
 Transform:
   m_ObjectHideFlags: 0
