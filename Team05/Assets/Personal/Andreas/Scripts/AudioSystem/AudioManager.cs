@@ -18,8 +18,8 @@ namespace AudioSystem
             }
         }
 
-        public static float SfxVolume;
-        public static float MusicVolume;
+        public static float SfxVolume = 1f;
+        public static float MusicVolume = 1f;
 
         private static Dictionary<string, AudioClip> _audioClips;
         private static AudioPlayer _musicPlayer;

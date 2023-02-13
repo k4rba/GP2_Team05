@@ -6,6 +6,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
+using AudioSystem;
 using FlowFieldSystem;
 using Health;
 using DG.Tweening;
@@ -137,6 +138,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             Destroy(dashBox);
             _shieldDashTime = 0;
         });
+        AudioManager.PlaySfx("attack_shield_dash", transform.position);
     }
 
     private void HoldBasic() {
