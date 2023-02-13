@@ -57,6 +57,12 @@ public class CharacterManager : MonoBehaviour
                 // spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
 
+            var player1 = Players[0];
+            var player2 = Players[1];
+
+            player1.GetComponent<PlayerBounds>().LinkWithOther(player2.GetComponent<Rigidbody>());
+            player2.GetComponent<PlayerBounds>().LinkWithOther(player1.GetComponent<Rigidbody>());
+
             var p1Con = Players[0].transform.Find("TetherConnector").gameObject;
             var hinge = p1Con.GetComponent<HingeJoint>();
             Destroy(hinge);
