@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AudioSystem;
 using UnityEngine;
 
 public class PlayerAttackScheme : MonoBehaviour {
@@ -28,12 +29,14 @@ public class PlayerAttackScheme : MonoBehaviour {
                         Instantiate(_basicAttack,
                             playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
                     ActiveProjectiles.Add(basicAttack);
+                    AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
                     break;
                 }
                 case true:
                     Instantiate(_specialAAbility,
                         playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
                     StunChargedProjectile = !StunChargedProjectile;
+                    AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
                     break;
             }
         }
@@ -46,6 +49,7 @@ public class PlayerAttackScheme : MonoBehaviour {
             var tetherBlast =
                 Instantiate(_specialBAbility, currentProjectilePosition, Quaternion.identity);
                 Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
+                AudioManager.PlaySfx("attack_tether_explosion", playerTransform.position);
         }
     }
 
@@ -55,11 +59,14 @@ public class PlayerAttackScheme : MonoBehaviour {
             var tetherFlail = Instantiate(_specialXAbility,
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
             ActiveProjectiles.Add(tetherFlail);
+            AudioManager.PlaySfx("attack_tether_flail2", playerTransform.position);
         }
     }
 
     public void RangedAbilityA() {
         StunChargedProjectile = !StunChargedProjectile;
+        var playerTransform = transform;
+        AudioManager.PlaySfx("attack_tether_stun", playerTransform.position);
     }
 
     public void BasicMeleeAttack() {
@@ -67,24 +74,29 @@ public class PlayerAttackScheme : MonoBehaviour {
         var basicAttack =
             Instantiate(_basicAttack,
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+        AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
+        AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
     }
 
     public void MeleeAbilityB() {
         var playerTransform = transform;
         var shieldDome = Instantiate(_specialBAbility,
             playerTransform.position, Quaternion.identity);
+        AudioManager.PlaySfx("attack_shield_dome", playerTransform.position);
     }
 
     public void MeleeAbilityX() {
-        var playertransform = transform;
-        var rotation = playertransform.rotation;
-        var dashHitBox = Instantiate(_specialXAbility2, playertransform.position, rotation, playertransform.transform);
+        var playerTransform = transform;
+        var rotation = playerTransform.rotation;
+        var dashHitBox = Instantiate(_specialXAbility2, playerTransform.position, rotation, playerTransform.transform);
+        AudioManager.PlaySfx("attack_shield_dash_charging", playerTransform.position);
     }
     
     public void MeleeAbilityA() {
         var playerTransform = transform;
         var shieldSlam = Instantiate(_specialAAbility,
             playerTransform.position  + (playerTransform.forward), playerTransform.rotation);
+        AudioManager.PlaySfx("attack_shield_slam", playerTransform.position);
     }
 
     public void InitializeAttack() {

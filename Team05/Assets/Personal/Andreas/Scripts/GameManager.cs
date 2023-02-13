@@ -13,15 +13,17 @@ namespace Andreas.Scripts
         public EnemyManager EnemyManager;
         public CharacterManager CharacterManager;
         public PlayerJoinManager PlayerJoinManager;
+
         public CameraTopDownController CameraController;
-        public WorldManager WorldManager;
+
+        // public WorldManager WorldManager;
         public RopeManager RopeManager;
         public DollyCamManager DollyManager;
-        
+
         private void Awake()
         {
             // InputSystem.DisableDevice(Keyboard.current);
-            
+
             if(Instance == null)
             {
                 Instance = this;
@@ -42,6 +44,14 @@ namespace Andreas.Scripts
             source.loop = true;
             source.volume = 0.25f;
             source.Play();
+        }
+
+        private void Update()
+        {
+            if(Input.GetKeyDown(KeyCode.H))
+            {
+                AudioManager.PlaySfx("attack_basic_attack_ranged2");
+            }
         }
     }
 }
