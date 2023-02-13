@@ -54,7 +54,7 @@ public class CharacterManager : MonoBehaviour
                 GameManager.Instance.CameraController.SetTransforms(player.transform);
                 var spawner = GameManager.Instance.EnemyManager.Spawner;
                 spawner.EnableSpawning(false);
-                spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
+                // spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
 
             var p1Con = Players[0].transform.Find("TetherConnector").gameObject;
@@ -62,8 +62,17 @@ public class CharacterManager : MonoBehaviour
             Destroy(hinge);
             var p2Con = Players[1].transform.Find("TetherConnector").gameObject;
 
-            GameManager.Instance.DollyManager.AssignTargets(Players[0].gameObject, Players[1].gameObject);
-            GameManager.Instance.RopeManager.SetRopeEnds(p1Con, p2Con);
+            var dollyManager = GameManager.Instance.DollyManager;
+            if(dollyManager != null)
+            {
+                dollyManager.AssignTargets(Players[0].gameObject, Players[1].gameObject);
+            }
+
+            var ropeManager = GameManager.Instance.RopeManager;
+            if(ropeManager != null)
+            {
+                ropeManager.SetRopeEnds(p1Con, p2Con);
+            }
         }
     }
 }

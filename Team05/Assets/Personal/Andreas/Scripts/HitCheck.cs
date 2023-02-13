@@ -1,11 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Andreas.Scripts {
     public class HitCheck : MonoBehaviour {
 
         private GameObject _target;
         private bool _didHit = false;
+
+        private float _lifeTimer = 1f;
         
         public void Set(GameObject target) {
             _target = target;
@@ -25,7 +26,12 @@ namespace Andreas.Scripts {
             }
         }
 
-        private void Update() {
+        private void Update()
+        {
+            _lifeTimer -= Time.deltaTime;
+            
+            if(_lifeTimer <= 0)
+                Destroy(gameObject);
             
         }
         
