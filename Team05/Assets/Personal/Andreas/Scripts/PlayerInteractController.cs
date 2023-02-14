@@ -20,6 +20,7 @@ namespace Andreas.Scripts
 
         public void Interact()
         {
+            Debug.Log("controller interact");
             OnInteract?.Invoke();
         }
     }
