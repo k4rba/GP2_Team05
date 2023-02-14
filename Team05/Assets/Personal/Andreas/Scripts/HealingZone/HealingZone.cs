@@ -75,13 +75,10 @@ namespace Andreas.Scripts.HealingZone
 
         private void Heal()
         {
-            var players = GameManager.Instance.CharacterManager.Players;
-
-            for(int i = 0; i < players.Count; i++)
-            {
-                var p = players[i];
-                p.Health.InstantHealing(p, _data.HealAmount);
-            }
+            if(CurrentPlayer == null)
+                return; 
+            
+            CurrentPlayer.Health.InstantDamage(CurrentPlayer, _data.HealAmount);
         }
     }
 }
