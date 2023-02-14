@@ -6,11 +6,6 @@ namespace Andreas.Scripts
     {
         public float Damage = 999f;
 
-        private void Awake()
-        {
-            
-        }
-
         private void OnTriggerEnter(Collider other)
         {
             var player = other.GetComponent<Player>();
@@ -19,6 +14,5 @@ namespace Andreas.Scripts
                 player.Health.InstantDamage(player, Damage);
             }
         }
-        
     }
 }
