@@ -52,6 +52,10 @@ namespace Personal.Andreas.Scripts.Actors
             {
                 StateManager.SetState(new EnemyStateRatRoam());
             }
+            else if(Data.Name.Equals("Seagull"))
+            {
+                StateManager.SetState(new EnemyStateSeagull(transform.position));
+            }
             else
             {
                 StateManager.SetState(new EnemyStateIdle());
