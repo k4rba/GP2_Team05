@@ -1,10 +1,14 @@
 using UnityEngine;
+using UnityEngine.Rendering.UI;
 using Util;
 
 namespace Andreas.Scripts.HealingZone
 {
     public class HealingZone : MonoBehaviour
     {
+        public Player CurrentPlayer;
+        public bool IsOccupied => _activated;
+        
         [SerializeField] private HealingZoneData _data;
 
         private Timer _tickTimer;
@@ -19,9 +23,13 @@ namespace Andreas.Scripts.HealingZone
 
         private void OnTriggerEnter(Collider other)
         {
+            if(CurrentPlayer != null)
+                return;
+            
             var player = other.gameObject.GetComponent<Player>();
             if(player != null)
             {
+                CurrentPlayer = player;
                 _activated = true;
                 Debug.Log("HEALING PAD ACTIVATED");
             }
@@ -33,6 +41,12 @@ namespace Andreas.Scripts.HealingZone
 
         private void OnTriggerExit(Collider other)
         {
+            var player = other.gameObject.GetComponent<Player>();
+            if(player == CurrentPlayer)
+            {
+                CurrentPlayer = null;
+                _activated = false;
+            }
         }
 
         private void Update()
