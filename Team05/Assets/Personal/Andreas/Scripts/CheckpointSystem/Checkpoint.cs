@@ -1,9 +1,11 @@
 ﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Andreas.Scripts.CheckpointSystem
 {
     public class Checkpoint : MonoBehaviour
     {
+        public UnityEvent OnCheckpointSet;
         public Transform[] Spawns;
         
         private void OnTriggerEnter(Collider other)
@@ -14,6 +16,7 @@ namespace Andreas.Scripts.CheckpointSystem
 
             var cm = GameManager.Instance.CheckpointManager;
             cm.SetCurrentCheckpoint(this);
+            OnCheckpointSet?.Invoke();
         }
 
         private void OnDrawGizmos()
