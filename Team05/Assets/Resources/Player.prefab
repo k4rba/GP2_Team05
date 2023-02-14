@@ -115,6 +115,7 @@ GameObject:
   - component: {fileID: -9040017964127699642}
   - component: {fileID: 3373715374849181714}
   - component: {fileID: 7069198549760303795}
+  - component: {fileID: 8934059289705220366}
   m_Layer: 0
   m_Name: Player
   m_TagString: Untagged
@@ -347,6 +348,10 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1731058e-0440-440f-b95b-283c036e6f2e
     m_ActionName: Player/SpecialA[/XInputControllerWindows/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: dcccd813-88e8-4bed-9115-f2db4d7ce0a4
+    m_ActionName: Player/Interact
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -461,6 +466,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Data: {fileID: 11400000, guid: 101a238248d475146a49d5f266222b60, type: 2}
+--- !u!114 &8934059289705220366
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 714828357488824669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cd7a215796c842fd9c98ee177ff013fe, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &714828357503984146
 GameObject:
   m_ObjectHideFlags: 0
