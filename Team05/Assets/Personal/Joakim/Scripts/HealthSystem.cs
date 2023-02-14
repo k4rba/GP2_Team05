@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Andreas.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -53,7 +54,8 @@ namespace Health {
 
         public void Die(IDamagable damagable) {
             Debug.Log(damagable + "Died :C");
-            SceneManager.LoadScene("MainScene");
+            // SceneManager.LoadScene("MainScene");
+            GameManager.Instance.CharacterManager.RespawnPlayers();
         }
 
         private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);

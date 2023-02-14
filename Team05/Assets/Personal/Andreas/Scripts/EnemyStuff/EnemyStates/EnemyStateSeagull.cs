@@ -5,11 +5,12 @@ namespace Andreas.Scripts.EnemyStates
 {
     public class EnemyStateSeagull : EnemyState
     {
+        public float MaxVelocity = 5f;
+        
         private Vector3 _center;
         private Vector3 _destination;
 
         private Timer _destinationChangeTimer = 2f;
-
         private Timer _randomPushTimer = 3f;
 
 
@@ -60,8 +61,9 @@ namespace Andreas.Scripts.EnemyStates
             var speed = Enemy.Data.MoveSpeed * distance * 0.05f;
             var vel = (dir + Random.insideUnitSphere * 0.5f).normalized * (speed * Time.fixedDeltaTime);
 
+            
             Enemy.Body.AddForce(vel, ForceMode.VelocityChange);
-            Enemy.Body.velocity = Vector3.ClampMagnitude(Enemy.Body.velocity, 5f);
+            Enemy.Body.velocity = Vector3.ClampMagnitude(Enemy.Body.velocity, MaxVelocity);
         }
     }
 }

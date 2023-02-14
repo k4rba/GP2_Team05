@@ -89,12 +89,12 @@ namespace Personal.Andreas.Scripts.Actors
         {
             Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
-            RotateTowardsDirection();
         }
 
         private void FixedUpdate()
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
+            // RotateTowardsDirection();
         }
     }
 }

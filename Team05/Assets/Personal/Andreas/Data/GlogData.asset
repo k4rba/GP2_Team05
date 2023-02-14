@@ -15,6 +15,8 @@ MonoBehaviour:
   Name: Glog
   Health: 10
   MoveSpeed: 3.5
+  MoveSpeedAcceleration: 10
+  TurnSpeed: 10
   DamageMultiplier: 1
   AttackLibrary:
     Attacks:
@@ -25,7 +27,7 @@ MonoBehaviour:
       CastTime: 1
     - Type: 1
       Damage: 1
-      Range: 1.2
+      Range: 2
       Cooldown: 0
       CastTime: 1
   SizeScale: 1
