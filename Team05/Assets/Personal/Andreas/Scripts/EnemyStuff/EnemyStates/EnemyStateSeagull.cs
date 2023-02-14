@@ -58,7 +58,7 @@ namespace Andreas.Scripts.EnemyStates
             var dir = (center - enemyPos).normalized;
             var distance = Vector3.Distance(center, enemyPos);
             var speed = Enemy.Data.MoveSpeed * distance * 0.05f;
-            var vel = (dir + Random.insideUnitSphere * 0.5f).normalized * (speed * Time.deltaTime);
+            var vel = (dir + Random.insideUnitSphere * 0.5f).normalized * (speed * Time.fixedDeltaTime);
 
             Enemy.Body.AddForce(vel, ForceMode.VelocityChange);
             Enemy.Body.velocity = Vector3.ClampMagnitude(Enemy.Body.velocity, 5f);
