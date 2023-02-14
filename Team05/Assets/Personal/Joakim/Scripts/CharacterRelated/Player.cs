@@ -43,6 +43,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private float shieldDashButtonActive;
 
     private GameObject dashArea;
+    public event Action OnInteracted;
 
     private ProjectileReceiver _projectileReceiver;
 
@@ -128,6 +129,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 _shieldDashHold = false;
             }
         }
+        
+        //  test
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Interact();
+        }
     }
 
     public void Dash() {
@@ -177,6 +184,20 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 StartCoroutine(StartAbilityBCooldown());
             }
         }
+    }
+
+    public void OnInteract(InputAction.CallbackContext context) {
+        Debug.Log("interacted");
+        if(context.performed)
+        {
+            Debug.Log("interact performed");
+            OnInteracted?.Invoke();
+        }
+    }
+
+    private void Interact()
+    {
+        OnInteracted?.Invoke();
     }
 
     IEnumerator StartAbilityBCooldown() {
