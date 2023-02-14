@@ -2,8 +2,7 @@
 
 namespace Andreas.Scripts
 {
-    public class EnemySpawner : MonoBehaviour
+    public class EnemySpawner : EnemySpawnerBase
     {
-        
     }
 }

@@ -19,5 +19,6 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             var proj = bulletObj.GetComponent<Projectile>();
             proj.Init(Target.position);
         }
+
     }
 }

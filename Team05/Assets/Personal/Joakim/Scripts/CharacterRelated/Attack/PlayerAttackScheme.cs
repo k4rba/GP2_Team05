@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using AudioSystem;
 using UnityEngine;
 
 public class PlayerAttackScheme : MonoBehaviour {
@@ -10,7 +11,6 @@ public class PlayerAttackScheme : MonoBehaviour {
     private GameObject _specialXAbility2;
     public List<GameObject> ActiveProjectiles = new List<GameObject>();
     private bool StunChargedProjectile;
-    public float DashAreaZ = 1;
 
     public enum Character {
         Ranged,
@@ -28,12 +28,14 @@ public class PlayerAttackScheme : MonoBehaviour {
                         Instantiate(_basicAttack,
                             playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
                     ActiveProjectiles.Add(basicAttack);
+                    AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
                     break;
                 }
                 case true:
                     Instantiate(_specialAAbility,
                         playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
                     StunChargedProjectile = !StunChargedProjectile;
+                    AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
                     break;
             }
         }
@@ -46,20 +48,14 @@ public class PlayerAttackScheme : MonoBehaviour {
             var tetherBlast =
                 Instantiate(_specialBAbility, currentProjectilePosition, Quaternion.identity);
                 Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
-        }
-    }
-
-    public void RangedAbilityX() {
-        var playerTransform = transform;
-        if (ActiveProjectiles.Count == 0) {
-            var tetherFlail = Instantiate(_specialXAbility,
-                playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
-            ActiveProjectiles.Add(tetherFlail);
+                AudioManager.PlaySfx("attack_tether_explosion", playerTransform.position);
         }
     }
 
     public void RangedAbilityA() {
         StunChargedProjectile = !StunChargedProjectile;
+        var playerTransform = transform;
+        AudioManager.PlaySfx("attack_tether_stun", playerTransform.position);
     }
 
     public void BasicMeleeAttack() {
@@ -67,24 +63,22 @@ public class PlayerAttackScheme : MonoBehaviour {
         var basicAttack =
             Instantiate(_basicAttack,
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+        AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
+        AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
     }
 
     public void MeleeAbilityB() {
         var playerTransform = transform;
         var shieldDome = Instantiate(_specialBAbility,
             playerTransform.position, Quaternion.identity);
-    }
-
-    public void MeleeAbilityX() {
-        var playertransform = transform;
-        var rotation = playertransform.rotation;
-        var dashHitBox = Instantiate(_specialXAbility2, playertransform.position, rotation, playertransform.transform);
+        AudioManager.PlaySfx("attack_shield_dome", playerTransform.position);
     }
     
     public void MeleeAbilityA() {
         var playerTransform = transform;
         var shieldSlam = Instantiate(_specialAAbility,
             playerTransform.position  + (playerTransform.forward), playerTransform.rotation);
+        AudioManager.PlaySfx("attack_shield_slam", playerTransform.position);
     }
 
     public void InitializeAttack() {
@@ -92,23 +86,18 @@ public class PlayerAttackScheme : MonoBehaviour {
             case Character.Ranged:
                 _basicAttack = Resources.Load<GameObject>("RangedBasicProjectile");
                 _specialBAbility = Resources.Load<GameObject>("RangedSpecialB");
-                _specialXAbility = Resources.Load<GameObject>("RangedSpecialX");
                 _specialAAbility = Resources.Load<GameObject>("RangedSpecialA");
                 _rangedBAbilityFX = Resources.Load<GameObject>("BallExplodeFX");
                 BasicAttacksList.Add(BasicRangedAttack);
                 BasicAttacksList.Add(RangedAbilityB);
-                BasicAttacksList.Add(RangedAbilityX);
                 BasicAttacksList.Add(RangedAbilityA);
                 break;
             case Character.Melee:
                 _basicAttack = Resources.Load<GameObject>("MeleeHit");
                 _specialBAbility = Resources.Load<GameObject>("MeleeShieldDome");
-                _specialXAbility = Resources.Load<GameObject>("DashArea");
-                _specialXAbility2 = Resources.Load<GameObject>("DashHitBox");
                 _specialAAbility = Resources.Load<GameObject>("MeleeShieldSlam");
                 BasicAttacksList.Add(BasicMeleeAttack);
                 BasicAttacksList.Add(MeleeAbilityB);
-                BasicAttacksList.Add(MeleeAbilityX);
                 BasicAttacksList.Add(MeleeAbilityA);
                 break;
         }

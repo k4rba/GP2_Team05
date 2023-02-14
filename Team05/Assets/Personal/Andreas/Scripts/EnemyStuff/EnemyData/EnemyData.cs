@@ -11,6 +11,8 @@ namespace Andreas.Scripts.EnemyData
         public string Name;
         public int Health;
         public float MoveSpeed;
+        public float MoveSpeedAcceleration = 10f;
+        public float TurnSpeed = 10f;
         
         [Tooltip("The damage multiplier of the Enemy. This scales multiplicative with the enemy attacks (AttackDamage * DamageMultiplier)")]
         public float DamageMultiplier = 1f;
@@ -29,5 +31,6 @@ namespace Andreas.Scripts.EnemyData
 
         [Header("SFX")] 
         public AudioClip OnDeath;
+
     }
 }

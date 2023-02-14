@@ -20,7 +20,8 @@ namespace Andreas.Scripts.EnemyStates.EnemyModes
         {
             var tf = _body.transform;
 
-            var direction = Enemy.FlowAgent.FlowDirection;
+            // var direction = Enemy.FlowAgent.FlowDirection;
+            var direction = Vector2.zero;
             
             if(direction == Vector2.zero)
             {

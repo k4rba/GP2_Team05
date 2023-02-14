@@ -37,7 +37,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     public enum RangedAttackType {
         BasicAttack,
         TetherBlast,
-        TetherFlail,
         StunBall
     }
 
@@ -57,9 +56,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
                 break;
             case RangedAttackType.TetherBlast:
                 TetherBlast();
-                break;
-            case RangedAttackType.TetherFlail:
-                TetherFlail();
                 break;
             case RangedAttackType.StunBall:
                 StunBall();
@@ -91,24 +87,12 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         StartCoroutine(TetherBlasted());
     }
 
-    public void TetherFlail() {
-        StartCoroutine(TetherFlailRotateAround());
-    }
-
     public void StunBall() {
         //  StartCoroutine(StunBallBounce());
     }
 
     IEnumerator TetherBlasted() {
         yield return new WaitForSeconds(1);
-        Destroy(gameObject);
-    }
-
-    IEnumerator TetherFlailRotateAround() {
-        _rotateAroundPlayer = !_rotateAroundPlayer;
-        yield return new WaitForSeconds(5);
-        _rotateAroundPlayer = !_rotateAroundPlayer;
-        player.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
         Destroy(gameObject);
     }
 
