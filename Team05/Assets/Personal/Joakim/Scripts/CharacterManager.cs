@@ -81,4 +81,17 @@ public class CharacterManager : MonoBehaviour
             }
         }
     }
+
+    public void RespawnPlayers()
+    {
+        var cm = GameManager.Instance.CheckpointManager;
+        var respawnPoints = cm.GetCurrentSpawnPositions();
+        for(int i = 0; i < Players.Count; i++)
+        {
+            var respawnPoint = respawnPoints[i];
+            var player = Players[i];
+            player.transform.position = respawnPoint;
+            player.Health.ResetHealth(player);
+        }
+    }
 }

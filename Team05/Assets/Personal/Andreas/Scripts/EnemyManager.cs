@@ -24,10 +24,12 @@ namespace Personal.Andreas.Scripts
             _enemies = new();
         }
 
-        public void SpawnEnemy(Vector3 position, GameObject prefab)
+        public Enemy SpawnEnemy(Vector3 position, GameObject prefab)
         {
-            var enemy = Instantiate(prefab, position, Quaternion.identity, _enemyContainer.transform);
-            AddEnemy(enemy.GetComponent<Enemy>());
+            var enemyObj = Instantiate(prefab, position, Quaternion.identity, _enemyContainer.transform);
+            var enemy = enemyObj.GetComponent<Enemy>();
+            AddEnemy(enemy);
+            return enemy;
         }
 
         public void AddEnemy(Enemy enemy)

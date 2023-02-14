@@ -47,12 +47,14 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Start()
         {
-            AudioManager.PlaySfx(Data.OnDeath.name);
-
             //  temp
             if(Data.Name.Equals("Rat"))
             {
                 StateManager.SetState(new EnemyStateRatRoam());
+            }
+            else if(Data.Name.Equals("Seagull"))
+            {
+                StateManager.SetState(new EnemyStateSeagull(transform.position));
             }
             else
             {
@@ -87,12 +89,12 @@ namespace Personal.Andreas.Scripts.Actors
         {
             Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
-            RotateTowardsDirection();
         }
 
         private void FixedUpdate()
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
+            // RotateTowardsDirection();
         }
     }
 }
