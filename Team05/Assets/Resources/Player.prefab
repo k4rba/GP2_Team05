@@ -347,22 +347,6 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 1731058e-0440-440f-b95b-283c036e6f2e
     m_ActionName: Player/SpecialA[/XInputControllerWindows/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 714828357488824483}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnAbilityX
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: f8082e3b-3fb2-447d-abf2-86442862a60c
-    m_ActionName: Player/SpecialX[/XInputControllerWindows/buttonWest]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
@@ -436,7 +420,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   ActiveProjectiles: []
-  DashAreaZ: 1
   characterType: 0
 --- !u!114 &-9040017964127699642
 MonoBehaviour:
