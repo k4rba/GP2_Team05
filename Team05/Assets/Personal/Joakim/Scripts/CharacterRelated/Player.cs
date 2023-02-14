@@ -197,6 +197,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private void Interact()
     {
+        Debug.Log("player Interact");
         OnInteracted?.Invoke();
     }
 
