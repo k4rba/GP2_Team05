@@ -1,21 +1,14 @@
 using System;
 using System.Collections;
-using System.Linq;
 using System.Collections.Generic;
 using Andreas.Scripts;
-using Andreas.Scripts.Flowfield;
 using Andreas.Scripts.StateMachine;
 using Andreas.Scripts.StateMachine.States;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
-using AudioSystem;
-using FlowFieldSystem;
 using Health;
-using DG.Tweening;
-using Personal.Andreas.Scripts;
-using Personal.Andreas.Scripts.Actors;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -49,11 +42,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private bool _bOnCd, _aOnCd, _xOnCd;
 
-    private bool _shieldDashHold;
-    private float _shieldDashTime;
-    private float shieldDashButtonActive;
-
-    private GameObject dashArea;
     public event Action OnInteracted;
 
     public StatesManager StatesManager;
@@ -78,7 +66,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private void Awake()
     {
         StatesManager = new();
-        dashArea = Resources.Load<GameObject>("DashArea");
         Health = new HealthSystem();
         Health.OnDamageTaken += HealthOnOnDamageTaken;
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
@@ -143,32 +130,16 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private void Update() {
         StatesManager.Update(Time.deltaTime);
-        if (_shieldDashHold) {
-            var dashBox = GameObject.Find("DashArea(Clone)");
-            dashBox.transform.rotation = transform.rotation;
-            dashBox.GetComponent<Rigidbody>().AddForce(transform.forward * (1.2f * Time.deltaTime), ForceMode.Impulse);
-            _shieldDashTime += Time.deltaTime;
-            if (_shieldDashTime >= 2.5f) {
-                playerAttackScheme.BasicAttacksList[2]();
-                Dash();
-                _shieldDashHold = false;
-            }
 
-        if (_aOnCd) {
-            currentAbilityACooldown -= Time.deltaTime;
-        }
-
-        if (_bOnCd) {
-            currentAbilityBCooldown -= Time.deltaTime;
-        }
-
-        //  test
-        
-        if(Input.GetKeyDown(KeyCode.T))
+        if(_aOnCd)
         {
-            Health.InstantDamage(this, 0.01f);
-        }
-        
+            currentAbilityACooldown -= Time.deltaTime;
+        }       
+        if(_bOnCd)
+        {
+            currentAbilityBCooldown -= Time.deltaTime;
+        }       
+        //  test        
         if(Input.GetKeyDown(KeyCode.F))
         {
             Interact();
@@ -244,7 +215,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnMove(InputAction.CallbackContext context) {
-        if (!_shieldDashHold) {
             var cam = Camera.main.transform;
             var input = context.ReadValue<Vector2>();
 
@@ -263,11 +233,10 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             var camMove = fwInput + riInput;
 
             moveDirection = new Vector2(camMove.x, camMove.z);
-        }
     }
 
     public void OnLook(InputAction.CallbackContext context) {
-        if (context.performed && !_shieldDashHold) {
+        if (context.performed) {
             _lookDirection = context.ReadValue<Vector2>();
 
             var cam = Camera.main.transform;
