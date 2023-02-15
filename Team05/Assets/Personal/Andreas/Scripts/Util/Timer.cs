@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace Util
@@ -28,6 +29,17 @@ namespace Util
 
             return false;
         }
-        
+
+        public IEnumerable<bool> UpdateTicks()
+        {
+            _timer += Time.deltaTime;
+            while(_timer >= _time)
+            {
+                _timer -= _time;
+                yield return true;
+            }
+            yield return false;
+        }
+
     }
 }

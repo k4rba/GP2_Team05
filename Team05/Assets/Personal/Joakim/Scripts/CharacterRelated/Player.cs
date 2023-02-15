@@ -1,8 +1,11 @@
 using System;
 using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using Andreas.Scripts;
 using Andreas.Scripts.Flowfield;
+using Andreas.Scripts.StateMachine;
+using Andreas.Scripts.StateMachine.States;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -28,6 +31,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private bool _switchedToCharacterMode = true;
     public GameObject otherPlayer;
 
+    private GameObject _model;
+
     [field: SerializeField] public Material HealthMaterial { get; set; }
     public HealthSystem Health { get; set; }
     [field: SerializeField] public int CurrentHealth { get; set; }
@@ -51,6 +56,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private GameObject dashArea;
     public event Action OnInteracted;
 
+    public StatesManager StatesManager;
+    
     private ProjectileReceiver _projectileReceiver;
 
     public enum CharacterType {
@@ -68,9 +75,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 #endif
-    private void Awake() {
+    private void Awake()
+    {
+        StatesManager = new();
         dashArea = Resources.Load<GameObject>("DashArea");
         Health = new HealthSystem();
+        Health.OnDamageTaken += HealthOnOnDamageTaken;
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
         gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
@@ -83,6 +93,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
+    }
+
+    private void HealthOnOnDamageTaken()
+    {
+        StatesManager.AddState(new StateColorFlash(_model, Color.red));
     }
 
     private void Projectile_OnHit(Projectile proj) {
@@ -108,7 +123,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
 
-                transform.Find("Jose").gameObject.SetActive(true);
+                _model = transform.Find("Jose").gameObject; 
+                _model.SetActive(true);
                 break;
             case CharacterType.Melee:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
@@ -119,13 +135,25 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
-                transform.Find("Bronk").gameObject.SetActive(true);
+                _model = transform.Find("Bronk").gameObject; 
+                _model.SetActive(true);
                 break;
         }
     }
 
-
     private void Update() {
+        StatesManager.Update(Time.deltaTime);
+        if (_shieldDashHold) {
+            var dashBox = GameObject.Find("DashArea(Clone)");
+            dashBox.transform.rotation = transform.rotation;
+            dashBox.GetComponent<Rigidbody>().AddForce(transform.forward * (1.2f * Time.deltaTime), ForceMode.Impulse);
+            _shieldDashTime += Time.deltaTime;
+            if (_shieldDashTime >= 2.5f) {
+                playerAttackScheme.BasicAttacksList[2]();
+                Dash();
+                _shieldDashHold = false;
+            }
+
         if (_aOnCd) {
             currentAbilityACooldown -= Time.deltaTime;
         }
@@ -135,7 +163,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
 
         //  test
-        if (Input.GetKeyDown(KeyCode.F)) {
+        
+        if(Input.GetKeyDown(KeyCode.T))
+        {
+            Health.InstantDamage(this, 0.01f);
+        }
+        
+        if(Input.GetKeyDown(KeyCode.F))
+        {
             Interact();
         }
     }
@@ -200,6 +235,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
 
     private void FixedUpdate() {
+        StatesManager.Update(Time.fixedDeltaTime);
         _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
