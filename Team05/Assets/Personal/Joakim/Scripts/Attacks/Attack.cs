@@ -13,7 +13,6 @@ namespace AttackNamespace {
         public interface IPlayerAttacker {
             public float AttackSpeed { get; set; }
             public float AbilityACooldown { get; set; }
-            public float AbilityXCooldown { get; set; }
             public float AbilityBCooldown { get; set; }
         }
 

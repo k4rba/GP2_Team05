@@ -10,9 +10,27 @@ namespace Andreas.Scripts
         
         [SerializeField] private GameObject _targetObj;
         [SerializeField] private CinemachineVirtualCamera _camera;
+        [SerializeField] private CinemachineVirtualCamera [] _cameras;
         
         private List<Transform> _transforms = new();
-        
+
+        private void Start()
+        {
+            SetActiveCamera(_camera);
+        }
+
+        public void SetActiveCamera(CinemachineVirtualCamera cam)
+        {
+            for (int i = 0; i < _cameras.Length; i++)
+            {
+                _cameras[i].gameObject.SetActive(false);
+            }
+
+            _camera = cam;
+            _camera.gameObject.SetActive(true);
+            _camera.Follow = _targetObj.transform;
+            _camera.LookAt = _targetObj.transform;
+        }
         public void AssignTargets(GameObject p1, GameObject p2)
         {
             _transforms.Add(p1.transform);
