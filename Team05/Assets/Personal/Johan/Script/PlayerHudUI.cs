@@ -2,76 +2,71 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using TMPro;
+using WaitForSeconds = UnityEngine.WaitForSeconds;
 
 
-public class PlayerHudUI : MonoBehaviour
-{
-    public int player1 = 0;
-    public int player2 = 0;
-
-
-    [SerializeField] private Image[] player1AbilityFillImage;
-    [SerializeField] private Image[] player2AbilityFillImage;
-
-    public float[] player1abilityCooldown;
-    public float[] player2abilityCooldown;
-
-    private float[] player1abilityCooldownMax;
-    private float[] player2abilityCooldownMax;
+public class PlayerHudUI : MonoBehaviour {
+    [SerializeField] private Image[] meleeAbilityFillImage;
+    [SerializeField] private Image[] rangedAbilityFillImage;
 
     [SerializeField] private Image[] rangerAbility;
     [SerializeField] private Image[] tankAbility;
 
-    // Start is called before the first frame update
-    public void SetUi()
-    {
 
-        // 1== ranger  2== tank
-        if (player1==1)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                player1AbilityFillImage[i] = rangerAbility[i];
-                player2AbilityFillImage[i] = tankAbility[i];
+    public List<Player> Players = new List<Player>();
 
+
+    private float meleeAbility1CDMax, meleeAbility2CDMax, rangedAbility1CDMax, rangedAbility2CDMax;
+
+
+    public void SetUi() {
+        foreach (var player in Players) {
+            switch (player.cType) {
+                case Player.CharacterType.Melee:
+                    meleeAbility1CDMax = player.AbilityBCooldown;
+                    meleeAbility2CDMax = player.AbilityACooldown;
+                    break;
+                case Player.CharacterType.Ranged:
+                    rangedAbility1CDMax = player.AbilityBCooldown;
+                    rangedAbility2CDMax = player.AbilityACooldown;
+                    break;
             }
-            player1abilityCooldownMax[1] = 5;
-            player1abilityCooldownMax[2] = 5;
-            player2abilityCooldownMax[1] = 5;
-            player2abilityCooldownMax[2] = 5;
-         
-        }
-        else if (player1 == 2)
-        {
-            for (int i = 0; i < 2; i++)
-            {
-                player1AbilityFillImage[i] = tankAbility[i];
-                player2AbilityFillImage[i] = rangerAbility[i];
-
-            }
-            player1abilityCooldownMax[1] = 5;
-            player1abilityCooldownMax[2] = 5;
-            player2abilityCooldownMax[1] = 5;
-            player2abilityCooldownMax[2] = 5;
         }
     }
 
-    // Update is called once per frame
-    void Update()
-    {
-        for (int i = 0; i < 2; i++)
-        {
-            player1AbilityFillImage[i].fillAmount = player1abilityCooldown[i] / player1abilityCooldownMax[i];
-            player2AbilityFillImage[i].fillAmount = player2abilityCooldown[i] / player2abilityCooldownMax[i];
+    public void SetCooldown(Player.CharacterType cType, int abilityNumber) {
+        switch (cType) {
+            case Player.CharacterType.Melee:
+                switch (abilityNumber) {
+                    case 0:
+                        StartCoroutine(VisualizeCooldown(meleeAbilityFillImage[0], meleeAbility1CDMax));
+                        break;
+                    case 1:
+                        StartCoroutine(VisualizeCooldown(meleeAbilityFillImage[1], meleeAbility2CDMax));
+                        break;
+                }
+
+                break;
+
+            case Player.CharacterType.Ranged:
+                switch (abilityNumber) {
+                    case 0:
+                        StartCoroutine(VisualizeCooldown(rangedAbilityFillImage[0], rangedAbility1CDMax));
+                        break;
+                    case 1:
+                        StartCoroutine(VisualizeCooldown(rangedAbilityFillImage[1], rangedAbility2CDMax));
+                        break;
+                }
+                break;
         }
+    }
 
-        //test
-         if (Input.GetKeyDown(KeyCode.Space))
-         {
-            SetUi();
-            Debug.Log("saf");
-         }
-
+    IEnumerator VisualizeCooldown(Image relevantFillImage, float maxCd) {
+        relevantFillImage.fillAmount = 0;
+        var fillAmountStep = 1 / (maxCd * 10);
+        for (int i = 0; i < maxCd * 10; i++) {
+            yield return new WaitForSeconds(0.1f);
+            relevantFillImage.fillAmount += fillAmountStep;
+        }
     }
 }
