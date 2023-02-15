@@ -78,7 +78,7 @@ namespace Andreas.Scripts.HealingZone
             if(CurrentPlayer == null)
                 return; 
             
-            CurrentPlayer.Health.InstantDamage(CurrentPlayer, _data.HealAmount);
+            CurrentPlayer.Health.InstantHealing(CurrentPlayer, _data.HealAmount);
         }
     }
 }
