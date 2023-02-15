@@ -23,8 +23,6 @@ namespace Health {
 
                 InstantDamage(self, 0.05f);
 
-                Debug.Log(self + " Transferred health to " + other);
-                
                 var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
                 // Debug.Log($"TRANSFER: hp: {other.Health.Health}   shader: {otherHealthMatFloat}");
             }
@@ -57,7 +55,6 @@ namespace Health {
         }
 
         public void Die(IDamagable damagable) {
-            Debug.Log(damagable + "Died :C");
             // SceneManager.LoadScene("MainScene");
             GameManager.Instance.CharacterManager.RespawnPlayers();
         }
