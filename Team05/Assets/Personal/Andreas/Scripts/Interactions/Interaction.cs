@@ -13,7 +13,6 @@ namespace Andreas.Scripts.Interactions
             if(player is IInteractor interactor)
             {
                 interactor.OnInteract += InteractorOnOnInteract;
-                Debug.Log("player enter");
             }
         }
 
@@ -23,13 +22,11 @@ namespace Andreas.Scripts.Interactions
             if(player is IInteractor interactor)
             {
                 interactor.OnInteract -= InteractorOnOnInteract;
-                Debug.Log("player exit");
             }
         }
 
         private void InteractorOnOnInteract()
         {
-            Debug.Log("interactor trigger");
             OnTrigger?.Invoke();
         }
     }

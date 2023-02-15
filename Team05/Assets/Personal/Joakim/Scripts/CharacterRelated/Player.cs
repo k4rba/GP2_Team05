@@ -39,8 +39,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     [field: SerializeField] public float AttackSpeed { get; set; }
 
     [field: SerializeField] public float AbilityACooldown { get; set; }
-    [field: SerializeField] public float AbilityXCooldown { get; set; }
     [field: SerializeField] public float AbilityBCooldown { get; set; }
+
+
+    public float currentAbilityACooldown;
+    public float currentAbilityBCooldown;
+    
     private bool _bOnCd, _aOnCd, _xOnCd;
 
     private bool _shieldDashHold;
@@ -109,6 +113,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         playerAttackScheme = GetComponent<PlayerAttackScheme>();
         switch (type) {
             case CharacterType.Ranged:
+                GameManager.Instance.PlayerHudUi.Players.Add(this);
                 name = "RangedPlayer";
                 AbilityBCooldown = 8;
                 AbilityACooldown = 10;
@@ -120,6 +125,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 _model.SetActive(true);
                 break;
             case CharacterType.Melee:
+                GameManager.Instance.PlayerHudUi.Players.Add(this);
                 name = "MeleePlayer)";
                 AbilityBCooldown = 15;
                 AbilityACooldown = 5;
@@ -145,6 +151,13 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 Dash();
                 _shieldDashHold = false;
             }
+
+        if (_aOnCd) {
+            currentAbilityACooldown -= Time.deltaTime;
+        }
+
+        if (_bOnCd) {
+            currentAbilityBCooldown -= Time.deltaTime;
         }
         
         //  test
@@ -195,6 +208,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     IEnumerator StartAbilityACooldown() {
+        currentAbilityACooldown = AbilityACooldown;
+        GameManager.Instance.PlayerHudUi.SetCooldown(cType, 1);
         yield return new WaitForSeconds(AbilityACooldown);
         _aOnCd = !_aOnCd;
     }
@@ -222,6 +237,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     IEnumerator StartAbilityBCooldown() {
+        currentAbilityBCooldown = AbilityBCooldown;
+        GameManager.Instance.PlayerHudUi.SetCooldown(cType, 0);
         yield return new WaitForSeconds(AbilityBCooldown);
         _bOnCd = !_bOnCd;
     }
