@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Andreas.Scripts;
 using Andreas.Scripts.Flowfield;
 using JetBrains.Annotations;
@@ -36,10 +37,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     [field: SerializeField] public float AbilityACooldown { get; set; }
     [field: SerializeField] public float AbilityBCooldown { get; set; }
 
+    public List<Material> allMats = new List<Material>();
 
     public float currentAbilityACooldown;
     public float currentAbilityBCooldown;
-    
+
     private bool _bOnCd, _aOnCd, _xOnCd;
 
     private bool _shieldDashHold;
@@ -131,22 +133,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (_bOnCd) {
             currentAbilityBCooldown -= Time.deltaTime;
         }
-        
+
         //  test
-        if(Input.GetKeyDown(KeyCode.F))
-        {
+        if (Input.GetKeyDown(KeyCode.F)) {
             Interact();
         }
-    }
-
-    public void Dash() {
-        var dashBox = GameObject.Find("DashArea(Clone)");
-        transform.DOMove(dashBox.transform.position, 0.5f).OnComplete(() => {
-            var dashBox = GameObject.Find("DashArea(Clone)");
-            Destroy(dashBox);
-            _shieldDashTime = 0;
-        });
-        AudioManager.PlaySfx("attack_shield_dash", transform.position);
     }
 
     private void HoldBasic() {
@@ -191,14 +182,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnInteract(InputAction.CallbackContext context) {
-        if(context.performed)
-        {
+        if (context.performed) {
             OnInteracted?.Invoke();
         }
     }
 
-    private void Interact()
-    {
+    private void Interact() {
         OnInteracted?.Invoke();
     }
 

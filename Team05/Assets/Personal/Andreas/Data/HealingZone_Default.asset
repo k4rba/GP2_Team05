@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e9215418a4974554a7b13de218ab5dea, type: 3}
   m_Name: HealingZone_Default
   m_EditorClassIdentifier: 
-  HealAmount: 10
+  HealAmount: 0.02
   TickRate: 1
   MaxTicks: 3
