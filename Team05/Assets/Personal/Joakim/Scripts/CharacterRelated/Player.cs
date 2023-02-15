@@ -187,10 +187,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnInteract(InputAction.CallbackContext context) {
-        Debug.Log("interacted");
         if(context.performed)
         {
-            Debug.Log("interact performed");
             OnInteracted?.Invoke();
         }
     }

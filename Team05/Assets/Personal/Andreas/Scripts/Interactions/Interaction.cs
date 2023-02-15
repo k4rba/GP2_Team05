@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using UnityEngine.Events;
 
 namespace Andreas.Scripts.Interactions
@@ -10,7 +9,8 @@ namespace Andreas.Scripts.Interactions
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other is IInteractor interactor)
+            var player = other.GetComponent<PlayerInteractController>(); 
+            if(player is IInteractor interactor)
             {
                 interactor.OnInteract += InteractorOnOnInteract;
             }
@@ -18,7 +18,8 @@ namespace Andreas.Scripts.Interactions
 
         private void OnTriggerExit(Collider other)
         {
-            if(other is IInteractor interactor)
+            var player = other.GetComponent<PlayerInteractController>(); 
+            if(player is IInteractor interactor)
             {
                 interactor.OnInteract -= InteractorOnOnInteract;
             }

@@ -25,7 +25,8 @@ namespace Andreas.Scripts.EnemyStates
 
             UpdateDestination();
             var pos = Random.insideUnitCircle * Rng.NextF(1f, 3f);
-            Enemy.transform.position = new Vector3(pos.x, Enemy.transform.position.y, pos.y);
+            var enPos = Enemy.transform.position;
+            Enemy.transform.position = new Vector3(enPos.x + pos.x, enPos.y, enPos.z + pos.y);
         }
 
         private void UpdateDestination()
