@@ -9,7 +9,6 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         private int _endIndex;
 
         private int _index;
-
         private Timer _timer;
 
         public override void Start()
@@ -22,17 +21,16 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         {
             base.Update(dt);
 
-            if(_timer.UpdateTick())
+            foreach(var t in _timer.UpdateTicks())
             {
                 SetRopeCool();
                 _index++;
+                if(_index >= Rope.Segments.Count)
+                {
+                    Exit();
+                    break;
+                }
             }
-
-            if(_index >= Rope.Segments.Count)
-            {
-                Exit();
-            }
-            
         }
 
         public void SetRopeCool()

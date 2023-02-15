@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using Andreas.Scripts;
@@ -7,6 +8,8 @@ using UnityEngine.SceneManagement;
 namespace Health {
     public class HealthSystem {
         public float Health;
+
+        public event Action OnDamageTaken;
 
         public HealthSystem() {
             Health = 0.25f;
@@ -40,6 +43,7 @@ namespace Health {
                 player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
                 
                 playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+                OnDamageTaken?.Invoke();
                 // Debug.Log($"DAMAGE: hp: {player.Health.Health}   shader: {playerHealthMat}");
             }
             else {
