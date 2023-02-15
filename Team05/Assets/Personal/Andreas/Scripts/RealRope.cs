@@ -9,6 +9,8 @@ public class RealRope : MonoBehaviour
     [SerializeField] private GameObject _start;
     [SerializeField] private GameObject _end;
     
+    public List<GameObject> Segments => _segments;
+    
     private List<GameObject> _segments;
 
     private void Awake()
