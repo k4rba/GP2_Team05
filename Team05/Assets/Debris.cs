@@ -5,6 +5,7 @@ public class Debris : MonoBehaviour
 {
     [SerializeField] private float Force = 5f;
     [SerializeField] private float Torque = 5f;
+    
     private void Awake()
     {
         var body = GetComponent<Rigidbody>();

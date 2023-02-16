@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b567219393e849e1bccbb2e757032ba3, type: 3}
   m_Name: Rope Data
   m_EditorClassIdentifier: 
-  TransferSpeed: 1
+  TransferSpeed: 0.2
   SegmentTime: 0.25
   SegmentScale: 3

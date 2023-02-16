@@ -32,11 +32,14 @@ namespace Util
 
         public int UpdateTicks()
         {
+            if(_time <= 0)
+                return 0;
             _timer += Time.deltaTime;
             int ticks = 0;
             while(_timer >= _time)
             {
                 _timer -= _time;
+                ticks++;
             }
             return ticks;
         }
