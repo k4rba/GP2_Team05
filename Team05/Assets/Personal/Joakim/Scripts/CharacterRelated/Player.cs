@@ -9,6 +9,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
 using Health;
+using UnityEditor.Animations;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -47,6 +48,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public StatesManager StatesManager;
     
     private ProjectileReceiver _projectileReceiver;
+
+    public Animator _animController;
 
     public enum CharacterType {
         Ranged,
@@ -103,27 +106,30 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         switch (type) {
             case CharacterType.Ranged:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
+
                 name = "RangedPlayer";
                 AbilityBCooldown = 8;
-                AbilityACooldown = 10;
+                AbilityACooldown = 3;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
 
-                _model = transform.Find("Jose").gameObject; 
+                _model = transform.Find("Jose").gameObject;
                 _model.SetActive(true);
+                _animController = _model.GetComponent<Animator>();
                 break;
             case CharacterType.Melee:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
                 name = "MeleePlayer)";
-                AbilityBCooldown = 15;
-                AbilityACooldown = 5;
+                AbilityBCooldown = 5;
+                AbilityACooldown = 15;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
                 _model = transform.Find("Bronk").gameObject; 
                 _model.SetActive(true);
+                _animController = _model.GetComponent<Animator>();
                 break;
         }
     }
@@ -233,6 +239,13 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             var camMove = fwInput + riInput;
 
             moveDirection = new Vector2(camMove.x, camMove.z);
+
+            var filbert = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.y));
+            
+            
+            _animController.SetFloat("VelX", filbert.x);
+            _animController.SetFloat("VelY", filbert.z);
+            
     }
 
     public void OnLook(InputAction.CallbackContext context) {

@@ -10,7 +10,6 @@ public class PlayerAttackScheme : MonoBehaviour {
     private GameObject _rangedBAbilityFX;
     private GameObject _specialXAbility2;
     public List<GameObject> ActiveProjectiles = new List<GameObject>();
-    private bool StunChargedProjectile;
 
     public enum Character {
         Ranged,
@@ -22,22 +21,11 @@ public class PlayerAttackScheme : MonoBehaviour {
     public void BasicRangedAttack() {
         var playerTransform = transform;
         if (ActiveProjectiles.Count == 0) {
-            switch (StunChargedProjectile) {
-                case false: {
-                    var basicAttack =
-                        Instantiate(_basicAttack,
-                            playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
-                    ActiveProjectiles.Add(basicAttack);
-                    AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
-                    break;
-                }
-                case true:
-                    Instantiate(_specialAAbility,
-                        playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
-                    StunChargedProjectile = !StunChargedProjectile;
-                    AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
-                    break;
-            }
+            var basicAttack =
+                Instantiate(_basicAttack,
+                    playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+            ActiveProjectiles.Add(basicAttack);
+            AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
         }
     }
 
@@ -47,15 +35,16 @@ public class PlayerAttackScheme : MonoBehaviour {
             var currentProjectilePosition = ActiveProjectiles[0].transform.position;
             var tetherBlast =
                 Instantiate(_specialBAbility, currentProjectilePosition, Quaternion.identity);
-                Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
-                AudioManager.PlaySfx("attack_tether_explosion", playerTransform.position);
+            Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
+            AudioManager.PlaySfx("attack_tether_explosion", playerTransform.position);
         }
     }
 
     public void RangedAbilityA() {
-        StunChargedProjectile = !StunChargedProjectile;
         var playerTransform = transform;
-        AudioManager.PlaySfx("attack_tether_stun", playerTransform.position);
+        Instantiate(_specialAAbility,
+            playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+        AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
     }
 
     public void BasicMeleeAttack() {
@@ -70,14 +59,14 @@ public class PlayerAttackScheme : MonoBehaviour {
     public void MeleeAbilityB() {
         var playerTransform = transform;
         var shieldDome = Instantiate(_specialBAbility,
-            playerTransform.position, Quaternion.identity);
+            new Vector3(transform.position.x, transform.position.y - 1.53f, transform.position.z), Quaternion.identity);
         AudioManager.PlaySfx("attack_shield_dome", playerTransform.position);
     }
-    
+
     public void MeleeAbilityA() {
         var playerTransform = transform;
         var shieldSlam = Instantiate(_specialAAbility,
-            playerTransform.position  + (playerTransform.forward), playerTransform.rotation);
+            playerTransform.position + (playerTransform.forward), playerTransform.rotation);
         AudioManager.PlaySfx("attack_shield_slam", playerTransform.position);
     }
 
