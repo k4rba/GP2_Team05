@@ -30,15 +30,15 @@ namespace Util
             return false;
         }
 
-        public IEnumerable<bool> UpdateTicks()
+        public int UpdateTicks()
         {
             _timer += Time.deltaTime;
+            int ticks = 0;
             while(_timer >= _time)
             {
                 _timer -= _time;
-                yield return true;
             }
-            yield return false;
+            return ticks;
         }
 
     }

@@ -17,7 +17,7 @@ namespace Andreas.Scripts.RopeSystem.SegmentStates
             base.Start();
             _time = Rope.Data.SegmentTime;
             
-            _startColor = Color.red;
+            _startColor = Color.white;
             _endColor = Segment.BaseColor;
             _material = Segment.gameObject.GetComponent<MeshRenderer>().material;
         }
