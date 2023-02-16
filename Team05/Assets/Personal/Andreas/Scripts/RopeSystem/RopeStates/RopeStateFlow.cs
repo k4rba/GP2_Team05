@@ -19,16 +19,8 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         public override void Start()
         {
             base.Start();
-            // _objLight = new GameObject("RopeLight");
-            var lightPrefab = FastResources.Load<GameObject>("Prefabs/Rope/RopeLight"); 
+            var lightPrefab = FastResources.Load<GameObject>("Prefabs/Rope/RopeLight");
             _objLight = Object.Instantiate(lightPrefab, Rope.transform);
-            
-            // var light = _objLight.AddComponent<Light>();
-            // light.color = Color.white;
-            // light.type = LightType.Point;
-            // light.intensity = 5f;
-            // light.range = 20f;
-            // light.shadows = LightShadows.Soft;
             _timer = Rope.Data.TransferSpeed / Rope.Segments.Count;
         }
 
@@ -36,10 +28,9 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         {
             base.Update(dt);
 
-            foreach(var ticked in _timer.UpdateTicks())
+            int ticks = _timer.UpdateTicks();
+            for(int i = 0; i < ticks; i++)
             {
-                if(!ticked)
-                    continue;
                 SetRopeCool();
                 _index++;
                 if(_index >= Rope.Segments.Count)
