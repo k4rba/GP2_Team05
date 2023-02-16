@@ -9,7 +9,7 @@ public class CharacterManager : MonoBehaviour
 {
     public bool rangedLockedIn, meleeLockedIn;
     public GameObject characterSelectionScreen;
-    public GameObject mainGameUI;
+    public GameObject mainGameUI, playerHUDui;
     public List<Player> Players = new List<Player>();
 
 
@@ -33,6 +33,8 @@ public class CharacterManager : MonoBehaviour
         {
             characterSelectionScreen.SetActive(false);
             mainGameUI.SetActive(true);
+            playerHUDui.SetActive(true);
+
             foreach(var player in Players)
             {
                 player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
@@ -79,6 +81,25 @@ public class CharacterManager : MonoBehaviour
             {
                 ropeManager.SetRopeEnds(p1Con, p2Con);
             }
+        }
+        GameManager.Instance.PlayerHudUi.SetUi();
+    }
+
+
+    public void GetPlayerType(int player) {
+        
+    }
+
+    public void RespawnPlayers()
+    {
+        var cm = GameManager.Instance.CheckpointManager;
+        var respawnPoints = cm.GetCurrentSpawnPositions();
+        for(int i = 0; i < Players.Count; i++)
+        {
+            var respawnPoint = respawnPoints[i];
+            var player = Players[i];
+            player.transform.position = respawnPoint;
+            player.Health.ResetHealth(player);
         }
     }
 }

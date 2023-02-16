@@ -1,11 +1,15 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
+using Andreas.Scripts;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 namespace Health {
     public class HealthSystem {
         public float Health;
+
+        public event Action OnDamageTaken;
 
         public HealthSystem() {
             Health = 0.25f;
@@ -19,8 +23,6 @@ namespace Health {
 
                 InstantDamage(self, 0.05f);
 
-                Debug.Log(self + " Transferred health to " + other);
-                
                 var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
                 // Debug.Log($"TRANSFER: hp: {other.Health.Health}   shader: {otherHealthMatFloat}");
             }
@@ -39,6 +41,7 @@ namespace Health {
                 player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
                 
                 playerHealthMat = player.HealthMaterial.GetFloat("_HP");
+                OnDamageTaken?.Invoke();
                 // Debug.Log($"DAMAGE: hp: {player.Health.Health}   shader: {playerHealthMat}");
             }
             else {
@@ -52,8 +55,8 @@ namespace Health {
         }
 
         public void Die(IDamagable damagable) {
-            Debug.Log(damagable + "Died :C");
-            SceneManager.LoadScene("MainScene");
+            // SceneManager.LoadScene("MainScene");
+            GameManager.Instance.CharacterManager.RespawnPlayers();
         }
 
         private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);

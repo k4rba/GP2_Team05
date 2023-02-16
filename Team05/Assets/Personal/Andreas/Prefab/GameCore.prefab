@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654144816016968970}
   - component: {fileID: 654144816016968969}
+  - component: {fileID: 1379539381}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -44,4 +45,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7827ea0f804ca0a68204b79502d7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Glob: {fileID: 2379351155670192603, guid: 93740fb3d0e2cbd418de53a20df8ce2d, type: 3}
+--- !u!114 &1379539381
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 654144816016968968}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f0755e7630544f5784f1b5f3e2ae57e6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  EnemyManager: {fileID: 0}
+  CharacterManager: {fileID: 0}
+  PlayerJoinManager: {fileID: 0}
+  PlayerHudUi: {fileID: 0}
+  CameraController: {fileID: 0}
+  CheckpointManager: {fileID: 0}
+  RopeManager: {fileID: 0}
+  DollyManager: {fileID: 0}

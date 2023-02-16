@@ -1,4 +1,5 @@
 ﻿using System;
+using Andreas.Scripts.CheckpointSystem;
 using AudioSystem;
 using Personal.Andreas.Scripts;
 using UnityEngine;
@@ -14,7 +15,10 @@ namespace Andreas.Scripts
         public CharacterManager CharacterManager;
         public PlayerJoinManager PlayerJoinManager;
 
+        public PlayerHudUI PlayerHudUi;
+
         public CameraTopDownController CameraController;
+        public CheckpointManager CheckpointManager;
 
         // public WorldManager WorldManager;
         public RopeManager RopeManager;
@@ -46,12 +50,5 @@ namespace Andreas.Scripts
             source.Play();
         }
 
-        private void Update()
-        {
-            if(Input.GetKeyDown(KeyCode.H))
-            {
-                AudioManager.PlaySfx("attack_basic_attack_ranged2");
-            }
-        }
     }
 }

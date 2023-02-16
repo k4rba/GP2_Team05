@@ -1,17 +1,15 @@
 using System;
 using System.Collections;
+using System.Collections.Generic;
 using Andreas.Scripts;
-using Andreas.Scripts.Flowfield;
+using Andreas.Scripts.StateMachine;
+using Andreas.Scripts.StateMachine.States;
 using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
-using AudioSystem;
-using FlowFieldSystem;
 using Health;
-using DG.Tweening;
-using Personal.Andreas.Scripts;
-using Personal.Andreas.Scripts.Actors;
+using UnityEditor.Animations;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -27,6 +25,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private bool _switchedToCharacterMode = true;
     public GameObject otherPlayer;
 
+    private GameObject _model;
+
     [field: SerializeField] public Material HealthMaterial { get; set; }
     public HealthSystem Health { get; set; }
     [field: SerializeField] public int CurrentHealth { get; set; }
@@ -34,17 +34,22 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     [field: SerializeField] public float AttackSpeed { get; set; }
 
     [field: SerializeField] public float AbilityACooldown { get; set; }
-    [field: SerializeField] public float AbilityXCooldown { get; set; }
     [field: SerializeField] public float AbilityBCooldown { get; set; }
+
+    public List<Material> allMats = new List<Material>();
+
+    public float currentAbilityACooldown;
+    public float currentAbilityBCooldown;
+
     private bool _bOnCd, _aOnCd, _xOnCd;
 
-    private bool _shieldDashHold;
-    private float _shieldDashTime;
-    private float shieldDashButtonActive;
+    public event Action OnInteracted;
 
-    private GameObject dashArea;
-
+    public StatesManager StatesManager;
+    
     private ProjectileReceiver _projectileReceiver;
+
+    public Animator _animController;
 
     public enum CharacterType {
         Ranged,
@@ -61,9 +66,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 #endif
-    private void Awake() {
-        dashArea = Resources.Load<GameObject>("DashArea");
+    private void Awake()
+    {
+        StatesManager = new();
         Health = new HealthSystem();
+        Health.OnDamageTaken += HealthOnOnDamageTaken;
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
         gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
@@ -76,6 +83,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
+    }
+
+    private void HealthOnOnDamageTaken()
+    {
+        StatesManager.AddState(new StateColorFlash(_model, Color.red));
     }
 
     private void Projectile_OnHit(Projectile proj) {
@@ -93,55 +105,58 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         playerAttackScheme = GetComponent<PlayerAttackScheme>();
         switch (type) {
             case CharacterType.Ranged:
+                GameManager.Instance.PlayerHudUi.Players.Add(this);
+
                 name = "RangedPlayer";
                 AbilityBCooldown = 8;
-                AbilityACooldown = 10;
+                AbilityACooldown = 3;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
 
-                transform.Find("Jose").gameObject.SetActive(true);
+                _model = transform.Find("Jose").gameObject;
+                _model.SetActive(true);
+                _animController = _model.GetComponent<Animator>();
                 break;
             case CharacterType.Melee:
+                GameManager.Instance.PlayerHudUi.Players.Add(this);
                 name = "MeleePlayer)";
-                AbilityBCooldown = 15;
-                AbilityACooldown = 5;
+                AbilityBCooldown = 5;
+                AbilityACooldown = 15;
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
-                transform.Find("Bronk").gameObject.SetActive(true);
+                _model = transform.Find("Bronk").gameObject; 
+                _model.SetActive(true);
+                _animController = _model.GetComponent<Animator>();
                 break;
         }
     }
 
-
     private void Update() {
-        if (_shieldDashHold) {
-            var dashBox = GameObject.Find("DashArea(Clone)");
-            dashBox.transform.rotation = transform.rotation;
-            dashBox.GetComponent<Rigidbody>().AddForce(transform.forward * (1.2f * Time.deltaTime), ForceMode.Impulse);
-            _shieldDashTime += Time.deltaTime;
-            if (_shieldDashTime >= 2.5f) {
-                playerAttackScheme.BasicAttacksList[2]();
-                Dash();
-                _shieldDashHold = false;
-            }
+        StatesManager.Update(Time.deltaTime);
+
+        if(_aOnCd)
+        {
+            currentAbilityACooldown -= Time.deltaTime;
+        }       
+        if(_bOnCd)
+        {
+            currentAbilityBCooldown -= Time.deltaTime;
+        }       
+        //  test        
+        if(Input.GetKeyDown(KeyCode.F))
+        {
+            Interact();
         }
     }
 
-    public void Dash() {
-        var dashBox = GameObject.Find("DashArea(Clone)");
-        transform.DOMove(dashBox.transform.position, 0.5f).OnComplete(() => {
-            var dashBox = GameObject.Find("DashArea(Clone)");
-            Destroy(dashBox);
-            _shieldDashTime = 0;
-        });
-        AudioManager.PlaySfx("attack_shield_dash", transform.position);
-    }
-
     private void HoldBasic() {
-        if (playerAttackScheme != null) playerAttackScheme.BasicAttacksList[0]();
+        if (playerAttackScheme != null) {
+            playerAttackScheme.BasicAttacksList[0]();
+            _animController.SetTrigger("BasicAttackTrig");
+        }
     }
 
     public void OnBasicAttack(InputAction.CallbackContext context) {
@@ -158,6 +173,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_aOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[1]();
+                _animController.SetTrigger("ShieldDomeTrig");
                 _aOnCd = !_aOnCd;
                 StartCoroutine(StartAbilityACooldown());
             }
@@ -165,6 +181,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     IEnumerator StartAbilityACooldown() {
+        currentAbilityACooldown = AbilityACooldown;
+        GameManager.Instance.PlayerHudUi.SetCooldown(cType, 1);
         yield return new WaitForSeconds(AbilityACooldown);
         _aOnCd = !_aOnCd;
     }
@@ -173,19 +191,33 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_bOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[2]();
+                _animController.SetTrigger("ShieldSlamTrig");
                 _bOnCd = !_bOnCd;
                 StartCoroutine(StartAbilityBCooldown());
             }
         }
     }
 
+    public void OnInteract(InputAction.CallbackContext context) {
+        if (context.performed) {
+            OnInteracted?.Invoke();
+        }
+    }
+
+    private void Interact() {
+        OnInteracted?.Invoke();
+    }
+
     IEnumerator StartAbilityBCooldown() {
+        currentAbilityBCooldown = AbilityBCooldown;
+        GameManager.Instance.PlayerHudUi.SetCooldown(cType, 0);
         yield return new WaitForSeconds(AbilityBCooldown);
         _bOnCd = !_bOnCd;
     }
 
 
     private void FixedUpdate() {
+        StatesManager.Update(Time.fixedDeltaTime);
         _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         if (_lookDirection.x != 0 && _lookDirection.y != 0) {
@@ -194,7 +226,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     public void OnMove(InputAction.CallbackContext context) {
-        if (!_shieldDashHold) {
             var cam = Camera.main.transform;
             var input = context.ReadValue<Vector2>();
 
@@ -213,11 +244,17 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             var camMove = fwInput + riInput;
 
             moveDirection = new Vector2(camMove.x, camMove.z);
-        }
+
+            var filbert = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.y));
+            
+            
+            _animController.SetFloat("VelX", filbert.x);
+            _animController.SetFloat("VelY", filbert.z);
+            
     }
 
     public void OnLook(InputAction.CallbackContext context) {
-        if (context.performed && !_shieldDashHold) {
+        if (context.performed) {
             _lookDirection = context.ReadValue<Vector2>();
 
             var cam = Camera.main.transform;

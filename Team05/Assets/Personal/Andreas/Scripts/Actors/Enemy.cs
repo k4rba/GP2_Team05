@@ -3,7 +3,8 @@ using Andreas.Scripts;
 using Andreas.Scripts.EnemyData;
 using Andreas.Scripts.EnemyStates;
 using Andreas.Scripts.EnemyStuff;
-using AudioSystem;
+using Andreas.Scripts.StateMachine;
+using Andreas.Scripts.StateMachine.States;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -12,26 +13,30 @@ namespace Personal.Andreas.Scripts.Actors
     [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : Actor
     {
-        [NonSerialized] public NavMeshAgent NavAgent;
-
         public Vector3 Position
         {
             get => transform.position;
             set => transform.position = value;
         }
 
+        [NonSerialized] public NavMeshAgent NavAgent;
         [NonSerialized] public Rigidbody Body;
+        [NonSerialized] public Vector3 LookDirection;
 
         public EnemyData Data;
         public EnemyStateManager StateManager;
-
+        private StatesManager _statesManager;
         public string State;
+
+        [SerializeField] private GameObject _model;
+
 
         private void Awake()
         {
             Health.Health = 3;
 
             StateManager = new(this);
+            _statesManager = new();
             Body = gameObject.GetComponent<Rigidbody>();
 
             NavAgent = GetComponent<NavMeshAgent>();
@@ -47,12 +52,14 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void Start()
         {
-            AudioManager.PlaySfx(Data.OnDeath.name);
-
             //  temp
             if(Data.Name.Equals("Rat"))
             {
                 StateManager.SetState(new EnemyStateRatRoam());
+            }
+            else if(Data.Name.Equals("Seagull"))
+            {
+                StateManager.SetState(new EnemyStateSeagull(transform.position));
             }
             else
             {
@@ -67,15 +74,25 @@ namespace Personal.Andreas.Scripts.Actors
             {
                 Die();
             }
+            else
+            {
+                _statesManager.AddState(new StateColorFlash(_model, Color.red));
+            }
         }
 
         private void RotateTowardsDirection()
         {
-            var direction = Body.velocity;
-            if(direction == Vector3.zero)
+            if(NavAgent.isOnNavMesh && !NavAgent.isStopped)
+                LookDirection = NavAgent.velocity;
+
+            if(LookDirection == Vector3.zero)
                 return;
+            
             // transform.Rotate(direction);
-            transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            // var rotation = transform.rotation;
+            // var to = Quaternion.Euler(direction);
+            // transform.rotation = Quaternion.RotateTowards(rotation, to, 90f * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.LookRotation(LookDirection.normalized);
         }
 
         public void Die()
@@ -87,12 +104,14 @@ namespace Personal.Andreas.Scripts.Actors
         {
             Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
-            RotateTowardsDirection();
+            _statesManager.Update(Time.deltaTime);
         }
 
         private void FixedUpdate()
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
+            _statesManager.FixedUpdate(Time.fixedDeltaTime);
+            RotateTowardsDirection();
         }
     }
 }

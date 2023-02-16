@@ -6,16 +6,7 @@ namespace Andreas.Scripts.EnemyStates
 {
     public class EnemyStateIdle : EnemyState
     {
-
         private Timer _scanTargetTimer = 1f;
-        
-        public override void Start()
-        {
-            base.Start();
-
-            // Debug.Log("IDLE");
-            
-        }
 
         public override void Update(float dt)
         {
@@ -29,17 +20,23 @@ namespace Andreas.Scripts.EnemyStates
 
         private void EnterHunt(GameObject target)
         {
-            // Debug.Log("exit hunt");
-            // Enemy.FlowAgent.SetTarget(target);
-            Enemy.StateManager.SetState(new EnemyStateHunt(target));
+            //  temporary
+            if(Enemy.Data.Name.Equals("Gunnar"))
+            {
+                Enemy.StateManager.SetState(new EnemyStateHunt(target));
+            }
+            else
+            {
+                Enemy.StateManager.SetState(new EnemyStateRangedHunt(target));
+            }
         }
-        
+
         private void ScanForPlayer()
         {
             var players = GameManager.Instance.CharacterManager.Players;
 
             float aggroRange = 15f;
-            
+
             for(int i = 0; i < players.Count; i++)
             {
                 var p = players[i];
@@ -48,13 +45,10 @@ namespace Andreas.Scripts.EnemyStates
 
                 if(distance < aggroRange)
                 {
-                    // EnterHunt(p.GetComponent<FlowTargetAgent>());
                     EnterHunt(p.gameObject);
-                    // Debug.Log($"aggro on player: {p.name}");
                     return;
                 }
             }
         }
-        
     }
 }

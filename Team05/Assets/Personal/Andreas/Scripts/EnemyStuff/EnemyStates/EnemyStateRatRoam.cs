@@ -12,7 +12,6 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
-
             SetDestinationRandom();
         }
 
@@ -24,7 +23,7 @@ namespace Andreas.Scripts.EnemyStates
             float radius = walkRadiusRange * roll;
             _walkCooldownTimer = 0.5f + _walkCooldown * roll;
 
-            var enemyPosition = Enemy.transform.position; 
+            var enemyPosition = Enemy.transform.position;
             var rndScanDirection = enemyPosition + Random.insideUnitSphere * radius;
             NavMeshHit hit;
             NavMesh.SamplePosition(rndScanDirection, out hit, radius, 1);
