@@ -153,7 +153,10 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
     private void HoldBasic() {
-        if (playerAttackScheme != null) playerAttackScheme.BasicAttacksList[0]();
+        if (playerAttackScheme != null) {
+            playerAttackScheme.BasicAttacksList[0]();
+            _animController.SetTrigger("BasicAttackTrig");
+        }
     }
 
     public void OnBasicAttack(InputAction.CallbackContext context) {
@@ -170,6 +173,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_aOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[1]();
+                _animController.SetTrigger("ShieldDomeTrig");
                 _aOnCd = !_aOnCd;
                 StartCoroutine(StartAbilityACooldown());
             }
@@ -187,6 +191,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_bOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[2]();
+                _animController.SetTrigger("ShieldSlamTrig");
                 _bOnCd = !_bOnCd;
                 StartCoroutine(StartAbilityBCooldown());
             }
