@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1077535845809548376}
   - component: {fileID: 1077535845809548377}
   - component: {fileID: 1077535845809548374}
-  - component: {fileID: 1077535845809548378}
+  - component: {fileID: 3885880341228809930}
   m_Layer: 5
   m_Name: UICanvas
   m_TagString: Untagged
@@ -103,7 +103,7 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!114 &1077535845809548378
+--- !u!114 &3885880341228809930
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -112,29 +112,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1077535845809548375}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 02feec37722936d4bb65aeb149309129, type: 3}
+  m_Script: {fileID: 11500000, guid: df8c5f4e5421435c97e2ee30d639f9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player1: 0
-  player2: 0
-  player1AbilityFillImage:
+  meleeAbilityFillImage:
   - {fileID: 1077535847189174088}
   - {fileID: 1077535847247980873}
-  player2AbilityFillImage:
+  rangedAbilityFillImage:
   - {fileID: 1077535847691155003}
   - {fileID: 1077535847591082908}
-  player1abilityCooldown:
-  - 0
-  - 0
-  player2abilityCooldown:
-  - 0
-  - 0
   rangerAbility:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1077535846847394572}
+  - {fileID: 1077535847581790490}
   tankAbility:
-  - {fileID: 0}
-  - {fileID: 0}
+  - {fileID: 1077535846256573798}
+  - {fileID: 1077535847702363320}
+  Players: []
 --- !u!1 &1077535846101749775
 GameObject:
   m_ObjectHideFlags: 0
