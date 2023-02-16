@@ -1,5 +1,4 @@
-﻿using AudioSystem;
-using UnityEngine;
+﻿using UnityEngine;
 using Util;
 
 namespace Andreas.Scripts.EnemyStates
@@ -16,13 +15,11 @@ namespace Andreas.Scripts.EnemyStates
         {
             base.Start();
             RandomizeAttack();
-            // Enemy.FlowAgent.IsEnabled = true;
             UpdateDestination();
         }
 
         private void UpdateDestination()
         {
-            // Enemy.NavAgent.destination = Enemy.FlowAgent.Target.transform.position;
             Enemy.NavAgent.isStopped = false;
             Enemy.NavAgent.destination = Target.transform.position;
         }
@@ -46,7 +43,6 @@ namespace Andreas.Scripts.EnemyStates
         {
             base.Exit();
             Enemy.NavAgent.isStopped = true;
-            // Enemy.FlowAgent.IsEnabled = false;
         }
 
         private void EnterAttack()
@@ -54,7 +50,6 @@ namespace Andreas.Scripts.EnemyStates
             Enemy.StateManager.SetState(
                 new EnemyStateWait(0.5f, new EnemyStateAttack(Target, Attack)));
         }
-
 
     }
 }
