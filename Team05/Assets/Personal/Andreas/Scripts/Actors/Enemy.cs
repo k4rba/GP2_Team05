@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections;
 using Andreas.Scripts;
 using Andreas.Scripts.EnemyData;
 using Andreas.Scripts.EnemyStates;
@@ -30,6 +31,8 @@ namespace Personal.Andreas.Scripts.Actors
 
         [SerializeField] private GameObject _model;
 
+        public Animator _animator;
+
 
         private void Awake()
         {
@@ -40,6 +43,8 @@ namespace Personal.Andreas.Scripts.Actors
             Body = gameObject.GetComponent<Rigidbody>();
 
             NavAgent = GetComponent<NavMeshAgent>();
+
+            _animator = GetComponentInChildren<Animator>();
             UpdateNavAgentStats();
         }
 
@@ -95,8 +100,13 @@ namespace Personal.Andreas.Scripts.Actors
             transform.rotation = Quaternion.LookRotation(LookDirection.normalized);
         }
 
-        public void Die()
-        {
+        public void Die() {
+            _animator.SetTrigger("Die");
+            StartCoroutine(WaitThenDieForAnimationsSake());
+        }
+
+        IEnumerator WaitThenDieForAnimationsSake() {
+            yield return new WaitForSeconds(1);
             Destroy(gameObject);
         }
 

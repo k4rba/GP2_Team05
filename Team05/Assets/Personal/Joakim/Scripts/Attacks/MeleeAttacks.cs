@@ -89,9 +89,11 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
 
         if (enemy != null && meleeAttackType == MeleeAttackType.ShieldSlam) {
             enemy.StateManager.SetState(new EnemyStateStunned(10f));
+            enemy._animator.SetTrigger("Stun");
         }
 
         int finalDamage = (int)Mathf.Min(1, BasicDamage);
         enemy.TakeDamage(finalDamage);
+        enemy._animator.SetTrigger("GetHit");
     }
 }
