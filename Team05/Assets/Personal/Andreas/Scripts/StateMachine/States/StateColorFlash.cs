@@ -6,9 +6,9 @@ namespace Andreas.Scripts.StateMachine.States
 {
     struct MaterialColors
     {
+        public Material Material;
         public Color Start;
         public Color End;
-        public Material Material;
 
         public MaterialColors(Color start, Color end, Material material)
         {
@@ -19,12 +19,9 @@ namespace Andreas.Scripts.StateMachine.States
     }
     public class StateColorFlash : State
     {
-        private float timer = 0.2f;
-
+        private float _timer = 0.1f;
         private Color _color;
-
         private GameObject _model;
-
         private List<MaterialColors> _materials;
 
         public StateColorFlash(GameObject model, Color color)
@@ -69,9 +66,9 @@ namespace Andreas.Scripts.StateMachine.States
         {
             base.Update(dt);
 
-            timer -= dt;
+            _timer -= dt;
 
-            if(timer <= 0)
+            if(_timer <= 0)
                 Exit();
         }
 
