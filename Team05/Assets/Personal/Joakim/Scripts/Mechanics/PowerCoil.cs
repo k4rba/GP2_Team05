@@ -22,7 +22,11 @@ namespace Joakim.Scripts.Mechanics {
         public GameObject coupledFuseBox;
         private LineRenderer _lr;
         private int _currentLineIndex;
-        private bool done;
+        public bool done;
+
+        [Header(
+            "Check this only if more than one coil needs to be charged to progress. Do the same for other coils connected to this event.")]
+        public bool multipleCoils;
 
         private Vector3 _lineStartPos, _lineEndPos;
 
@@ -32,7 +36,6 @@ namespace Joakim.Scripts.Mechanics {
             _lineStartPos = transform.position;
             _lineEndPos = fuseBoxPos;
         }
-
 
         private void Start() {
             _lr = GetComponentInChildren<LineRenderer>();
@@ -51,9 +54,12 @@ namespace Joakim.Scripts.Mechanics {
 
         private void OnTriggerExit(Collider other) {
             if (other.GetComponent<HealthSystem.IDamagable>() == affectedPlayer) {
+                if (!done) {
+                    _lr.SetPosition(0, _lineStartPos);
+                }
+
                 _currentLineIndex = 0;
                 _currentTic = 0;
-                _lr.SetPosition(0, _lineStartPos);
                 affectedPlayer = null;
                 CancelInvoke(nameof(OfferHealth));
             }
@@ -76,14 +82,19 @@ namespace Joakim.Scripts.Mechanics {
                 _currentTic++;
             }
             else if (_currentTic == requiredTicsToExecuteEvent) {
-                ExecuteEvent();
                 done = !done;
+                ExecuteEvent();
                 CancelInvoke(nameof(OfferHealth));
             }
         }
 
         public void ExecuteEvent() {
-            objectToDisableUponExecute.SetActive(false);
+            if (!multipleCoils) {
+                objectToDisableUponExecute.SetActive(false);
+            }
+            else {
+                coupledFuseBox.GetComponent<FuseBoxMultipleCoilsOnly>().CheckIfFinished();
+            }
         }
     }
 }

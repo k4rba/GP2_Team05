@@ -1,6 +1,7 @@
 ﻿using AttackNamespace;
 using UnityEngine;
 using UnityEngine.Events;
+using Util;
 
 namespace Andreas.Scripts
 {
@@ -9,15 +10,22 @@ namespace Andreas.Scripts
     {
         public int Life = 1;
 
-        public UnityEvent OnDestroyed;
+        [Space(10)]
         
+        [SerializeField] private int _debrisCount = 3;
+        [SerializeField] private GameObject[] _debrisPrefabs;
+        
+        [Space(20)]
+        
+        public UnityEvent OnDestroyed;
+
         private void OnTriggerEnter(Collider other)
         {
             var attack = other.GetComponent<Attack.IAttack>();
 
             if(attack == null)
                 return;
-            
+
             if(--Life <= 0)
             {
                 Destruct();
@@ -26,6 +34,7 @@ namespace Andreas.Scripts
 
         public void Destruct()
         {
+            SpawnPlanks();
             OnDestroyed?.Invoke();
             Delete();
         }
@@ -33,6 +42,17 @@ namespace Andreas.Scripts
         public void Delete()
         {
             Destroy(gameObject);
+        }
+
+        public void SpawnPlanks()
+        {
+            if(_debrisPrefabs is not {Length: > 0})
+                return;
+
+            for(int i = 0; i < _debrisCount; i++)
+            {
+                Instantiate(_debrisPrefabs.RandomItem(), transform.position, Quaternion.identity);
+            }
         }
     }
 }

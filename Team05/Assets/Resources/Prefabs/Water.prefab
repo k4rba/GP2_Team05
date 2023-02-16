@@ -98,5 +98,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Size: 50
   GridSize: 16
-  WaveSpeed: 0.2
-  WavePower: 15
+  WaveSpeed: 0.3
+  WavePower: 6
+  _generateMesh: 0

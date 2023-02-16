@@ -64,7 +64,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: c8daca2ff4390224c943921d025fb187, type: 2}
+  - {fileID: 2100000, guid: 1792d78d9ad7ea6449fbd1c8b0ce9a6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -114,7 +114,7 @@ MonoBehaviour:
   <BasicDamage>k__BackingField: 1
   <SpecialDamage>k__BackingField: 0.8
   <ProjectileSpeed>k__BackingField: 30
-  <AttackSize>k__BackingField: 1
+  <AttackSize>k__BackingField: 0.5
   player: {fileID: 0}
   distToPlayer: 0
   stunBallNearbyEnemies: []

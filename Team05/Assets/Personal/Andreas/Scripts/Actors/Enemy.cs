@@ -3,6 +3,8 @@ using Andreas.Scripts;
 using Andreas.Scripts.EnemyData;
 using Andreas.Scripts.EnemyStates;
 using Andreas.Scripts.EnemyStuff;
+using Andreas.Scripts.StateMachine;
+using Andreas.Scripts.StateMachine.States;
 using AudioSystem;
 using UnityEngine;
 using UnityEngine.AI;
@@ -12,26 +14,28 @@ namespace Personal.Andreas.Scripts.Actors
     [RequireComponent(typeof(NavMeshAgent))]
     public class Enemy : Actor
     {
-        [NonSerialized] public NavMeshAgent NavAgent;
-
         public Vector3 Position
         {
             get => transform.position;
             set => transform.position = value;
         }
 
+        [NonSerialized] public NavMeshAgent NavAgent;
         [NonSerialized] public Rigidbody Body;
 
         public EnemyData Data;
         public EnemyStateManager StateManager;
-
+        private StatesManager _statesManager;
         public string State;
+
+        [SerializeField] private GameObject _model;
 
         private void Awake()
         {
             Health.Health = 3;
 
             StateManager = new(this);
+            _statesManager = new();
             Body = gameObject.GetComponent<Rigidbody>();
 
             NavAgent = GetComponent<NavMeshAgent>();
@@ -69,6 +73,10 @@ namespace Personal.Andreas.Scripts.Actors
             {
                 Die();
             }
+            else
+            {
+                _statesManager.AddState(new StateColorFlash(_model, Color.red));
+            }
         }
 
         private void RotateTowardsDirection()
@@ -89,11 +97,13 @@ namespace Personal.Andreas.Scripts.Actors
         {
             Data.AttackLibrary.Update();
             StateManager.Update(Time.deltaTime);
+            _statesManager.Update(Time.deltaTime);
         }
 
         private void FixedUpdate()
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
+            _statesManager.FixedUpdate(Time.fixedDeltaTime);
             // RotateTowardsDirection();
         }
     }

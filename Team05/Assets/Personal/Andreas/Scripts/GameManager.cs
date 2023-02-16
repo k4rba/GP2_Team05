@@ -15,6 +15,8 @@ namespace Andreas.Scripts
         public CharacterManager CharacterManager;
         public PlayerJoinManager PlayerJoinManager;
 
+        public PlayerHudUI PlayerHudUi;
+
         public CameraTopDownController CameraController;
         public CheckpointManager CheckpointManager;
 
