@@ -45,8 +45,8 @@ namespace Andreas.Scripts.EnemyStates
             Enemy.NavAgent.isStopped = true;
         }
 
-        private void EnterAttack()
-        {
+        private void EnterAttack() {
+            Enemy._animator.SetTrigger("Hit");
             Enemy.StateManager.SetState(
                 new EnemyStateWait(0.25f, new EnemyStateAttack(Target, Attack)));
         }

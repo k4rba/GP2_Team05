@@ -130,6 +130,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
 
             var enemy = stunBallNearbyEnemies[i];
             int finalDamage = (int)Mathf.Min(1, BasicDamage);
+            enemy._animator.SetTrigger("Stun");
             enemy.TakeDamage(finalDamage);
         }
 
@@ -145,6 +146,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
             var enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy != null) {
                 int finalDamage = (int)Mathf.Min(1, BasicDamage);
+                enemy._animator.SetTrigger("GetHit");
                 enemy.TakeDamage(finalDamage);
             }
         }
