@@ -36,8 +36,10 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         {
             base.Update(dt);
 
-            foreach(var t in _timer.UpdateTicks())
+            foreach(var ticked in _timer.UpdateTicks())
             {
+                if(!ticked)
+                    continue;
                 SetRopeCool();
                 _index++;
                 if(_index >= Rope.Segments.Count)
