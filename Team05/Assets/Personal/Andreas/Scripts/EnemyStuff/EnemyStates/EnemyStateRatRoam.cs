@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using System.Collections.Generic;
+using UnityEngine;
 using UnityEngine.AI;
 using Util;
 
@@ -9,9 +10,14 @@ namespace Andreas.Scripts.EnemyStates
         private float _walkCooldown = 3f;
         private float _walkCooldownTimer = 1f;
 
+        private List<Player> _players;
+
+        private Timer _scanPlayersTimer = 1f; 
+
         public override void Start()
         {
             base.Start();
+            _players = GameManager.Instance.CharacterManager.Players;
 
             SetDestinationRandom();
         }
@@ -39,6 +45,12 @@ namespace Andreas.Scripts.EnemyStates
             {
                 SetDestinationRandom();
             }
+
+            if(_scanPlayersTimer.UpdateTick())
+            {
+                
+            }
+            
         }
     }
 }

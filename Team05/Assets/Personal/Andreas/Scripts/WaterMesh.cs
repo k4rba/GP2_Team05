@@ -1,5 +1,7 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Serialization;
 
 namespace Andreas.Scripts
 {
@@ -24,25 +26,39 @@ namespace Andreas.Scripts
         private float _waterLevel;
         private MeshFilter _meshFilter;
         private Vector2 offset;
+        private bool _generated;
+
+        [SerializeField] private bool _generateMesh;
+
+        private void Awake()
+        {
+            _meshFilter = GetComponent<MeshFilter>();
+        }
 
         private void Start()
         {
-            _meshFilter = GetComponent<MeshFilter>();
-            _meshFilter.mesh = GenerateMesh();
+            _meshFilter.sharedMesh = GenerateMesh();
             Noise();
         }
 
         private void Update()
         {
             Noise();
+
         }
 
         private void Noise()
         {
+            if(_generateMesh)
+            {
+                _meshFilter.sharedMesh = GenerateMesh();
+                _generateMesh = false;
+            }
+            
             offset.x += WaveSpeed * Time.deltaTime;
             offset.y += WaveSpeed * Time.deltaTime;
 
-            var vertices = _meshFilter.mesh.vertices;
+            var vertices = _meshFilter.sharedMesh.vertices;
 
             for(int i = 0; i < vertices.Length; i++)
             {
@@ -51,7 +67,7 @@ namespace Andreas.Scripts
                 vertices[i] = new Vector3(v.x, noise * WavePower, v.z);
             }
 
-            _meshFilter.mesh.vertices = vertices;
+            _meshFilter.sharedMesh.vertices = vertices;
         }
 
         private Mesh GenerateMesh()
@@ -94,6 +110,20 @@ namespace Andreas.Scripts
             retMesh.SetUVs(0, uvs);
             retMesh.SetTriangles(triangles, 0);
             return retMesh;
+        }
+
+        private void OnDrawGizmos()
+        {
+            if(_meshFilter == null)
+            {
+                _meshFilter = GetComponent<MeshFilter>();
+            }
+            if(_meshFilter.sharedMesh == null)
+            {
+                _meshFilter.sharedMesh = GenerateMesh();
+            }
+
+            Noise();
         }
     }
 }
