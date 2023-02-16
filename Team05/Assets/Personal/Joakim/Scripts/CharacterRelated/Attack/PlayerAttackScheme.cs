@@ -43,7 +43,7 @@ public class PlayerAttackScheme : MonoBehaviour {
     public void RangedAbilityA() {
         var playerTransform = transform;
         Instantiate(_specialAAbility,
-            playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+            playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
         AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
     }
 
@@ -51,7 +51,7 @@ public class PlayerAttackScheme : MonoBehaviour {
         var playerTransform = transform;
         var basicAttack =
             Instantiate(_basicAttack,
-                playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+                playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
         AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
         AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
     }
