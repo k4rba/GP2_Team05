@@ -1,5 +1,8 @@
-﻿using Andreas.Scripts.RopeSystem.SegmentStates;
+﻿using System.Drawing;
+using Andreas.Scripts.RopeSystem.SegmentStates;
+using UnityEngine;
 using Util;
+using Color = UnityEngine.Color;
 
 namespace Andreas.Scripts.RopeSystem.RopeStates
 {
@@ -11,9 +14,13 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         private int _index;
         private Timer _timer;
 
+        private GameObject _objLight;
+
         public override void Start()
         {
             base.Start();
+            var lightPrefab = FastResources.Load<GameObject>("Prefabs/Rope/RopeLight");
+            _objLight = Object.Instantiate(lightPrefab, Rope.transform);
             _timer = Rope.Data.TransferSpeed / Rope.Segments.Count;
         }
 
@@ -21,7 +28,8 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         {
             base.Update(dt);
 
-            foreach(var t in _timer.UpdateTicks())
+            int ticks = _timer.UpdateTicks();
+            for(int i = 0; i < ticks; i++)
             {
                 SetRopeCool();
                 _index++;
@@ -36,9 +44,18 @@ namespace Andreas.Scripts.RopeSystem.RopeStates
         public void SetRopeCool()
         {
             var segment = Rope.Segments[_index].GetComponent<RopeSegment>();
+            segment.GetComponent<Rigidbody>()
+                .AddForce(Random.insideUnitSphere * Rng.NextF(3f, 10f), ForceMode.VelocityChange);
             segment.AddState(new RopeSegmentStateColor());
             segment.AddState(new RopeSegmentStateSize());
+
+            _objLight.transform.position = segment.transform.position;
         }
-        
+
+        public override void Exit()
+        {
+            base.Exit();
+            Object.Destroy(_objLight);
+        }
     }
 }
