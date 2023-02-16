@@ -5,7 +5,6 @@ using Andreas.Scripts.EnemyStates;
 using Andreas.Scripts.EnemyStuff;
 using Andreas.Scripts.StateMachine;
 using Andreas.Scripts.StateMachine.States;
-using AudioSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -22,6 +21,7 @@ namespace Personal.Andreas.Scripts.Actors
 
         [NonSerialized] public NavMeshAgent NavAgent;
         [NonSerialized] public Rigidbody Body;
+        [NonSerialized] public Vector3 LookDirection;
 
         public EnemyData Data;
         public EnemyStateManager StateManager;
@@ -29,6 +29,7 @@ namespace Personal.Andreas.Scripts.Actors
         public string State;
 
         [SerializeField] private GameObject _model;
+
 
         private void Awake()
         {
@@ -81,11 +82,17 @@ namespace Personal.Andreas.Scripts.Actors
 
         private void RotateTowardsDirection()
         {
-            var direction = Body.velocity;
-            if(direction == Vector3.zero)
+            if(NavAgent.isOnNavMesh && !NavAgent.isStopped)
+                LookDirection = NavAgent.velocity;
+
+            if(LookDirection == Vector3.zero)
                 return;
+            
             // transform.Rotate(direction);
-            transform.rotation = Quaternion.LookRotation(direction.normalized, Vector3.up);
+            // var rotation = transform.rotation;
+            // var to = Quaternion.Euler(direction);
+            // transform.rotation = Quaternion.RotateTowards(rotation, to, 90f * Time.fixedDeltaTime);
+            transform.rotation = Quaternion.LookRotation(LookDirection.normalized);
         }
 
         public void Die()
@@ -104,7 +111,7 @@ namespace Personal.Andreas.Scripts.Actors
         {
             StateManager.FixedUpdate(Time.fixedDeltaTime);
             _statesManager.FixedUpdate(Time.fixedDeltaTime);
-            // RotateTowardsDirection();
+            RotateTowardsDirection();
         }
     }
 }

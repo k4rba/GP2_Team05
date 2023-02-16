@@ -6,16 +6,14 @@ namespace Andreas.Scripts.EnemyStates
     public class EnemyStateAttack : EnemyStateTarget
     {
         public EnemyStateAttack(GameObject target, EnemyAttackBase attack) 
-            : base(target, attack)
-        {
-        }
+            : base(target, attack) { }
 
         public override void Start()
         {
             base.Start();
-            // Debug.Log("enter attack");
-
             Attack.Start();
+            var dirToTarget = (Target.transform.position - Enemy.transform.position).normalized;
+            Enemy.LookDirection = dirToTarget;
         }
 
         public override void Update(float dt)
@@ -32,10 +30,7 @@ namespace Andreas.Scripts.EnemyStates
         public override void Exit()
         {
             base.Exit();
-            // Debug.Log("exit attack");
-            Enemy.StateManager.SetState(new EnemyStateWait(0.5f));
-            // Enemy.CancelAttack();
-            // Enemy.StateManager.SetState(new EnemyStateHunt());
+            Enemy.StateManager.SetState(new EnemyStateWait(0.25f));
         }
     }
 }
