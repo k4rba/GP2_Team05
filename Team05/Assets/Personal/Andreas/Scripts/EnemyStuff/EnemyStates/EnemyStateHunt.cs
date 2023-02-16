@@ -48,7 +48,7 @@ namespace Andreas.Scripts.EnemyStates
         private void EnterAttack()
         {
             Enemy.StateManager.SetState(
-                new EnemyStateWait(0.5f, new EnemyStateAttack(Target, Attack)));
+                new EnemyStateWait(0.25f, new EnemyStateAttack(Target, Attack)));
         }
 
     }

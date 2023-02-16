@@ -10,11 +10,13 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: bf6b92054b9b45e995abcf0703baea63, type: 3}
-  m_Name: BlobbyData
+  m_Name: BosseData
   m_EditorClassIdentifier: 
-  Name: Blobby
+  Name: Bosse
   Health: 1
   MoveSpeed: 8
+  MoveSpeedAcceleration: 10
+  TurnSpeed: 10
   DamageMultiplier: 1
   AttackLibrary:
     Attacks:

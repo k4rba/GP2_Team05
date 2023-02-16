@@ -20,8 +20,14 @@ namespace Andreas.Scripts.EnemyStates
             base.Start();
 
             _players = GameManager.Instance.CharacterManager.Players;
-
             RandomizeAttack();
+
+            if(Rng.Roll(50))
+            {
+                TryFlee();
+                return;
+            }
+            
             UpdateDestination();
         }
 
@@ -33,18 +39,21 @@ namespace Andreas.Scripts.EnemyStates
 
         private void TryFlee()
         {
+            float minDistanceFromPlayerToFlee = 6f;
             var enemyPos = Enemy.transform.position;
             for(int i = 0; i < _players.Count; i++)
             {
                 var playerPos = _players[i].transform.position;
                 var distance = enemyPos.FastDistance(playerPos);
 
-                if(distance < 3)
+                if(distance < minDistanceFromPlayerToFlee)
                 {
                     var dir = (enemyPos - playerPos).normalized;
-                    var fleePos = dir * Rng.NextF(2f, 4f);
+                    var fleePos = enemyPos + dir * 5f;
                     Enemy.StateManager.SetState(new EnemyStateMoveDirection(fleePos));
                     Exit();
+                    Debug.Log("fleeing");
+                    break;
                 }
                 
             }
@@ -73,12 +82,13 @@ namespace Andreas.Scripts.EnemyStates
         private void EnterAttack()
         {
             Enemy.StateManager.SetState(
-                new EnemyStateWait(0.5f, new EnemyStateAttack(Target, Attack)));
+                new EnemyStateWait(0.25f, new EnemyStateAttack(Target, Attack)));
         }
 
         public override void Exit()
         {
             base.Exit();
+            Enemy.NavAgent.isStopped = true;
         }
     }
 }

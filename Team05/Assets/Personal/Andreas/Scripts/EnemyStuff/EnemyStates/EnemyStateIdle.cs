@@ -21,7 +21,7 @@ namespace Andreas.Scripts.EnemyStates
         private void EnterHunt(GameObject target)
         {
             //  temporary
-            if(Enemy.Data.Name.Equals("Bosse"))
+            if(Enemy.Data.Name.Equals("Gunnar"))
             {
                 Enemy.StateManager.SetState(new EnemyStateHunt(target));
             }
