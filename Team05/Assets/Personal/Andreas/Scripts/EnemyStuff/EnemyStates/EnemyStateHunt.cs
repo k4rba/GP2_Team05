@@ -14,6 +14,8 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
+            Debug.Log("RUNNING");
+            Enemy._animator.SetBool("Run", true);
             RandomizeAttack();
             UpdateDestination();
         }
@@ -42,11 +44,11 @@ namespace Andreas.Scripts.EnemyStates
         public override void Exit()
         {
             base.Exit();
+            Enemy._animator.SetBool("Run", false);
             Enemy.NavAgent.isStopped = true;
         }
 
         private void EnterAttack() {
-            Enemy._animator.SetTrigger("Hit");
             Enemy.StateManager.SetState(
                 new EnemyStateWait(0.25f, new EnemyStateAttack(Target, Attack)));
         }

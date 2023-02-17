@@ -12,9 +12,16 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             return enemyPos + dir * 1f;
         }
 
+        private Vector3 ProjectileSpawnObjectPosition()
+        {
+            return Enemy.ProjectileSpawnPosition.transform.position;
+        }
+
         protected void Shoot(GameObject prefab)
         {
             var spawnPos = InfrontOfEnemy();
+            spawnPos = ProjectileSpawnObjectPosition();
+            
             var bulletObj = Object.Instantiate(prefab, spawnPos, Quaternion.identity);
             var proj = bulletObj.GetComponent<Projectile>();
             proj.Init(Target.position);
