@@ -11,7 +11,6 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
 using Health;
-using UnityEditor.Animations;
 
 #if UNITY_EDITOR
 using UnityEditor;
