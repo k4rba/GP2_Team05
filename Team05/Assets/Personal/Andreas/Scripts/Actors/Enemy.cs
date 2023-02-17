@@ -31,6 +31,8 @@ namespace Personal.Andreas.Scripts.Actors
 
         [SerializeField] private GameObject _model;
 
+        public Transform ProjectileSpawnPosition;
+
         public Animator _animator;
 
 
@@ -77,7 +79,7 @@ namespace Personal.Andreas.Scripts.Actors
             Health.Health -= damage;
             if(Health.Health <= 0)
             {
-                Die();
+                Die(); 
             }
             else
             {
@@ -101,6 +103,7 @@ namespace Personal.Andreas.Scripts.Actors
         }
 
         public void Die() {
+            
             _animator.SetTrigger("Die");
             StartCoroutine(WaitThenDieForAnimationsSake());
         }

@@ -18,7 +18,9 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
-
+            
+            Enemy._animator.SetBool("Run", true);
+            
             _players = GameManager.Instance.CharacterManager.Players;
             RandomizeAttack();
 
@@ -88,6 +90,7 @@ namespace Andreas.Scripts.EnemyStates
         public override void Exit()
         {
             base.Exit();
+            Enemy._animator.SetBool("Run", false);
             Enemy.NavAgent.isStopped = true;
         }
     }

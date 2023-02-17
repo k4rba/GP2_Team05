@@ -9,6 +9,12 @@
             _timer = duration;
         }
 
+        public override void Start()
+        {
+            base.Start();
+            Enemy._animator.SetTrigger("Stun");
+        }
+
         public override void Update(float dt)
         {
             base.Update(dt);
