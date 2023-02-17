@@ -7,6 +7,11 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
+      name: Black
+    second: {fileID: 2100000, guid: f1b70613244e8db43a5994ee174e57fa, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
       name: SewerOutletFloor
     second: {fileID: 2100000, guid: 04d47d0c5127ed6409a5ed40045307ad, type: 2}
   - first:
