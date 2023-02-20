@@ -78,7 +78,7 @@ namespace Joakim.Scripts.Mechanics {
                 var lightningEffect = Instantiate(_lightningTrailEffect, transform.position, Quaternion.identity);
                 lightningEffect.transform.DOMove(_affectedPlayerPos.position, 0.25f)
                     .OnComplete(() => Destroy(lightningEffect));
-                affectedPlayer.Health.InstantDamage(affectedPlayer, damagePerTic);
+                affectedPlayer?.Health.InstantDamage(affectedPlayer, damagePerTic);
                 _currentTic++;
             }
             else if (_currentTic == requiredTicsToExecuteEvent) {
