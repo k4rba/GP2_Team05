@@ -1,0 +1,37 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 58a23c63944e477d814e53d54e5b957f, type: 3}
+  m_Name: EnemySfxData
+  m_EditorClassIdentifier: 
+  Attack:
+    Chance: 100
+    Audios: []
+  SpecialAttack:
+    Chance: 100
+    Audios: []
+  OnDeath:
+    Chance: 100
+    Audios:
+    - {fileID: 8300000, guid: 48c9df38357b35f469278bbd97c3adb2, type: 3}
+    - {fileID: 8300000, guid: de0e25b148e76c7439ea3cad6a4c27af, type: 3}
+  OnAggro:
+    Chance: 50
+    Audios:
+    - {fileID: 8300000, guid: 3cdcf4d6abafcad45aafa8ad322b693b, type: 3}
+    - {fileID: 8300000, guid: 1d73188ddf8b548479139f61b8fc930b, type: 3}
+    - {fileID: 8300000, guid: 7abcdbfe83c865042a0fad83aa4d5c56, type: 3}
+  OnHint:
+    Chance: 100
+    Audios: []
+  OnKill:
+    Chance: 100
+    Audios: []

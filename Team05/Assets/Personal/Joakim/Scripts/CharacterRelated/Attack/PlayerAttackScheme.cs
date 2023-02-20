@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Andreas.Scripts.PlayerData;
 using AudioSystem;
 using UnityEngine;
 
@@ -17,6 +18,7 @@ public class PlayerAttackScheme : MonoBehaviour {
     }
 
     public Character characterType;
+    public PlayerSfxData SfxData;
 
     public void BasicRangedAttack() {
         var playerTransform = transform;
@@ -25,7 +27,8 @@ public class PlayerAttackScheme : MonoBehaviour {
                 Instantiate(_basicAttack,
                     playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
             ActiveProjectiles.Add(basicAttack);
-            AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
+            AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
+            // AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
         }
     }
 
@@ -51,8 +54,10 @@ public class PlayerAttackScheme : MonoBehaviour {
         var basicAttack =
             Instantiate(_basicAttack,
                 playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
-        AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
-        AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
+        AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
+
+        // AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
+        // AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
     }
 
     public void MeleeAbilityB() {

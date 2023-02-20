@@ -1,4 +1,5 @@
 using Andreas.Scripts;
+using Andreas.Scripts.PlayerData;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using DG.Tweening;
@@ -76,6 +77,7 @@ public class CharacterSelection : MonoBehaviour
     public void OnChoose(InputAction.CallbackContext context)
     {
         if(!context.performed) return;
+        var player = GetComponent<Player>();
         switch(selectedDir)
         {
             case -1:
@@ -85,6 +87,7 @@ public class CharacterSelection : MonoBehaviour
                     GetComponent<Player>().cType = Player.CharacterType.Ranged;
                     GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Ranged;
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                    player.SfxData = FastResources.Load<PlayerSfxData>("Data/JoseSfxData");
                     GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
                     GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                 }
@@ -101,6 +104,7 @@ public class CharacterSelection : MonoBehaviour
                     GetComponent<Player>().cType = Player.CharacterType.Melee;
                     GetComponentInChildren<PlayerAttackScheme>().characterType = PlayerAttackScheme.Character.Melee;
                     GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
+                    player.SfxData = FastResources.Load<PlayerSfxData>("Data/BronkSfxData");
                     GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
                     GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                 }
@@ -111,6 +115,9 @@ public class CharacterSelection : MonoBehaviour
 
                 break;
         }
+        
+        var attackScheme = GetComponentInChildren<PlayerAttackScheme>();
+        attackScheme.SfxData = player.SfxData;
     }
 
     private void Update()
@@ -123,6 +130,14 @@ public class CharacterSelection : MonoBehaviour
         }
     }
 
+    private Player SetupAutoPlayer(Player player)
+    {
+        player.SfxData = FastResources.Load<PlayerSfxData>("Data/BronkSfxData");
+        var attackScheme = GetComponentInChildren<PlayerAttackScheme>();
+        attackScheme.SfxData = player.SfxData;
+        return player;
+    }
+    
     private void AutoEnter()
     {
         var cm = GameManager.Instance.CharacterManager;
@@ -130,12 +145,12 @@ public class CharacterSelection : MonoBehaviour
         cm.rangedLockedIn = true;
         
         //  add player1
-        cm.Players.Add(GetComponent<Player>());
+        cm.Players.Add(SetupAutoPlayer(GetComponent<Player>()));
         
         //  add player2
         var playerPrefab = FastResources.Load<GameObject>("Player");
         var playerObj = Instantiate(playerPrefab, Vector3.zero, quaternion.identity);
-        var player2 = playerObj.GetComponent<Player>();
+        var player2 = SetupAutoPlayer(playerObj.GetComponent<Player>());
         cm.Players.Add(player2);
         
         cm.CheckIfAllAreLockedIn();
