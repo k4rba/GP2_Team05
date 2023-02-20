@@ -111,7 +111,7 @@ namespace Joakim.Scripts.Mechanics {
 
         public void ExecuteEvent() {
             if (!multipleCoils) {
-                objectToDisableUponExecute.SetActive(false);
+                objectToDisableUponExecute.GetComponent<DoorOpen>().DoorSlideOpen();
             }
             else {
                 coupledFuseBox.GetComponent<FuseBoxMultipleCoilsOnly>().CheckIfFinished();
