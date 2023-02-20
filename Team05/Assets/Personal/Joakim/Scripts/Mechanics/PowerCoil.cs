@@ -24,6 +24,13 @@ namespace Joakim.Scripts.Mechanics {
         private int _currentLineIndex;
         public bool done;
 
+        [Space(8)]
+        [Header("SFX")]
+        [SerializeField] private AudioClip _sfxIdle;
+        [SerializeField] private AudioClip _sfxCharging;
+        [SerializeField] private AudioClip _sfxOnComplete;
+        private AudioSource _sfxIdleSource, _sfxChargingSource, _sfxOnCompleteSource;
+
         [Header(
             "Check this only if more than one coil needs to be charged to progress. Do the same for other coils connected to this event.")]
         public bool multipleCoils;
@@ -49,6 +56,9 @@ namespace Joakim.Scripts.Mechanics {
                 affectedPlayer = other.GetComponent<HealthSystem.IDamagable>();
                 _affectedPlayerPos = other.transform;
                 InvokeRepeating(nameof(OfferHealth), 0, 2);
+                
+                if(_sfxIdle != null)
+                    _sfxChargingSource = AudioManager.PlaySfx(_sfxIdle.name, transform.position);
             }
         }
 
@@ -58,6 +68,8 @@ namespace Joakim.Scripts.Mechanics {
                     _lr.SetPosition(0, _lineStartPos);
                 }
 
+                _sfxChargingSource?.Stop();
+                
                 _currentLineIndex = 0;
                 _currentTic = 0;
                 affectedPlayer = null;
@@ -85,6 +97,15 @@ namespace Joakim.Scripts.Mechanics {
                 done = !done;
                 ExecuteEvent();
                 CancelInvoke(nameof(OfferHealth));
+
+                var pos = transform.position;
+                if(_sfxIdle != null)
+                    _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
+                if(_sfxOnComplete != null)
+                {
+                    _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
+                    _sfxOnCompleteSource.loop = true;
+                }
             }
         }
 
