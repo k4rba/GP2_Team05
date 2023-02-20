@@ -92,21 +92,36 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     }
 
     IEnumerator TetherBlasted() {
-        yield return new WaitForSeconds(1);
+        var forward = transform.forward;
+        _rb.AddForce(forward * ProjectileSpeed, ForceMode.Impulse);
+        yield return new WaitUntil(() => distToPlayer >= 10 || CheckIfBulletCollided());
+        player.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
+        Instantiate(player.GetComponent<PlayerAttackScheme>()._rangedBAbilityFX, transform.position,
+            Quaternion.identity);
         Destroy(gameObject);
     }
-
+    
 
     IEnumerator BasicAttackRetract() {
         var forward = transform.forward;
         _rb.AddForce(forward * ProjectileSpeed, ForceMode.Impulse);
-        yield return new WaitUntil(() => distToPlayer >= 10);
+        yield return new WaitUntil(() => distToPlayer >= 10 || CheckIfBulletCollided());
         _moveBackToPlayer = true;
         _rb.AddForce(forward * ProjectileSpeed * -1, ForceMode.Impulse);
         yield return new WaitUntil(() => distToPlayer <= 1.5f);
         player.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
         Destroy(gameObject);
     }
+
+
+    bool CheckIfBulletCollided() {
+        Physics.SphereCast(transform.position, 0.2f, player.GetComponent<Player>().lookDirV3, out RaycastHit hit, 1);
+        if (hit.collider != null) {
+            return true;
+        }
+        return false;
+    }
+
 
     private void CheckForNearbyEnemies() {
         var distance = 10;

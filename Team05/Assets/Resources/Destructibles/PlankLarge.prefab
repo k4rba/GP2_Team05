@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &7867809331492652015
+--- !u!1 &1145739911791935859
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,50 +8,46 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 7867809331492651990}
-  - component: {fileID: 7867809331492652009}
-  - component: {fileID: 7867809331492652008}
-  - component: {fileID: 7867809331492652011}
-  - component: {fileID: 7867809331492652010}
-  - component: {fileID: 7867809331492652013}
-  - component: {fileID: 7867809331492652012}
+  - component: {fileID: 337115545837558729}
+  - component: {fileID: 3675631469015323756}
+  - component: {fileID: 1506031936608870566}
   m_Layer: 0
-  m_Name: Plank
+  m_Name: WoodenPlank
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &7867809331492651990
+--- !u!4 &337115545837558729
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867809331492652015}
+  m_GameObject: {fileID: 1145739911791935859}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 3.79, y: -1.77, z: -7.6}
-  m_LocalScale: {x: 0.19276668, y: 0.84342915, z: 0.032017015}
+  m_LocalPosition: {x: -0, y: 0, z: 0}
+  m_LocalScale: {x: 75, y: 75, z: 75}
   m_ConstrainProportionsScale: 0
   m_Children: []
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 7867809331492651990}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!33 &7867809331492652009
+--- !u!33 &3675631469015323756
 MeshFilter:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867809331492652015}
-  m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
---- !u!23 &7867809331492652008
+  m_GameObject: {fileID: 1145739911791935859}
+  m_Mesh: {fileID: -4281088687195083841, guid: 059a2a7a85b4fc547bac53210aef3d52, type: 3}
+--- !u!23 &1506031936608870566
 MeshRenderer:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7867809331492652015}
+  m_GameObject: {fileID: 1145739911791935859}
   m_Enabled: 1
   m_CastShadows: 1
   m_ReceiveShadows: 1
@@ -65,7 +61,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 5b8b654260fd1b5458f2a54f507d87bb, type: 2}
+  - {fileID: 2100000, guid: 36dbffea8fa8f1a4c90b795c29ea4763, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -87,6 +83,42 @@ MeshRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_AdditionalVertexStreams: {fileID: 0}
+--- !u!1 &7867809331492652015
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7867809331492651990}
+  - component: {fileID: 7867809331492652011}
+  - component: {fileID: 7867809331492652010}
+  - component: {fileID: 7867809331492652013}
+  - component: {fileID: 7867809331492652012}
+  m_Layer: 0
+  m_Name: PlankLarge
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7867809331492651990
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7867809331492652015}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children:
+  - {fileID: 337115545837558729}
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!65 &7867809331492652011
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -98,8 +130,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 6.5550346, y: 0.11031098, z: 0.6366473}
+  m_Center: {x: 0.21574688, y: -0.024952423, z: -0.011472613}
 --- !u!54 &7867809331492652010
 Rigidbody:
   m_ObjectHideFlags: 0

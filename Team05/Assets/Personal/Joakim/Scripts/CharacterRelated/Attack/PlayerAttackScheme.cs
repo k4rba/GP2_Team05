@@ -7,7 +7,7 @@ public class PlayerAttackScheme : MonoBehaviour {
 
     public readonly List<BasicAttacks> BasicAttacksList = new List<BasicAttacks>();
     private GameObject _basicAttack, _specialBAbility, _specialXAbility, _specialAAbility;
-    private GameObject _rangedBAbilityFX;
+    public GameObject _rangedBAbilityFX;
     private GameObject _specialXAbility2;
     public List<GameObject> ActiveProjectiles = new List<GameObject>();
 
@@ -31,12 +31,11 @@ public class PlayerAttackScheme : MonoBehaviour {
 
     public void RangedAbilityB() {
         var playerTransform = transform;
-        if (ActiveProjectiles.Count == 1) {
-            var currentProjectilePosition = ActiveProjectiles[0].transform.position;
-            var tetherBlast =
-                Instantiate(_specialBAbility, currentProjectilePosition, Quaternion.identity);
-            Instantiate(_rangedBAbilityFX, currentProjectilePosition, Quaternion.identity);
-            AudioManager.PlaySfx("attack_tether_explosion", playerTransform.position);
+        if (ActiveProjectiles.Count <= 1) {
+            var tetherAttack =
+            Instantiate(_basicAttack,
+                playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+            ActiveProjectiles.Add(tetherAttack);
         }
     }
 
