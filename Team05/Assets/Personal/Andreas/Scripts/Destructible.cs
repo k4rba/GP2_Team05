@@ -10,14 +10,10 @@ namespace Andreas.Scripts
     {
         public int Life = 1;
 
-        [Space(10)]
-        
-        [SerializeField] private int _debrisCount = 3;
+        [Space(10)] [SerializeField] private int _debrisCount = 3;
         [SerializeField] private GameObject[] _debrisPrefabs;
-        
-        [Space(20)]
-        
-        public UnityEvent OnDestroyed;
+
+        [Space(20)] public UnityEvent OnDestroyed;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -46,13 +42,20 @@ namespace Andreas.Scripts
 
         public void SpawnPlanks()
         {
-            if(_debrisPrefabs is not {Length: > 0})
+            if(_debrisPrefabs is not { Length: > 0 })
                 return;
 
             for(int i = 0; i < _debrisCount; i++)
             {
-                Instantiate(_debrisPrefabs.RandomItem(), transform.position, Quaternion.identity);
+                var randomRot = Quaternion.Euler(new Vector3(Rng.NextF(360f), Rng.NextF(360f), Rng.NextF(360f)));
+                Instantiate(_debrisPrefabs.RandomItem(), transform.position, randomRot);
             }
         }
+
+        private Vector3 GetRandomPosition()
+        {
+            return Vector3.zero;
+        }
+        
     }
 }
