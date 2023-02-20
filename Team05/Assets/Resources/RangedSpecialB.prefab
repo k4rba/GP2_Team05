@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 67583390151345072}
   - component: {fileID: 67583390151345074}
   - component: {fileID: 67583390151345085}
+  - component: {fileID: 6586893007056654047}
   m_Layer: 0
   m_Name: RangedSpecialB
   m_TagString: Untagged
@@ -71,12 +72,28 @@ MonoBehaviour:
   <BasicDamage>k__BackingField: 1
   <SpecialDamage>k__BackingField: 0.8
   <ProjectileSpeed>k__BackingField: 30
-  <AttackSize>k__BackingField: 0.5
+  <AttackSize>k__BackingField: 1.5
   player: {fileID: 0}
   distToPlayer: 0
   stunBallNearbyEnemies: []
   numberOfBounces: 0
   rangedAttackType: 1
+--- !u!54 &6586893007056654047
+Rigidbody:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 67583390151345084}
+  serializedVersion: 2
+  m_Mass: 1
+  m_Drag: 0
+  m_AngularDrag: 0.05
+  m_UseGravity: 0
+  m_IsKinematic: 0
+  m_Interpolate: 0
+  m_Constraints: 0
+  m_CollisionDetection: 0
 --- !u!1 &7689695899091269282
 GameObject:
   m_ObjectHideFlags: 0
@@ -139,7 +156,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: a85ddc5c9cb7b994394c01fba9dd36a0, type: 2}
+  - {fileID: 2100000, guid: 1792d78d9ad7ea6449fbd1c8b0ce9a6d, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0

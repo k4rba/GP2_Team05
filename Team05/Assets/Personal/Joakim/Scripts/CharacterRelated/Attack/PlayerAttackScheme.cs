@@ -33,7 +33,7 @@ public class PlayerAttackScheme : MonoBehaviour {
         var playerTransform = transform;
         if (ActiveProjectiles.Count <= 1) {
             var tetherAttack =
-            Instantiate(_basicAttack,
+            Instantiate(_specialBAbility,
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
             ActiveProjectiles.Add(tetherAttack);
         }

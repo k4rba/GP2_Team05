@@ -10,7 +10,7 @@ public class FuseBoxMultipleCoilsOnly : MonoBehaviour {
     public void CheckIfFinished() {
         if (powerCoilsRequiredToOpen[0].done && powerCoilsRequiredToOpen[1].done) {
             foreach (var gobject in doorsToOpenUponFinished) {
-                gobject.gameObject.SetActive(false);
+                gobject.GetComponent<DoorOpen>().DoorSlideOpen();
             }
         }
     }
