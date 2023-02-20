@@ -15,3 +15,10 @@ MonoBehaviour:
   HealAmount: 0.02
   TickRate: 1
   MaxTicks: 5
+  Idle:
+    Chance: 100
+    Audios:
+    - {fileID: 0}
+  Active:
+    Chance: 100
+    Audios: []

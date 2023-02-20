@@ -259,9 +259,9 @@ GameObject:
   m_Component:
   - component: {fileID: 3735057864584483321}
   - component: {fileID: 4410445556969431452}
+  - component: {fileID: 2448122175680861009}
   - component: {fileID: 2448122175680861038}
   - component: {fileID: 2448122175680861039}
-  - component: {fileID: 2448122175680861009}
   m_Layer: 0
   m_Name: WoodenBlockage
   m_TagString: Untagged
@@ -298,6 +298,19 @@ BoxCollider:
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!65 &2448122175680861009
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2448122175680861036}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Size: {x: 6.67, y: 8.33, z: 1}
+  m_Center: {x: 0, y: 3.02, z: 0}
 --- !u!54 &2448122175680861038
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -333,19 +346,6 @@ MonoBehaviour:
   OnDestroyed:
     m_PersistentCalls:
       m_Calls: []
---- !u!65 &2448122175680861009
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2448122175680861036}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
-  m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 6.67, y: 8.33, z: 1}
-  m_Center: {x: 0, y: 3.02, z: 0}
 --- !u!1 &2876224413607130372
 GameObject:
   m_ObjectHideFlags: 0

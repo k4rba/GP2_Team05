@@ -1,5 +1,9 @@
-﻿using Andreas.Scripts.EnemyStuff;
+﻿using System;
+using Andreas.Scripts.EnemyStuff;
+using AudioSystem;
 using UnityEngine;
+using UnityEngine.Serialization;
+using Util;
 
 namespace Andreas.Scripts.EnemyData
 {
@@ -29,8 +33,11 @@ namespace Andreas.Scripts.EnemyData
         [Tooltip("The level or difficulty of the enemy.")]
         public int Tier = 1;
 
-        [Header("SFX")] 
-        public AudioClip OnDeath;
+         [Space(10)]
+        public EnemySfxData Sfx;
 
     }
+
+
+    
 }

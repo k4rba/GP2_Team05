@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Andreas.Scripts.EnemyData;
+using UnityEngine;
 
 namespace Andreas.Scripts.HealingZone
 {
@@ -8,5 +9,9 @@ namespace Andreas.Scripts.HealingZone
         public float HealAmount = 0.1f;
         public float TickRate = 1f;
         public int MaxTicks = 3;
+
+        [Header("SFX")]
+        public AudioData Idle;
+        public AudioData Active;
     }
 }

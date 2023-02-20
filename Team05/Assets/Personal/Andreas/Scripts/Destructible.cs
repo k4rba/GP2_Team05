@@ -1,4 +1,5 @@
-﻿using AttackNamespace;
+﻿using Andreas.Scripts.EnemyData;
+using AttackNamespace;
 using UnityEngine;
 using UnityEngine.Events;
 using Util;
@@ -10,10 +11,16 @@ namespace Andreas.Scripts
     {
         public int Life = 1;
 
-        [Space(10)] [SerializeField] private int _debrisCount = 3;
+        [Space(10)]
+        
+        [SerializeField] private int _debrisCount = 3;
         [SerializeField] private GameObject[] _debrisPrefabs;
 
-        [Space(20)] public UnityEvent OnDestroyed;
+        public AudioData Sound;
+        
+        [Space(20)]
+        
+        public UnityEvent OnDestroyed;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -32,6 +39,12 @@ namespace Andreas.Scripts
         {
             SpawnPlanks();
             OnDestroyed?.Invoke();
+
+            if(Sound != null)
+            {
+                Sound.Play(transform.position);
+            }
+            
             Delete();
         }
 

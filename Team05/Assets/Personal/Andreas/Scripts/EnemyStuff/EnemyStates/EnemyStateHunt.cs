@@ -14,10 +14,12 @@ namespace Andreas.Scripts.EnemyStates
         public override void Start()
         {
             base.Start();
-            Debug.Log("RUNNING");
             Enemy._animator.SetBool("Run", true);
             RandomizeAttack();
             UpdateDestination();
+            
+            Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
+            
         }
 
         private void UpdateDestination()
