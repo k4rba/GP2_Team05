@@ -1,14 +1,20 @@
-﻿using Andreas.Scripts.EnemyData;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Andreas.Scripts.PlayerData
 {
-    [CreateAssetMenu(fileName = "new Enemy Sfx Data",
-        menuName = "GP2/EnemySfxData", order = 0)]
+    [CreateAssetMenu(fileName = "new Player Sfx Data",
+        menuName = "GP2/PlayerSfxData", order = 0)]
     public class PlayerSfxData : ScriptableObject
     {
-        // public AudioData BasicAttack;
-        // public AudioData SpecialAttack;
-        // public AudioData SpecialAttack;
+        /// <summary>
+        /// aka WOOSH
+        /// </summary>
+        public AudioClip BasicAttack;
+        
+        public AudioClip SecondaryAttack;   //  shield slam / tether explosion
+        public AudioClip SpecialAttack;     //  shield dome / tether stun
+
+        public AudioClip AttackHit;
+        
     }
 }

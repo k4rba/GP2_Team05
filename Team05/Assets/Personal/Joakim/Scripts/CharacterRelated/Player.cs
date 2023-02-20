@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Andreas.Scripts;
+using Andreas.Scripts.PlayerData;
 using Andreas.Scripts.RopeSystem;
 using Andreas.Scripts.RopeSystem.RopeStates;
 using Andreas.Scripts.StateMachine;
@@ -48,6 +49,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public event Action OnInteracted;
 
     public StatesManager StatesManager;
+    [NonSerialized] public PlayerSfxData SfxData;
 
     private ProjectileReceiver _projectileReceiver;
 
