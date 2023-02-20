@@ -3,8 +3,9 @@ using UnityEngine;
 
 public class AudioController : MonoBehaviour
 {
+    public AudioClip Sound;
     public void PlaySfx()
     {
-        AudioManager.PlaySfx(name);
+        AudioManager.PlaySfx(Sound.name);
     }
 }

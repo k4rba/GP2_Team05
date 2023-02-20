@@ -6,6 +6,7 @@ using Andreas.Scripts.EnemyStates;
 using Andreas.Scripts.EnemyStuff;
 using Andreas.Scripts.StateMachine;
 using Andreas.Scripts.StateMachine.States;
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.AI;
 
@@ -102,8 +103,9 @@ namespace Personal.Andreas.Scripts.Actors
             transform.rotation = Quaternion.LookRotation(LookDirection.normalized);
         }
 
-        public void Die() {
-            
+        public void Die()
+        {
+            Data.Sfx.OnDeath.Play(transform.position);
             _animator.SetTrigger("Die");
             StartCoroutine(WaitThenDieForAnimationsSake());
         }

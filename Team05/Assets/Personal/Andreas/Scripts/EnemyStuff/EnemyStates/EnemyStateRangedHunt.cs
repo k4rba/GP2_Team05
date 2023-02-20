@@ -31,6 +31,9 @@ namespace Andreas.Scripts.EnemyStates
             }
             
             UpdateDestination();
+            
+            Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
+
         }
 
         private void UpdateDestination()
