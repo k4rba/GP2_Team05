@@ -16,10 +16,10 @@ using Health;
 using UnityEditor;
 #endif
 
-public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable
-{
+public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamagable {
     public Vector2 moveDirection;
     private Vector2 _lookDirection;
+    public Vector3 lookDirV3;
     private Rigidbody _rb;
     public float moveSpeed = 20;
     [CanBeNull] public PlayerAttackScheme playerAttackScheme;
@@ -53,8 +53,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     public Animator _animController;
 
-    public enum CharacterType
-    {
+    public enum CharacterType {
         Ranged,
         Melee
     }
@@ -62,17 +61,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     public CharacterType cType;
 
 #if UNITY_EDITOR
-    private void ModeChanged()
-    {
-        if(!EditorApplication.isPlayingOrWillChangePlaymode &&
-           EditorApplication.isPlaying)
-        {
+    private void ModeChanged() {
+        if (!EditorApplication.isPlayingOrWillChangePlaymode &&
+            EditorApplication.isPlaying) {
             Debug.Log("Exiting playmode.");
         }
     }
 #endif
-    private void Awake()
-    {
+    private void Awake() {
         StatesManager = new();
         Health = new HealthSystem();
         Health.OnDamageTaken += HealthOnOnDamageTaken;
@@ -90,37 +86,31 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #endif
     }
 
-    private void HealthOnOnDamageTaken()
-    {
+    private void HealthOnOnDamageTaken() {
         StatesManager.AddState(new StateColorFlash(_model, Color.red));
     }
 
-    private void Projectile_OnHit(Projectile proj)
-    {
+    private void Projectile_OnHit(Projectile proj) {
         Health.InstantDamage(this, proj.Damage);
     }
 
-    private void Start()
-    {
+    private void Start() {
         // var grounds = GameManager.Instance.WorldManager.Grounds;
         // var obstacles = GameManager.Instance.WorldManager.Obstacles;
         // var playerFlowFieldManager = GetComponentInChildren<FlowFieldManager>();
         // playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform);
     }
 
-    public void AssignPlayerToRole(Player.CharacterType type)
-    {
+    public void AssignPlayerToRole(Player.CharacterType type) {
         playerAttackScheme = GetComponent<PlayerAttackScheme>();
-        switch(type)
-        {
+        switch (type) {
             case CharacterType.Ranged:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
 
                 name = "RangedPlayer";
                 AbilityBCooldown = 8;
                 AbilityACooldown = 3;
-                if(playerAttackScheme != null)
-                {
+                if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
 
@@ -133,8 +123,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 name = "MeleePlayer)";
                 AbilityBCooldown = 5;
                 AbilityACooldown = 15;
-                if(playerAttackScheme != null)
-                {
+                if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
@@ -145,56 +134,44 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
-    private void Update()
-    {
+    private void Update() {
         StatesManager.Update(Time.deltaTime);
 
-        if(_aOnCd)
-        {
+        if (_aOnCd) {
             currentAbilityACooldown -= Time.deltaTime;
         }
 
-        if(_bOnCd)
-        {
+        if (_bOnCd) {
             currentAbilityBCooldown -= Time.deltaTime;
         }
 
         //  test        
-        if(Input.GetKeyDown(KeyCode.F))
-        {
+        if (Input.GetKeyDown(KeyCode.F)) {
             TestHealth();
             // Interact();
         }
     }
 
-    private void HoldBasic()
-    {
-        if(playerAttackScheme != null)
-        {
+    private void HoldBasic() {
+        if (playerAttackScheme != null) {
             playerAttackScheme.BasicAttacksList[0]();
             _animController.SetTrigger("BasicAttackTrig");
         }
     }
 
-    public void OnBasicAttack(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
+    public void OnBasicAttack(InputAction.CallbackContext context) {
+        if (context.performed) {
             InvokeRepeating(nameof(HoldBasic), 0, AttackSpeed);
         }
-        else if(context.canceled)
-        {
+        else if (context.canceled) {
             CancelInvoke(nameof(HoldBasic));
         }
     }
 
 
-    public void OnAbilityA(InputAction.CallbackContext context)
-    {
-        if(context.performed && !_aOnCd)
-        {
-            if(playerAttackScheme != null)
-            {
+    public void OnAbilityA(InputAction.CallbackContext context) {
+        if (context.performed && !_aOnCd) {
+            if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[1]();
                 _animController.SetTrigger("ShieldDomeTrig");
                 _aOnCd = !_aOnCd;
@@ -203,20 +180,16 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
-    IEnumerator StartAbilityACooldown()
-    {
+    IEnumerator StartAbilityACooldown() {
         currentAbilityACooldown = AbilityACooldown;
         GameManager.Instance.PlayerHudUi.SetCooldown(cType, 1);
         yield return new WaitForSeconds(AbilityACooldown);
         _aOnCd = !_aOnCd;
     }
 
-    public void OnAbilityB(InputAction.CallbackContext context)
-    {
-        if(context.performed && !_bOnCd)
-        {
-            if(playerAttackScheme != null)
-            {
+    public void OnAbilityB(InputAction.CallbackContext context) {
+        if (context.performed && !_bOnCd) {
+            if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[2]();
                 _animController.SetTrigger("ShieldSlamTrig");
                 _bOnCd = !_bOnCd;
@@ -225,21 +198,17 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
-    public void OnInteract(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
+    public void OnInteract(InputAction.CallbackContext context) {
+        if (context.performed) {
             OnInteracted?.Invoke();
         }
     }
 
-    private void Interact()
-    {
+    private void Interact() {
         OnInteracted?.Invoke();
     }
 
-    IEnumerator StartAbilityBCooldown()
-    {
+    IEnumerator StartAbilityBCooldown() {
         currentAbilityBCooldown = AbilityBCooldown;
         GameManager.Instance.PlayerHudUi.SetCooldown(cType, 0);
         yield return new WaitForSeconds(AbilityBCooldown);
@@ -247,19 +216,17 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 
 
-    private void FixedUpdate()
-    {
+    private void FixedUpdate() {
+        lookDirV3 = new Vector3(_lookDirection.x, 0, _lookDirection.y);
         StatesManager.Update(Time.fixedDeltaTime);
         _rb.velocity = new Vector3(moveDirection.x * moveSpeed, _rb.velocity.y, moveDirection.y * moveSpeed);
         var look = new Vector3(_lookDirection.x, 0, _lookDirection.y);
-        if(_lookDirection.x != 0 && _lookDirection.y != 0)
-        {
+        if (_lookDirection.x != 0 && _lookDirection.y != 0) {
             transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(look), 0.15f);
         }
     }
 
-    public void OnMove(InputAction.CallbackContext context)
-    {
+    public void OnMove(InputAction.CallbackContext context) {
         var cam = Camera.main.transform;
         var input = context.ReadValue<Vector2>();
 
@@ -286,10 +253,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         _animController.SetFloat("VelY", filbert.z);
     }
 
-    public void OnLook(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
+    public void OnLook(InputAction.CallbackContext context) {
+        if (context.performed) {
             _lookDirection = context.ReadValue<Vector2>();
 
             var cam = Camera.main.transform;
@@ -313,19 +278,16 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         }
     }
 
-    public void OnGiveHealth(InputAction.CallbackContext context)
-    {
-        if(context.performed)
-        {
-TestHealth();
+    public void OnGiveHealth(InputAction.CallbackContext context) {
+        if (context.performed) {
+            TestHealth();
         }
     }
 
-    void TestHealth()
-    {
+    void TestHealth() {
         Health.TransferHealth(this, otherPlayer.GetComponent<Player>());
         var rope = GameManager.Instance.RopeManager.Rope;
-        if(rope != null)
+        if (rope != null)
             rope.GetComponent<RopeVisualThingy>().AddState(new RopeStateFlow());
     }
 }
