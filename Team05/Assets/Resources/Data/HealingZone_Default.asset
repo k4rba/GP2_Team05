@@ -17,7 +17,9 @@ MonoBehaviour:
   MaxTicks: 5
   Idle:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 870b8be42b008f245877a2129c62a35e, type: 3}
   Active:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 6998dee2317fafa488499070bda237db, type: 3}

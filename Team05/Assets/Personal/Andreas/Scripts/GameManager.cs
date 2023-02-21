@@ -69,7 +69,13 @@ namespace Andreas.Scripts {
 
             foreach (var player in CharacterManager.Players) {
                 player.isDead = true;
-                player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+                var input = player.GetComponent<PlayerInput>();
+                if(input != null && input.enabled)
+                {
+                    input.SwitchCurrentActionMap("UI");
+                    if(input.currentActionMap != null)
+                        input.currentActionMap.Enable();
+                }
                 player.GetComponent<CharacterSelection>().gameOver = true;
                 player.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
