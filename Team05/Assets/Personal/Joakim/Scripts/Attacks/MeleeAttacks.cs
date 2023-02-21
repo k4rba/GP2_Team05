@@ -43,7 +43,7 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
 
     private void Awake() {
         playerObj = GameObject.Find("MeleePlayer");
-        _player = GetComponent<Player>();
+        _player = playerObj.GetComponent<Player>();
     }
 
     private void Start() {
