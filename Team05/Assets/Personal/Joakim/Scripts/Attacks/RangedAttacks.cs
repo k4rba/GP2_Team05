@@ -47,7 +47,7 @@ public GameObject playerObj;
 
     private void Awake() {
         playerObj = GameObject.Find("RangedPlayer");
-        _player = GetComponent<Player>();
+        _player = playerObj.GetComponent<Player>();
         _rb = GetComponent<Rigidbody>();
         _stunBallHitFX = Resources.Load<GameObject>("StunBallHitFX");
     }

@@ -122,7 +122,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 break;
             case CharacterType.Melee:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
-                name = "MeleePlayer)";
+                name = "MeleePlayer";
                 AbilityBCooldown = 5;
                 AbilityACooldown = 15;
                 if (playerAttackScheme != null) {
