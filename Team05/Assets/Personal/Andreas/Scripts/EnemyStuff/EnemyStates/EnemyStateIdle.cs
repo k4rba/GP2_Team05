@@ -40,6 +40,8 @@ namespace Andreas.Scripts.EnemyStates
             for(int i = 0; i < players.Count; i++)
             {
                 var p = players[i];
+                if(p.isDead)
+                    continue;
 
                 var distance = p.transform.position.FastDistance(Enemy.transform.position);
 
