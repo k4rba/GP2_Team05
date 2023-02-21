@@ -55,7 +55,7 @@ namespace Joakim.Scripts.Mechanics {
             if (affectedPlayer == null && !done) {
                 affectedPlayer = other.GetComponent<HealthSystem.IDamagable>();
                 _affectedPlayerPos = other.transform;
-                InvokeRepeating(nameof(OfferHealth), 0, 2);
+                InvokeRepeating(nameof(OfferHealth), 0, 1);
                 
                 if(_sfxCharging != null)
                     _sfxChargingSource = AudioManager.PlaySfx(_sfxCharging.name, transform.position);
@@ -80,7 +80,6 @@ namespace Joakim.Scripts.Mechanics {
         private void OfferHealth() {
             if (_currentTic != requiredTicsToExecuteEvent && coupledHealingStation.IsOccupied) {
                 _currentLineIndex++;
-                AudioManager.PlaySfx("LighningCoilZap");
                 var distance = Vector3.Distance(_lineStartPos, _lineEndPos);
                 var dir = (_lineEndPos - _lineStartPos).normalized;
                 var step = distance / requiredTicsToExecuteEvent;
@@ -97,22 +96,21 @@ namespace Joakim.Scripts.Mechanics {
                 done = !done;
                 ExecuteEvent();
                 CancelInvoke(nameof(OfferHealth));
-
-                var pos = transform.position;
-                if(_sfxIdle != null)
-                {
-                    _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
-                    _sfxIdleSource.loop = true;
-                    _sfxIdleSource.maxDistance = 20f;
-                }
-                if(_sfxOnComplete != null)
-                {
-                    _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
-                }
             }
         }
 
         public void ExecuteEvent() {
+            var pos = transform.position;
+            if(_sfxIdle != null)
+            {
+                _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
+                _sfxIdleSource.loop = true;
+                _sfxIdleSource.maxDistance = 20f;
+            }
+            if(_sfxOnComplete != null)
+            {
+                _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
+            }
             if (!multipleCoils) {
                 objectToDisableUponExecute.GetComponent<DoorOpen>().DoorSlideOpen();
             }

@@ -11,6 +11,7 @@ using JetBrains.Annotations;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using AttackNamespace;
+using AudioSystem;
 using Health;
 
 #if UNITY_EDITOR
@@ -149,11 +150,13 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             currentAbilityBCooldown -= Time.deltaTime;
         }
 
-        //  test        
+        //  test       
+#if UNITY_EDITOR
         if (Input.GetKeyDown(KeyCode.F)) {
             TestHealth();
             // Interact();
         }
+#endif
     }
 
     private void HoldBasic() {
@@ -290,6 +293,14 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     void TestHealth() {
         Health.TransferHealth(this, otherPlayer.GetComponent<Player>());
+        if(cType == CharacterType.Melee)
+        {
+            AudioManager.PlaySfx("BrankSharingLife_mixdown", transform.position);
+        }
+        else if(cType == CharacterType.Ranged)
+        {
+            AudioManager.PlaySfx("JosephineSharingLife_mixdown", transform.position);
+        } 
         var rope = GameManager.Instance.RopeManager.Rope;
         if (rope != null)
             rope.GetComponent<RopeVisualThingy>().AddState(new RopeStateFlow());
