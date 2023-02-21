@@ -103,7 +103,7 @@ MonoBehaviour:
   <SpecialDamage>k__BackingField: 0
   <ProjectileSpeed>k__BackingField: 30
   <AttackSize>k__BackingField: 0.5
-  player: {fileID: 0}
+  playerObj: {fileID: 0}
   distToPlayer: 0
   stunBallNearbyEnemies: []
   numberOfBounces: 6
