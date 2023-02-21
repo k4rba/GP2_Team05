@@ -56,7 +56,7 @@ namespace Health {
 
         public void Die(IDamagable damagable) {
             // SceneManager.LoadScene("MainScene");
-            GameManager.Instance.CharacterManager.RespawnPlayers();
+            GameManager.Instance.PlayersDead();
         }
 
         private float ClampHP(float health) => Mathf.Clamp(health, -0.5f, 0.5f);

@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56658eb8ceb94182b0e0ce2d4c13c7b1, type: 3}
   m_Name: BronkSfxData
   m_EditorClassIdentifier: 
-  BasicAttack: {fileID: 8300000, guid: d34b9cfdf90748f47a54fdc06dc64f78, type: 3}
+  BasicAttack: {fileID: 0}
   SecondaryAttack: {fileID: 0}
   SpecialAttack: {fileID: 0}
   AttackHit: {fileID: 0}

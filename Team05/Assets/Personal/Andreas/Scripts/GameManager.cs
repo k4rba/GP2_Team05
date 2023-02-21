@@ -1,9 +1,12 @@
 ﻿using System;
+using System.Collections;
 using Andreas.Scripts.CheckpointSystem;
 using AudioSystem;
 using Personal.Andreas.Scripts;
+using Personal.Andreas.Scripts.Actors;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using Util;
 
 namespace Andreas.Scripts
 {
@@ -46,9 +49,33 @@ namespace Andreas.Scripts
             var source = msuic.AddComponent<AudioSource>();
             source.clip = AudioManager.GetSoundClip("skalar_banan_men_bananen_blev_till_kiseloxid");
             source.loop = true;
-            source.volume = 0.25f;
+            source.volume = 0.18f;
             source.Play();
         }
 
+        public IEnumerator PlayEnemySfxCheer(Enemy enemy)
+        {
+            yield return new WaitForSeconds(Rng.NextF(1.5f));
+            enemy.Data.Sfx.OnKill.Play(enemy.Position);
+        }
+        
+        public void PlayersDead()
+        {
+            var enemies = EnemyManager.Enemies;
+            int maxCheers = 3;
+            for(int i = 0; i < enemies.Count; i++)
+            {
+                var e = enemies[i];
+                if(e.EnteredCombat)
+                {
+                    StartCoroutine(PlayEnemySfxCheer(e));
+                    maxCheers++;
+                    if(maxCheers <= 0)
+                        break;
+                }
+            }
+            
+            CharacterManager.RespawnPlayers();
+        }
     }
 }

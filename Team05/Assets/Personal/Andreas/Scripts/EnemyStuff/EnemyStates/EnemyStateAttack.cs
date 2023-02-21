@@ -14,7 +14,6 @@ namespace Andreas.Scripts.EnemyStates
             Attack.Start();
             var dirToTarget = (Target.transform.position - Enemy.transform.position).normalized;
             Enemy.LookDirection = dirToTarget;
-            // Enemy._animator.SetTarget();
             Enemy._animator.SetTrigger("Hit");
         }
 

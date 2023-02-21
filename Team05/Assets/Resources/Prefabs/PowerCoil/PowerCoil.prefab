@@ -392,6 +392,11 @@ MonoBehaviour:
   damagePerTic: 0.015
   coupledHealingStation: {fileID: 0}
   coupledFuseBox: {fileID: 0}
+  done: 0
+  _sfxIdle: {fileID: 8300000, guid: d0a9c757a95b4334cbaf89b040fb7cc4, type: 3}
+  _sfxCharging: {fileID: 8300000, guid: fd557a6c19351f643b3694f3b12ffe0b, type: 3}
+  _sfxOnComplete: {fileID: 8300000, guid: 5dd3a75bafd94154eb5d8d24e42a1f01, type: 3}
+  multipleCoils: 0
 --- !u!1 &1057591286241755522
 GameObject:
   m_ObjectHideFlags: 0

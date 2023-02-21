@@ -6,12 +6,14 @@ using System.Net;
 using Andreas.Scripts.EnemyStates;
 using UnityEngine;
 using AttackNamespace;
+using AudioSystem;
 using Personal.Andreas.Scripts.Actors;
 using Unity.VisualScripting;
 using Util;
 using DG.Tweening;
 using Unity.Mathematics;
 using UnityEngine.ProBuilder.MeshOperations;
+using UnityEngine.Serialization;
 
 public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     private Rigidbody _rb;
@@ -20,7 +22,8 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     [field: SerializeField] public float SpecialDamage { get; set; } //todo: implement special attack possibility
     [field: SerializeField] public float ProjectileSpeed { get; set; }
     [field: SerializeField] public float AttackSize { get; set; }
-    public GameObject player;
+public GameObject playerObj;
+    private Player _player;
     private Vector3 _playerPos;
     public float distToPlayer;
     private bool _moveBackToPlayer;
@@ -43,7 +46,8 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     public RangedAttackType rangedAttackType;
 
     private void Awake() {
-        player = GameObject.Find("RangedPlayer");
+        playerObj = GameObject.Find("RangedPlayer");
+        _player = GetComponent<Player>();
         _rb = GetComponent<Rigidbody>();
         _stunBallHitFX = Resources.Load<GameObject>("StunBallHitFX");
     }
@@ -67,16 +71,16 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     private void Update() {
         if (_moveBackToPlayer) {
             transform.position =
-                Vector3.MoveTowards(transform.position, player.transform.position, 15 * Time.deltaTime);
+                Vector3.MoveTowards(transform.position, playerObj.transform.position, 15 * Time.deltaTime);
         }
 
         if (_rotateAroundPlayer) {
-            _rb.transform.RotateAround(player.transform.position, Vector3.up, 720 * Time.deltaTime);
+            _rb.transform.RotateAround(playerObj.transform.position, Vector3.up, 720 * Time.deltaTime);
         }
     }
 
     private void FixedUpdate() {
-        distToPlayer = Vector3.Distance(player.transform.position, transform.position);
+        distToPlayer = Vector3.Distance(playerObj.transform.position, transform.position);
     }
 
     public void BasicAttack() {
@@ -95,8 +99,9 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         var forward = transform.forward;
         _rb.AddForce(forward * ProjectileSpeed, ForceMode.Impulse);
         yield return new WaitUntil(() => distToPlayer >= 10 || CheckIfBulletCollided());
-        player.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
-        Instantiate(player.GetComponent<PlayerAttackScheme>()._rangedBAbilityFX, transform.position,
+        playerObj.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
+        AudioManager.PlaySfx(_player.SfxData.SpecialAttack.name, _player.transform.position);
+        Instantiate(playerObj.GetComponent<PlayerAttackScheme>()._rangedBAbilityFX, transform.position,
             Quaternion.identity);
         Destroy(gameObject);
     }
@@ -109,13 +114,13 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         _moveBackToPlayer = true;
         _rb.AddForce(forward * ProjectileSpeed * -1, ForceMode.Impulse);
         yield return new WaitUntil(() => distToPlayer <= 1.5f);
-        player.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
+        playerObj.GetComponent<PlayerAttackScheme>().ActiveProjectiles.Remove(gameObject);
         Destroy(gameObject);
     }
 
 
     bool CheckIfBulletCollided() {
-        Physics.SphereCast(transform.position, 0.2f, player.GetComponent<Player>().lookDirV3, out RaycastHit hit, 1);
+        Physics.SphereCast(transform.position, 0.2f, playerObj.GetComponent<Player>().lookDirV3, out RaycastHit hit, 1);
         if (hit.collider != null) {
             return true;
         }
@@ -156,9 +161,16 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         if(BasicDamage < 1) {
                 return;
             }
+        
+            var enemy = other.gameObject.GetComponent<Enemy>();
+
+            if(enemy == null)
+            {
+                return;
+            }
+        
             
         if (rangedAttackType != RangedAttackType.StunBall) {
-            var enemy = other.gameObject.GetComponent<Enemy>();
             if (enemy != null) {
                 int finalDamage = (int)Mathf.Min(1, BasicDamage);
                 enemy._animator.SetTrigger("GetHit");
@@ -169,6 +181,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
             _triggered = !_triggered;
             GetComponent<Collider>().enabled = false;
             CheckForNearbyEnemies();
+            AudioManager.PlaySfx(_player.SfxData.SecondaryAttack.name, _player.transform.position);
         }
     }
 }

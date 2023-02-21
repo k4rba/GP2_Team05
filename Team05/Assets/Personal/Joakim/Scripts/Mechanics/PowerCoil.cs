@@ -57,8 +57,8 @@ namespace Joakim.Scripts.Mechanics {
                 _affectedPlayerPos = other.transform;
                 InvokeRepeating(nameof(OfferHealth), 0, 2);
                 
-                if(_sfxIdle != null)
-                    _sfxChargingSource = AudioManager.PlaySfx(_sfxIdle.name, transform.position);
+                if(_sfxCharging != null)
+                    _sfxChargingSource = AudioManager.PlaySfx(_sfxCharging.name, transform.position);
             }
         }
 
@@ -100,11 +100,14 @@ namespace Joakim.Scripts.Mechanics {
 
                 var pos = transform.position;
                 if(_sfxIdle != null)
+                {
                     _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
+                    _sfxIdleSource.loop = true;
+                    _sfxIdleSource.maxDistance = 20f;
+                }
                 if(_sfxOnComplete != null)
                 {
                     _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
-                    _sfxOnCompleteSource.loop = true;
                 }
             }
         }
