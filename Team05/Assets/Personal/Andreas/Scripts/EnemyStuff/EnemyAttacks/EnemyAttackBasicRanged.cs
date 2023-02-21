@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AudioSystem;
+using UnityEngine;
 using Util;
 
 namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
@@ -10,6 +11,7 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             base.OnAttacked();
             var prefab = FastResources.Load<GameObject>("Prefabs/Projectiles/BlobBullet");
             Shoot(prefab);
+            AudioManager.PlaySfx("RangeEnemyBasicShot1_mixdown", prefab.transform.position);
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AudioSystem;
+using UnityEngine;
 
 namespace Andreas.Scripts {
     public class HitCheck : MonoBehaviour {
@@ -20,6 +21,7 @@ namespace Andreas.Scripts {
                 Debug.Log("Did damage");
                 other.GetComponent<Player>().Health.InstantDamage(other.GetComponent<Player>(), 0.05f);
                 Destroy(gameObject);
+                AudioManager.PlaySfx("MeleeHit2_mixdown", transform.position);
             }
             else {
                 Debug.Log("Did no damage");

@@ -1,4 +1,5 @@
-﻿using Personal.Andreas.Scripts.Actors;
+﻿using AudioSystem;
+using Personal.Andreas.Scripts.Actors;
 using UnityEngine;
 using Util;
 
@@ -11,6 +12,8 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             base.OnAttacked();
             
             // Debug.Log("attacked");
+
+            AudioManager.PlaySfx("VoiceMeleeEnemyHits_mixdown", Enemy.transform.position);
             
             var enPos = Enemy.transform.position;
             // var unit = Enemy.FlowAgent.Target;
