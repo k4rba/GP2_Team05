@@ -8,10 +8,8 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using Util;
 
-namespace Andreas.Scripts
-{
-    public class GameManager : MonoBehaviour
-    {
+namespace Andreas.Scripts {
+    public class GameManager : MonoBehaviour {
         public static GameManager Instance { get; private set; }
 
         public EnemyManager EnemyManager;
@@ -27,24 +25,22 @@ namespace Andreas.Scripts
         public RopeManager RopeManager;
         public DollyCamManager DollyManager;
 
-        private void Awake()
-        {
+        public GameObject gameOverScreen;
+
+        private void Awake() {
             // InputSystem.DisableDevice(Keyboard.current);
 
-            if(Instance == null)
-            {
+            if (Instance == null) {
                 Instance = this;
                 DontDestroyOnLoad(gameObject);
             }
-            else
-            {
+            else {
                 Destroy(gameObject);
                 return;
             }
         }
 
-        private void Start()
-        {
+        private void Start() {
             var msuic = new GameObject("Music");
             var source = msuic.AddComponent<AudioSource>();
             source.clip = AudioManager.GetSoundClip("skalar_banan_men_bananen_blev_till_kiseloxid");
@@ -53,29 +49,31 @@ namespace Andreas.Scripts
             source.Play();
         }
 
-        public IEnumerator PlayEnemySfxCheer(Enemy enemy)
-        {
+        public IEnumerator PlayEnemySfxCheer(Enemy enemy) {
             yield return new WaitForSeconds(Rng.NextF(1.5f));
             enemy.Data.Sfx.OnKill.Play(enemy.Position);
         }
-        
-        public void PlayersDead()
-        {
+
+        public void PlayersDead() {
             var enemies = EnemyManager.Enemies;
             int maxCheers = 3;
-            for(int i = 0; i < enemies.Count; i++)
-            {
+            for (int i = 0; i < enemies.Count; i++) {
                 var e = enemies[i];
-                if(e.EnteredCombat)
-                {
+                if (e.EnteredCombat) {
                     StartCoroutine(PlayEnemySfxCheer(e));
                     maxCheers++;
-                    if(maxCheers <= 0)
+                    if (maxCheers <= 0)
                         break;
                 }
             }
-            
-            CharacterManager.RespawnPlayers();
+
+            foreach (var player in CharacterManager.Players) {
+                player.isDead = true;
+                player.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
+                player.GetComponent<CharacterSelection>().gameOver = true;
+                player.transform.rotation = Quaternion.Euler(0, 90, 0);
+            }
+            gameOverScreen.SetActive(true);
         }
     }
 }
