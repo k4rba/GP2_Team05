@@ -6,20 +6,22 @@ namespace Andreas.Scripts.EnemyStates
     public class EnemyStateHunt : EnemyStateTarget
     {
         private Timer _destinationInterval = 0.2f;
+        private Timer _sfxHintTimer = 2f;
 
         public EnemyStateHunt(GameObject target) : base(target)
         {
         }
-        
+
         public override void Start()
         {
             base.Start();
             Enemy._animator.SetBool("Run", true);
             RandomizeAttack();
             UpdateDestination();
-            
-            Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
-            
+
+            if(!Enemy.EnteredCombat)
+                Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
+            Enemy.EnteredCombat = true;
         }
 
         private void UpdateDestination()
@@ -31,6 +33,11 @@ namespace Andreas.Scripts.EnemyStates
         public override void Update(float dt)
         {
             base.Update(dt);
+
+            if(_sfxHintTimer.UpdateTick())
+            {
+                Enemy.Data.Sfx.OnHint.Play(Enemy.transform.position);
+            }
 
             if(_destinationInterval.UpdateTick())
             {
@@ -50,10 +57,10 @@ namespace Andreas.Scripts.EnemyStates
             Enemy.NavAgent.isStopped = true;
         }
 
-        private void EnterAttack() {
+        private void EnterAttack()
+        {
             Enemy.StateManager.SetState(
                 new EnemyStateWait(0.25f, new EnemyStateAttack(Target, Attack)));
         }
-
     }
 }

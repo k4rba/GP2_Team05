@@ -5,8 +5,10 @@ using Andreas.Scripts;
 using Andreas.Scripts.EnemyStates;
 using UnityEngine;
 using AttackNamespace;
+using AudioSystem;
 using Personal.Andreas.Scripts.Actors;
 using Unity.VisualScripting;
+using UnityEngine.Serialization;
 
 public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
     [field: SerializeField] public float BasicDamage { get; set; } //todo: implement something to actually damage
@@ -30,8 +32,9 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
     }
 
     public MeleeAttackType meleeAttackType;
-    
-    public GameObject player;
+
+    private Player _player;
+    public GameObject playerObj;
 
     IEnumerator DestroyAttackArea() {
         yield return new WaitForSeconds(0.2f);
@@ -39,7 +42,8 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
     }
 
     private void Awake() {
-        player = GameObject.Find("MeleePlayer");
+        playerObj = GameObject.Find("MeleePlayer");
+        _player = GetComponent<Player>();
     }
 
     private void Start() {
@@ -87,8 +91,14 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         if(enemy == null)
             return;
 
-        if (enemy != null && meleeAttackType == MeleeAttackType.ShieldSlam) {
-            enemy.StateManager.SetState(new EnemyStateStunned(10f));
+        if(meleeAttackType == MeleeAttackType.Basic)
+        {
+            var sfxHit = _player.SfxData.AttackHit;
+            AudioManager.PlaySfx(sfxHit.name, _player.transform.position);
+        }
+        
+        if (meleeAttackType == MeleeAttackType.ShieldSlam) {
+            enemy.StateManager.SetState(new EnemyStateStunned(2f));
         }
 
         int finalDamage = (int)Mathf.Min(1, BasicDamage);

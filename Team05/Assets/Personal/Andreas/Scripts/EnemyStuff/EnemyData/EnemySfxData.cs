@@ -32,6 +32,8 @@ namespace Andreas.Scripts.EnemyData
 
         public void Play(Vector3 pos)
         {
+            if(Audios.Length == null || Audios.Length <= 0)
+                return;
 
             if(!Rng.Roll(Chance))
                 return;

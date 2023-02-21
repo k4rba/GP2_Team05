@@ -32,46 +32,50 @@ public class PlayerAttackScheme : MonoBehaviour {
         }
     }
 
+    //  TETHER BLAST
     public void RangedAbilityB() {
         var playerTransform = transform;
         if (ActiveProjectiles.Count <= 1) {
             var tetherAttack =
             Instantiate(_specialBAbility,
                 playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+            AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
             ActiveProjectiles.Add(tetherAttack);
         }
     }
 
+    //  STUN SHOT
     public void RangedAbilityA() {
         var playerTransform = transform;
         Instantiate(_specialAAbility,
             playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
-        AudioManager.PlaySfx("attack_stun_shot", playerTransform.position);
+            AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
     }
 
+    
+    //  BRANK BASIC
     public void BasicMeleeAttack() {
         var playerTransform = transform;
         var basicAttack =
             Instantiate(_basicAttack,
                 playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
         AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
-
-        // AudioManager.PlaySfx("attack_basic_swosh", playerTransform.position);
-        // AudioManager.PlaySfx("attack_basic_attack_melee", playerTransform.position);
     }
 
+    //  SHIELD DOME
     public void MeleeAbilityB() {
         var playerTransform = transform;
         var shieldDome = Instantiate(_specialBAbility,
             new Vector3(transform.position.x, transform.position.y - 1.53f, transform.position.z), Quaternion.identity);
-        AudioManager.PlaySfx("attack_shield_dome", playerTransform.position);
+        AudioManager.PlaySfx(SfxData.SpecialAttack.name, playerTransform.position);
     }
 
+    //  SHIELD SLAM
     public void MeleeAbilityA() {
         var playerTransform = transform;
         var shieldSlam = Instantiate(_specialAAbility,
             playerTransform.position + (playerTransform.forward), playerTransform.rotation);
-        AudioManager.PlaySfx("attack_shield_slam", playerTransform.position);
+        AudioManager.PlaySfx(SfxData.SecondaryAttack.name, playerTransform.position);
     }
 
     public void InitializeAttack() {

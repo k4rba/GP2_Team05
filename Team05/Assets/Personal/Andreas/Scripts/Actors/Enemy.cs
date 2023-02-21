@@ -36,6 +36,7 @@ namespace Personal.Andreas.Scripts.Actors
 
         public Animator _animator;
 
+        public bool EnteredCombat;
 
         private void Awake()
         {
