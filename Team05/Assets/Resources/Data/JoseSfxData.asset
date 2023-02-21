@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 56658eb8ceb94182b0e0ce2d4c13c7b1, type: 3}
   m_Name: JoseSfxData
   m_EditorClassIdentifier: 
-  BasicAttack: {fileID: 0}
-  SecondaryAttack: {fileID: 0}
-  SpecialAttack: {fileID: 0}
-  AttackHit: {fileID: 0}
+  BasicAttack: {fileID: 8300000, guid: 83bd1dc653d92e448b3a8d5b44f5157e, type: 3}
+  SecondaryAttack: {fileID: 8300000, guid: 5fbac3897f8ab864598078f687de492f, type: 3}
+  SpecialAttack: {fileID: 8300000, guid: 200eddad9f794bd42861ed7833e38490, type: 3}
+  AttackHit: {fileID: 8300000, guid: e05c628d091110544ac4c665e3012a11, type: 3}

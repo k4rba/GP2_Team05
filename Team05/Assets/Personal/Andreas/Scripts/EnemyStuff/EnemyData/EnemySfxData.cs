@@ -30,16 +30,16 @@ namespace Andreas.Scripts.EnemyData
         
         public AudioClip GetRandomAudio() => Audios.RandomItem();
 
-        public void Play(Vector3 pos)
+        public AudioSource Play(Vector3 pos)
         {
             if(Audios.Length == null || Audios.Length <= 0)
-                return;
+                return null;
 
             if(!Rng.Roll(Chance))
-                return;
+                return null;
             
             var audio = Audios.RandomItem();
-            AudioManager.PlaySfx(audio.name, pos);
+            return AudioManager.PlaySfx(audio.name, pos);
         }
 
         public void Stop()

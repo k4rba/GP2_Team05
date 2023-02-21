@@ -115,6 +115,7 @@ namespace AudioSystem
                 var source = player.GetSource();
                 source.clip = clip;
                 source.loop = false;
+                source.maxDistance = 100f;
                 return player;
             }
 

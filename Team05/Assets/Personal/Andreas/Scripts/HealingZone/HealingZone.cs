@@ -1,3 +1,5 @@
+using System;
+using AudioSystem;
 using UnityEngine;
 using UnityEngine.Rendering.UI;
 using Util;
@@ -17,10 +19,19 @@ namespace Andreas.Scripts.HealingZone
         private int _ticks;
         private bool _activated;
 
+        private AudioSource _sfxIdle;
+
         private void Awake()
         {
             _tickTimer = _data.TickRate;
             _ticks = _data.MaxTicks;
+        }
+
+        private void Start()
+        {
+            _sfxIdle = _data.Idle.Play(transform.position);
+            _sfxIdle.SetMaxDistance(50f);
+            _sfxIdle.loop = true;
         }
 
         private void OnTriggerEnter(Collider other)
@@ -32,6 +43,8 @@ namespace Andreas.Scripts.HealingZone
             if(player != null)
             {
                 healingVFX.SetActive(true);
+                _sfxIdle.Stop();
+                _data.Active.Play(transform.position);
                 CurrentPlayer = player;
                 _activated = true;
                 Debug.Log("HEALING PAD ACTIVATED");
