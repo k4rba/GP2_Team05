@@ -11,6 +11,8 @@ namespace Andreas.Scripts.HealingZone
         
         [SerializeField] private HealingZoneData _data;
 
+        public GameObject healingVFX;
+
         private Timer _tickTimer;
         private int _ticks;
         private bool _activated;
@@ -29,6 +31,7 @@ namespace Andreas.Scripts.HealingZone
             var player = other.gameObject.GetComponent<Player>();
             if(player != null)
             {
+                healingVFX.SetActive(true);
                 CurrentPlayer = player;
                 _activated = true;
                 Debug.Log("HEALING PAD ACTIVATED");
@@ -44,6 +47,7 @@ namespace Andreas.Scripts.HealingZone
             var player = other.gameObject.GetComponent<Player>();
             if(player == CurrentPlayer)
             {
+                healingVFX.SetActive(false);
                 CurrentPlayer = null;
                 _activated = false;
             }
