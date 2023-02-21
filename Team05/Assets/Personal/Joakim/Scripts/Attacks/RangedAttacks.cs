@@ -22,7 +22,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     [field: SerializeField] public float SpecialDamage { get; set; } //todo: implement special attack possibility
     [field: SerializeField] public float ProjectileSpeed { get; set; }
     [field: SerializeField] public float AttackSize { get; set; }
-public GameObject playerObj;
+    public GameObject playerObj;
     private Player _player;
     private Vector3 _playerPos;
     public float distToPlayer;
@@ -30,7 +30,6 @@ public GameObject playerObj;
     private bool _rotateAroundPlayer;
     public List<Enemy> stunBallNearbyEnemies = new List<Enemy>();
     private GameObject _stunBallHitFX;
-    private bool _triggered;
     public int numberOfBounces = 6;
 
     public void DoDamage(float value) {
@@ -61,10 +60,6 @@ public GameObject playerObj;
             case RangedAttackType.TetherBlast:
                 TetherBlast();
                 break;
-            case RangedAttackType.StunBall:
-                StunBall();
-                _rb.AddForce(transform.forward * ProjectileSpeed, ForceMode.Impulse);
-                break;
         }
     }
 
@@ -91,10 +86,6 @@ public GameObject playerObj;
         StartCoroutine(TetherBlasted());
     }
 
-    public void StunBall() {
-        //  StartCoroutine(StunBallBounce());
-    }
-
     IEnumerator TetherBlasted() {
         var forward = transform.forward;
         _rb.AddForce(forward * ProjectileSpeed, ForceMode.Impulse);
@@ -105,7 +96,7 @@ public GameObject playerObj;
             Quaternion.identity);
         Destroy(gameObject);
     }
-    
+
 
     IEnumerator BasicAttackRetract() {
         var forward = transform.forward;
@@ -124,6 +115,7 @@ public GameObject playerObj;
         if (hit.collider != null) {
             return true;
         }
+
         return false;
     }
 
@@ -158,18 +150,17 @@ public GameObject playerObj;
     }
 
     private void OnTriggerEnter(Collider other) {
-        if(BasicDamage < 1) {
-                return;
-            }
-        
-            var enemy = other.gameObject.GetComponent<Enemy>();
+        if (BasicDamage < 1) {
+            return;
+        }
 
-            if(enemy == null)
-            {
-                return;
-            }
-        
-            
+        var enemy = other.gameObject.GetComponent<Enemy>();
+
+        if (enemy == null) {
+            return;
+        }
+
+
         if (rangedAttackType != RangedAttackType.StunBall) {
             if (enemy != null) {
                 int finalDamage = (int)Mathf.Min(1, BasicDamage);
@@ -177,8 +168,7 @@ public GameObject playerObj;
                 enemy.TakeDamage(finalDamage);
             }
         }
-        else if (rangedAttackType == RangedAttackType.StunBall && !_triggered) {
-            _triggered = !_triggered;
+        else if (rangedAttackType == RangedAttackType.StunBall) {
             GetComponent<Collider>().enabled = false;
             CheckForNearbyEnemies();
             AudioManager.PlaySfx(_player.SfxData.SecondaryAttack.name, _player.transform.position);

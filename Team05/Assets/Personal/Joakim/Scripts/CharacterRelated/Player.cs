@@ -28,6 +28,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private bool _switchedToCharacterMode = true;
     public GameObject otherPlayer;
 
+    public bool isDead = false;
+
     private GameObject _model;
 
     [field: SerializeField] public Material HealthMaterial { get; set; }

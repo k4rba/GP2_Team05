@@ -107,7 +107,7 @@ MonoBehaviour:
   distToPlayer: 0
   stunBallNearbyEnemies: []
   numberOfBounces: 6
-  rangedAttackType: 3
+  rangedAttackType: 2
 --- !u!54 &852779967050049576
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -135,8 +135,8 @@ BoxCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.7471313, y: 3.8177886, z: 2.3026547}
-  m_Center: {x: 0.029733181, y: 1.4088943, z: 0.12715983}
+  m_Size: {x: 2.7471313, y: 4.9270654, z: 2.3026547}
+  m_Center: {x: 0.029733181, y: 0.8542559, z: 0.12715985}
 --- !u!1001 &4814304035425267364
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1293,8 +1293,8 @@ BoxCollider:
   m_IsTrigger: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Size: {x: 2.1389484, y: 0.07247925, z: 1.8546677}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Size: {x: 5.2761965, y: 0.027941704, z: 4.156826}
+  m_Center: {x: 0.08068228, y: 0.022268772, z: 0.012815534}
 --- !u!4 &8592215503156754038 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3887299691830024402, guid: 036b2804aa58b634080a9cdf6d701fa7,
