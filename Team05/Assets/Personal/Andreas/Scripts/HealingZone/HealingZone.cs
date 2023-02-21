@@ -1,7 +1,4 @@
-using System;
-using AudioSystem;
 using UnityEngine;
-using UnityEngine.Rendering.UI;
 using Util;
 
 namespace Andreas.Scripts.HealingZone
@@ -20,6 +17,7 @@ namespace Andreas.Scripts.HealingZone
         private bool _activated;
 
         private AudioSource _sfxIdle;
+        private AudioSource _sfxActive;
 
         private void Awake()
         {
@@ -30,12 +28,15 @@ namespace Andreas.Scripts.HealingZone
         private void Start()
         {
             _sfxIdle = _data.Idle.Play(transform.position);
-            _sfxIdle.SetMaxDistance(50f);
             _sfxIdle.loop = true;
+            _sfxIdle.SetMaxDistance(50f);
         }
 
         private void OnTriggerEnter(Collider other)
         {
+            if(_ticks <= 0)
+                return;
+            
             if(CurrentPlayer != null)
                 return;
             
@@ -43,8 +44,7 @@ namespace Andreas.Scripts.HealingZone
             if(player != null)
             {
                 healingVFX.SetActive(true);
-                _sfxIdle.Stop();
-                _data.Active.Play(transform.position);
+                _sfxActive = _data.Active.Play(transform.position);
                 CurrentPlayer = player;
                 _activated = true;
                 Debug.Log("HEALING PAD ACTIVATED");
@@ -60,10 +60,16 @@ namespace Andreas.Scripts.HealingZone
             var player = other.gameObject.GetComponent<Player>();
             if(player == CurrentPlayer)
             {
-                healingVFX.SetActive(false);
-                CurrentPlayer = null;
-                _activated = false;
+                StopStuff();
             }
+        }
+
+        private void StopStuff()
+        {
+            healingVFX.SetActive(false);
+            CurrentPlayer = null;
+            _sfxActive?.Stop();
+            _activated = false;
         }
 
         private void Update()
@@ -87,6 +93,7 @@ namespace Andreas.Scripts.HealingZone
 
         private void Deplete()
         {
+            StopStuff();
             Debug.Log("HEALING PAD DEPLETED");
         }
 

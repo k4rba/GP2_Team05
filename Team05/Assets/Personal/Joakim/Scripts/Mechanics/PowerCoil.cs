@@ -52,8 +52,12 @@ namespace Joakim.Scripts.Mechanics {
         }
 
         private void OnTriggerEnter(Collider other) {
+            var player = other.gameObject.GetComponent<Player>();
+            if(player == null)
+                return;
+            
             if (affectedPlayer == null && !done) {
-                affectedPlayer = other.GetComponent<HealthSystem.IDamagable>();
+                affectedPlayer = player;
                 _affectedPlayerPos = other.transform;
                 InvokeRepeating(nameof(OfferHealth), 0, 1);
                 
@@ -63,6 +67,10 @@ namespace Joakim.Scripts.Mechanics {
         }
 
         private void OnTriggerExit(Collider other) {
+            var player = other.gameObject.GetComponent<Player>();
+            if(player == null)
+                return;
+            
             if (other.GetComponent<HealthSystem.IDamagable>() == affectedPlayer) {
                 if (!done) {
                     _lr.SetPosition(0, _lineStartPos);
