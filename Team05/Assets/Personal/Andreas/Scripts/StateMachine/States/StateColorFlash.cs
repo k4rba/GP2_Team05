@@ -17,6 +17,7 @@ namespace Andreas.Scripts.StateMachine.States
             Material = material;
         }
     }
+
     public class StateColorFlash : State
     {
         private float _timer = 0.1f;
@@ -35,9 +36,15 @@ namespace Andreas.Scripts.StateMachine.States
         {
             base.Start();
 
-            var modelMaterials = _model.GetComponentsInChildren<MeshRenderer>().Select(x => x.material);
+            var meshRenderers = _model.GetComponentsInChildren<MeshRenderer>().Select(x => x.material);
+            var skinnedMeshRenderers = _model.GetComponentsInChildren<SkinnedMeshRenderer>().Select(x => x.material);
+
+            foreach(var m in meshRenderers)
+            {
+                _materials.Add(new MaterialColors(_color, m.color, m));
+            }
             
-            foreach(var m in modelMaterials)
+            foreach(var m in skinnedMeshRenderers)
             {
                 _materials.Add(new MaterialColors(_color, m.color, m));
             }
@@ -52,7 +59,7 @@ namespace Andreas.Scripts.StateMachine.States
                 mat.Material.color = mat.Start;
             }
         }
-        
+
         public void SetColorEnd()
         {
             foreach(var mat in _materials)
@@ -60,7 +67,7 @@ namespace Andreas.Scripts.StateMachine.States
                 mat.Material.color = mat.End;
             }
         }
-        
+
 
         public override void Update(float dt)
         {

@@ -1,11 +1,12 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
+using UnityEngine.Events;
 
 namespace Andreas.Scripts
 {
     public class ProjectileReceiver : MonoBehaviour
     {
-        public Action<Projectile> OnHit;
+        // public Action<Projectile> OnHit;
+        public UnityAction<Projectile> OnHit;
 
         private void OnTriggerEnter(Collider other)
         {
@@ -17,7 +18,7 @@ namespace Andreas.Scripts
                 return;
             }
 
-            // Debug.Log("Projectile hit!");
+            Debug.Log($"Projectile hit '{gameObject.name}'!");
 
             OnHit?.Invoke(proj);
 
