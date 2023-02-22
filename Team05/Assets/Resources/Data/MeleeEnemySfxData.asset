@@ -39,7 +39,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: d900e5f547be0554cba0e3fb7d6b5152, type: 3}
     - {fileID: 8300000, guid: b4fe534c830ff4146ad92aa25fa20f88, type: 3}
   OnHint:
-    Chance: 60
+    Chance: 50
     Audios:
     - {fileID: 8300000, guid: 6bc3768bd96c6334cb5626e68bf29405, type: 3}
     - {fileID: 8300000, guid: 3b7a64841f9257548b41fbd6091716a4, type: 3}
@@ -50,7 +50,7 @@ MonoBehaviour:
     - {fileID: 8300000, guid: 687f3c5064635904a9e6890c3a568a04, type: 3}
     - {fileID: 8300000, guid: e5f75927decfbdb46b62b5062a75922e, type: 3}
   OnKill:
-    Chance: 50
+    Chance: 45
     Audios:
     - {fileID: 8300000, guid: 4b396bb06d19ded42a2d8d309d3e787f, type: 3}
     - {fileID: 8300000, guid: fc23ec0102139a448bad0d1c121403c9, type: 3}

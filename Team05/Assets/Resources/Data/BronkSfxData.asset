@@ -18,19 +18,28 @@ MonoBehaviour:
   AttackHit: {fileID: 8300000, guid: 429c64be39d98a5489d2f187a7cf3d83, type: 3}
   WhenHit:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: e6ac75fe67103c94dbc3cf0e35978576, type: 3}
+    - {fileID: 8300000, guid: e0ec4c72f2bfb7f4084c04bfaf264a6e, type: 3}
   Die:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 037352018ba34134da03dabf85eb0e7b, type: 3}
   LowHealth:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 084879520fb91574381c637ebcedee18, type: 3}
+    - {fileID: 8300000, guid: 42982628bcd1d3743a6a9cfca198909f, type: 3}
   Stunned:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 1deb6c75108862249874970722bcf29b, type: 3}
+    - {fileID: 8300000, guid: c045579ea5461f8479049b6e23afecdb, type: 3}
   GoToPowerCoil:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 27203ed858eda754e9c21399c332a7a4, type: 3}
   GoToHealPad:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: b8a84e48bdf98f44cbdd38ff79a6f899, type: 3}
