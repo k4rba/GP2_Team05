@@ -94,6 +94,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private void HealthOnOnDamageTaken() {
         StatesManager.AddState(new StateColorFlash(_model, Color.red));
+        
+        //play hit sound
     }
 
     private void OnHitRef(Projectile proj){
