@@ -465,7 +465,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1280446133571650962, guid: 8ba7db009d7d8c14ab5d0d75ea5bfec7, type: 3}
+  - {fileID: 5811342342853399222, guid: 7d7e886b4aabd4c46ac1f4920a335efb, type: 3}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -864,6 +864,7 @@ MonoBehaviour:
   _model: {fileID: 5028179991320725753}
   ProjectileSpawnPosition: {fileID: 8828858636230846196}
   _animator: {fileID: 0}
+  EnteredCombat: 0
 --- !u!1 &2495728826315454923
 GameObject:
   m_ObjectHideFlags: 0
@@ -1237,7 +1238,7 @@ SkinnedMeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 1504458271205132214, guid: 8ba7db009d7d8c14ab5d0d75ea5bfec7, type: 3}
+  - {fileID: 2100000, guid: 1463b71129e21a84fa119eba41f03a0f, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
