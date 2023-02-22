@@ -14,39 +14,46 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Attack:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: db8334599b2efff42ae60370edda9226, type: 3}
+    - {fileID: 8300000, guid: 3276046c2cb71d04e86e63778e5e7fff, type: 3}
+    - {fileID: 8300000, guid: d58f50ce574ed1741b3a47fb91dd584e, type: 3}
+    - {fileID: 8300000, guid: d1e38be913a0bcc42a1e4ef66b381ecc, type: 3}
   SpecialAttack:
     Chance: 100
-    Audios: []
+    Audios:
+    - {fileID: 8300000, guid: 847e9562443e3e647975274b5ff0f579, type: 3}
   OnDeath:
     Chance: 70
     Audios:
-    - {fileID: 8300000, guid: 48c9df38357b35f469278bbd97c3adb2, type: 3}
-    - {fileID: 8300000, guid: de0e25b148e76c7439ea3cad6a4c27af, type: 3}
-    - {fileID: 8300000, guid: e1c81fe558564c646bc6f21d67a00440, type: 3}
-    - {fileID: 8300000, guid: ca42a080f7c8d484fbfc9d4c790ddcff, type: 3}
+    - {fileID: 8300000, guid: 387b39c5b4b78894095dcf605c02e4d9, type: 3}
   OnAggro:
     Chance: 40
     Audios:
-    - {fileID: 8300000, guid: 3cdcf4d6abafcad45aafa8ad322b693b, type: 3}
-    - {fileID: 8300000, guid: 1d73188ddf8b548479139f61b8fc930b, type: 3}
-    - {fileID: 8300000, guid: 7abcdbfe83c865042a0fad83aa4d5c56, type: 3}
-    - {fileID: 8300000, guid: 20a2df0a4105089458c23284e70909c2, type: 3}
-    - {fileID: 8300000, guid: f904a8396f0228343af2662c8aadc615, type: 3}
-    - {fileID: 8300000, guid: f800b4f3fe360c5498b3a6e6000d284a, type: 3}
-    - {fileID: 8300000, guid: 2411582e66fbccc478abab62f418206a, type: 3}
+    - {fileID: 8300000, guid: b38a3191f12928748a7fb930511721e9, type: 3}
+    - {fileID: 8300000, guid: dddba851d42b86e4c981be659d16c57b, type: 3}
+    - {fileID: 8300000, guid: bf623b65b69209a489997f0b33870671, type: 3}
+    - {fileID: 8300000, guid: 853710c4049a30e42909a6090804e104, type: 3}
+    - {fileID: 8300000, guid: e39b5e8134d7c384ba43cd6477f2786d, type: 3}
+    - {fileID: 8300000, guid: 7996804bd57ebc641bda98366f7180fa, type: 3}
+    - {fileID: 8300000, guid: d900e5f547be0554cba0e3fb7d6b5152, type: 3}
+    - {fileID: 8300000, guid: b4fe534c830ff4146ad92aa25fa20f88, type: 3}
   OnHint:
     Chance: 60
     Audios:
-    - {fileID: 8300000, guid: fea4a5f5664f5384583c5ed132757487, type: 3}
-    - {fileID: 8300000, guid: a0e8d4dfd3be1e34a95507ffd58cb975, type: 3}
-    - {fileID: 8300000, guid: 1366170daef2e1a48a9247203911ef12, type: 3}
-    - {fileID: 8300000, guid: 7c9929f5d3405df41abcaf910780a6c0, type: 3}
-    - {fileID: 8300000, guid: 880de29deb82fb24fab8391658d26140, type: 3}
+    - {fileID: 8300000, guid: 6bc3768bd96c6334cb5626e68bf29405, type: 3}
+    - {fileID: 8300000, guid: 3b7a64841f9257548b41fbd6091716a4, type: 3}
+    - {fileID: 8300000, guid: 5eb5d2c35ab09354582c95195a9d5899, type: 3}
+    - {fileID: 8300000, guid: 1eb7b1828c516744f985e44f00c1e1be, type: 3}
+    - {fileID: 8300000, guid: f95efdf5e974c6549bb825dec6e3d799, type: 3}
+    - {fileID: 8300000, guid: f5f5910c2d366754497b2219819cd970, type: 3}
+    - {fileID: 8300000, guid: 687f3c5064635904a9e6890c3a568a04, type: 3}
+    - {fileID: 8300000, guid: e5f75927decfbdb46b62b5062a75922e, type: 3}
   OnKill:
     Chance: 50
     Audios:
-    - {fileID: 8300000, guid: b4d2278009bbb4b49980828fe24c9bd2, type: 3}
-    - {fileID: 8300000, guid: d34b9cfdf90748f47a54fdc06dc64f78, type: 3}
-    - {fileID: 8300000, guid: 0641e92cd4173ed499a7bc4b4d972107, type: 3}
-    - {fileID: 8300000, guid: d0a50ed540c1d514ba6615110f68b15c, type: 3}
+    - {fileID: 8300000, guid: 4b396bb06d19ded42a2d8d309d3e787f, type: 3}
+    - {fileID: 8300000, guid: fc23ec0102139a448bad0d1c121403c9, type: 3}
+    - {fileID: 8300000, guid: b4eb71776613c584bb1737fd1b1f86e3, type: 3}
+    - {fileID: 8300000, guid: e2c1cf4e90e8d424ea71d2c09a698316, type: 3}
+    - {fileID: 8300000, guid: 8073926bdfe9db04aa7a56cb6aa85225, type: 3}
