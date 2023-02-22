@@ -1,15 +1,16 @@
 using System;
-using System.Collections;
-using System.Collections.Generic;
 using Andreas.Scripts;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 namespace Health {
     public class HealthSystem {
         public float Health;
 
+        public const float MinHp = -0.5f;
+        public const float MaxHp = 0.5f;
+
         public event Action OnDamageTaken;
+        public event Action OnDie;
 
         public HealthSystem() {
             Health = 0.25f;
@@ -52,6 +53,7 @@ namespace Health {
         }
 
         public void Die(IDamagable damagable) {
+            OnDie?.Invoke();
             GameManager.Instance.PlayersDead();
         }
 

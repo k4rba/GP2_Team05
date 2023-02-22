@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace Andreas.Scripts {
     public enum Alliances {
@@ -12,6 +11,8 @@ namespace Andreas.Scripts {
         public Alliances Alliance;
         public float Damage;
         public float Speed;
+
+        public float StunDuration;
 
         private float _lifeTime = 6f;
 

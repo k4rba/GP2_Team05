@@ -55,6 +55,10 @@ namespace Joakim.Scripts.Mechanics {
             var player = other.gameObject.GetComponent<Player>();
             if(player == null)
                 return;
+
+            if(!coupledHealingStation.IsOccupied) {
+                player.SfxData.GoToHealPad.Play(player.transform.position);
+            }
             
             if (affectedPlayer == null && !done) {
                 affectedPlayer = player;

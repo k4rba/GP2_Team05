@@ -653,6 +653,7 @@ MonoBehaviour:
   Alliance: 2
   Damage: 0.05
   Speed: 8
+  StunDuration: 3
 --- !u!135 &6492150574243942572
 SphereCollider:
   m_ObjectHideFlags: 0
