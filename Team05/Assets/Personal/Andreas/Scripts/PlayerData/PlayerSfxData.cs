@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using Andreas.Scripts.EnemyData;
+using UnityEngine;
 
 namespace Andreas.Scripts.PlayerData
 {
@@ -21,10 +22,14 @@ namespace Andreas.Scripts.PlayerData
         [Space(10)]
         [Header("Voicelines")]
         
-        public AudioClip WhenHit;
-        public AudioClip Die;
-        public AudioClip LowHealth;
-        public AudioClip HintBreakable;
-        
+        public AudioData WhenHit;
+        public AudioData Die;
+        public AudioData LowHealth;
+        public AudioData Stunned;
+        // public AudioData Stunned;
+
+        public AudioData GoToPowerCoil;
+        public AudioData GoToHealPad;
+
     }
 }

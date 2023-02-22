@@ -69,8 +69,13 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         StartCoroutine(ShieldDomeDuration());
     }
 
-    IEnumerator ShieldDomeDuration() {
-        yield return new WaitForSeconds(10);
+    IEnumerator ShieldDomeDuration()
+    {
+        AudioManager.PlaySfx("Shield Dome activate_mixdown", transform.position);
+        yield return new WaitForSeconds(1);
+        AudioManager.PlaySfx("Shield Dome Idle_mixdown", transform.position);
+        yield return new WaitForSeconds(9);
+        AudioManager.PlaySfx("Shield Dome end_mixdown", transform.position);
         Destroy(gameObject);
     }
 

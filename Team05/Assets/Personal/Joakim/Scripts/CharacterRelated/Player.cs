@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using Andreas.Scripts;
+using Andreas.Scripts.EnemyData;
 using Andreas.Scripts.PlayerData;
 using Andreas.Scripts.RopeSystem;
 using Andreas.Scripts.RopeSystem.RopeStates;
@@ -57,6 +58,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
     private ProjectileReceiver _projectileReceiver;
 
+    private float _lowHealthWarningCooldownTimer;
     public Animator _animController;
 
     public enum CharacterType {
@@ -78,11 +80,12 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         StatesManager = new();
         Health = new HealthSystem();
         Health.OnDamageTaken += HealthOnOnDamageTaken;
+        Health.OnDie += HealthOnOnDie;
         _playerNumber = PlayerJoinManager.Instance.playerNumber;
         gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
-
+        
         _projectileReceiver = GetComponent<ProjectileReceiver>();
         _projectileReceiver.OnHit.AddListener(OnHitRef);
 
@@ -91,22 +94,40 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 #endif
     }
 
+    private void HealthOnOnDie() {
+        SfxData.Die.Play(transform.position);
+    }
 
     private void HealthOnOnDamageTaken() {
         StatesManager.AddState(new StateColorFlash(_model, Color.red));
         
-        //play hit sound
+        AudioData voiceLine = SfxData.WhenHit; 
+        if(_lowHealthWarningCooldownTimer <= 0)
+        {
+            var lowHealth = Mathf.Lerp(HealthSystem.MinHp, HealthSystem.MaxHp, 0.25f);
+            if(lowHealth <= Health.Health) {
+                voiceLine = SfxData.LowHealth;
+                const float LowHealthWarningCooldownTime = 3.5f; 
+                _lowHealthWarningCooldownTimer = LowHealthWarningCooldownTime;
+            }
+        }
+        
+        voiceLine.Play(transform.position);
     }
 
-    private void OnHitRef(Projectile proj){
+    private void OnHitRef(Projectile proj) {
         Health.InstantDamage(this, proj.Damage);
+        if(proj.StunDuration > 0f) {
+            StartCoroutine(TemporaryDisableInput(proj.StunDuration));
+            SfxData.Stunned.Play(transform.position);
+        }
     }
 
-    private void Start() {
-        // var grounds = GameManager.Instance.WorldManager.Grounds;
-        // var obstacles = GameManager.Instance.WorldManager.Obstacles;
-        // var playerFlowFieldManager = GetComponentInChildren<FlowFieldManager>();
-        // playerFlowFieldManager.SetupFromPlayer(grounds, obstacles, transform);
+    private IEnumerator TemporaryDisableInput(float duration) {
+        var inputActions = GetComponent<PlayerInput>().actions; 
+        inputActions.Disable();
+        yield return new WaitForSeconds(duration);
+        inputActions.Enable();
     }
 
     public void AssignPlayerToRole(Player.CharacterType type) {
@@ -145,6 +166,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private void Update() {
         StatesManager.Update(Time.deltaTime);
 
+        _lowHealthWarningCooldownTimer -= Time.deltaTime;
+        
         if (_aOnCd) {
             currentAbilityACooldown -= Time.deltaTime;
         }

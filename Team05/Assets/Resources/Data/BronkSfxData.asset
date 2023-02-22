@@ -16,3 +16,21 @@ MonoBehaviour:
   SecondaryAttack: {fileID: 8300000, guid: e9db09dac82d24743b2eb09d8f326259, type: 3}
   SpecialAttack: {fileID: 8300000, guid: 746c3360711749b4cbaf027ab25ae89d, type: 3}
   AttackHit: {fileID: 8300000, guid: 429c64be39d98a5489d2f187a7cf3d83, type: 3}
+  WhenHit:
+    Chance: 100
+    Audios: []
+  Die:
+    Chance: 100
+    Audios: []
+  LowHealth:
+    Chance: 100
+    Audios: []
+  Stunned:
+    Chance: 100
+    Audios: []
+  GoToPowerCoil:
+    Chance: 100
+    Audios: []
+  GoToHealPad:
+    Chance: 100
+    Audios: []

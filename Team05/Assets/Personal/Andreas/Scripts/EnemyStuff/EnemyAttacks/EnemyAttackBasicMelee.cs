@@ -27,8 +27,9 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             var hitCheck = box.GetComponent<HitCheck>();
             hitCheck.Set(unit.gameObject);
             
-            AudioManager.PlaySfx("VoiceMeleeEnemyHits_mixdown", Enemy.transform.position);
-
+            if(Rng.Roll(40))
+                AudioManager.PlaySfx("VoiceMeleeEnemyHits_mixdown", Enemy.transform.position);
+            AudioManager.PlaySfx("MeleeEnemyHitting_notHittingPlayer_mixdown", Enemy.transform.position);
         }
 
     }

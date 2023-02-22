@@ -7,7 +7,7 @@ namespace Andreas.Scripts.HealingZone
     {
         public Player CurrentPlayer;
         public bool IsOccupied => CurrentPlayer != null;
-        
+
         [SerializeField] private HealingZoneData _data;
 
         public GameObject healingVFX;
@@ -18,6 +18,8 @@ namespace Andreas.Scripts.HealingZone
 
         private AudioSource _sfxIdle;
         private AudioSource _sfxActive;
+
+        public bool IsHanSolo;
 
         private void Awake()
         {
@@ -36,22 +38,22 @@ namespace Andreas.Scripts.HealingZone
         {
             if(_ticks <= 0)
                 return;
-            
+
             if(CurrentPlayer != null)
                 return;
-            
+
             var player = other.gameObject.GetComponent<Player>();
-            if(player != null)
+            if(player == null)
+                return;
+
+            healingVFX.SetActive(true);
+            _sfxActive = _data.Active.Play(transform.position);
+            CurrentPlayer = player;
+            _activated = true;
+            
+            if(!IsHanSolo)
             {
-                healingVFX.SetActive(true);
-                _sfxActive = _data.Active.Play(transform.position);
-                CurrentPlayer = player;
-                _activated = true;
-                Debug.Log("HEALING PAD ACTIVATED");
-            }
-            else
-            {
-                Debug.Log("entered healing pad (BUT WAS NOT PLAYER)");
+                player.SfxData.GoToPowerCoil.Play(player.transform.position);
             }
         }
 
@@ -88,7 +90,6 @@ namespace Andreas.Scripts.HealingZone
                     Deplete();
                 }
             }
-            
         }
 
         private void Deplete()
@@ -100,8 +101,8 @@ namespace Andreas.Scripts.HealingZone
         private void Heal()
         {
             if(CurrentPlayer == null)
-                return; 
-            
+                return;
+
             CurrentPlayer.Health.InstantHealing(CurrentPlayer, _data.HealAmount);
         }
     }
