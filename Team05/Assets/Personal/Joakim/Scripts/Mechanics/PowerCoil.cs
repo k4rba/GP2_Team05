@@ -59,7 +59,8 @@ namespace Joakim.Scripts.Mechanics {
             if (affectedPlayer == null && !done) {
                 affectedPlayer = player;
                 _affectedPlayerPos = other.transform;
-                InvokeRepeating(nameof(OfferHealth), 0, 1);
+                InvokeRepeating(nameof(OfferHealth), 0, 2);
+                Debug.Log("STARTED COIL");
                 
                 if(_sfxCharging != null)
                     _sfxChargingSource = AudioManager.PlaySfx(_sfxCharging.name, transform.position);
@@ -75,7 +76,7 @@ namespace Joakim.Scripts.Mechanics {
                 if (!done) {
                     _lr.SetPosition(0, _lineStartPos);
                 }
-
+    
                 _sfxChargingSource?.Stop();
                 
                 _currentLineIndex = 0;
@@ -99,6 +100,8 @@ namespace Joakim.Scripts.Mechanics {
                     .OnComplete(() => Destroy(lightningEffect));
                 affectedPlayer?.Health.InstantDamage(affectedPlayer, damagePerTic);
                 _currentTic++;
+                Debug.Log($"TICKED COIL ({_currentTic} / {requiredTicsToExecuteEvent})");
+
             }
             else if (_currentTic == requiredTicsToExecuteEvent) {
                 done = !done;
@@ -108,6 +111,7 @@ namespace Joakim.Scripts.Mechanics {
         }
 
         public void ExecuteEvent() {
+                Debug.Log("COMPLETED COIL");
             var pos = transform.position;
             if(_sfxIdle != null)
             {
@@ -120,7 +124,9 @@ namespace Joakim.Scripts.Mechanics {
                 _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
             }
             if (!multipleCoils) {
-                objectToDisableUponExecute.GetComponent<DoorOpen>().DoorSlideOpen();
+                var doorOpen =objectToDisableUponExecute.GetComponent<DoorOpen>(); 
+                    if(doorOpen!=null)
+                        doorOpen.DoorSlideOpen();
             }
             else {
                 coupledFuseBox.GetComponent<FuseBoxMultipleCoilsOnly>().CheckIfFinished();

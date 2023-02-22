@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AudioSystem;
+using UnityEngine;
 using Util;
 
 namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
@@ -16,6 +17,8 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
         {
             base.Start();
 
+            AudioManager.PlaySfx("EnemyLeaping_mixdown", Enemy.transform.position);
+            
             _jumpTime = CastTimer;
 
             _startPos = Enemy.transform.position;

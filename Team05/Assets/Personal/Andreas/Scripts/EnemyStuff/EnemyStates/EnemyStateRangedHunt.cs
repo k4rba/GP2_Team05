@@ -32,7 +32,9 @@ namespace Andreas.Scripts.EnemyStates
             
             UpdateDestination();
             
-            Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
+            if(!Enemy.EnteredCombat)
+                Enemy.Data.Sfx.OnAggro.Play(Enemy.transform.position);
+            Enemy.EnteredCombat = true;
 
         }
 

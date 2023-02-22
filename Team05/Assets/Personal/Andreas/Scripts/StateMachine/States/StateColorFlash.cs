@@ -64,10 +64,9 @@ namespace Andreas.Scripts.StateMachine.States
         {
             foreach(var mat in _materials)
             {
-                mat.Material.color = mat.End;
+                mat.Material.color = Color.white;
             }
         }
-
 
         public override void Update(float dt)
         {

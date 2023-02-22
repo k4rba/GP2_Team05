@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using AudioSystem;
+using UnityEngine;
 
 namespace Andreas.Scripts {
     public class HitCheck : MonoBehaviour {
@@ -6,7 +7,7 @@ namespace Andreas.Scripts {
         private GameObject _target;
         private bool _didHit = false;
 
-        private float _lifeTimer = 1f;
+        private float _lifeTimer = 0.2f;
         
         public void Set(GameObject target) {
             _target = target;
@@ -20,6 +21,7 @@ namespace Andreas.Scripts {
                 Debug.Log("Did damage");
                 other.GetComponent<Player>().Health.InstantDamage(other.GetComponent<Player>(), 0.05f);
                 Destroy(gameObject);
+                AudioManager.PlaySfx("MeleeHit2_mixdown", transform.position);
             }
             else {
                 Debug.Log("Did no damage");
@@ -30,8 +32,8 @@ namespace Andreas.Scripts {
         {
             _lifeTimer -= Time.deltaTime;
             
-            // if(_lifeTimer <= 0)
-                // Destroy(gameObject);
+            if(_lifeTimer <= 0)
+                Destroy(gameObject);
             
         }
         

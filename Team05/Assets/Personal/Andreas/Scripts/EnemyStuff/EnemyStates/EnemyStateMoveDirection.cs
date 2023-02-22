@@ -8,10 +8,7 @@ namespace Andreas.Scripts.EnemyStates
     {
         private Vector3 _position;
         private Vector3 _destination;
-
-
         private Timer _exitTimer = 2f;
-
         private float _minDistance = 1f;
 
         public EnemyStateMoveDirection(Vector3 position)
@@ -25,6 +22,7 @@ namespace Andreas.Scripts.EnemyStates
             NavMesh.SamplePosition(_position, out hit, 10f, 1);
             Enemy.NavAgent.isStopped = false;
             Enemy.NavAgent.destination = _destination = hit.position;
+            Enemy._animator.SetBool("Run", true);
         }
         
         public override void Start()
@@ -50,7 +48,8 @@ namespace Andreas.Scripts.EnemyStates
         {
             base.Exit();
             Enemy.NavAgent.isStopped = true;
-            
+            Enemy._animator.SetBool("Run", false);
+
         }
     }
 }
