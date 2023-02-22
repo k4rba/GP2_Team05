@@ -141,7 +141,7 @@ public class CharacterSelection : MonoBehaviour {
         cm.Players.Add(SetupAutoPlayer(GetComponent<Player>()));
 
         //  add player2
-        var playerPrefab = FastResources.Load<GameObject>("Player");
+        var playerPrefab = FastResources.Load<GameObject>("Prefabs/Player/Player");
         var playerObj = Instantiate(playerPrefab, Vector3.zero, quaternion.identity);
         var player2 = SetupAutoPlayer(playerObj.GetComponent<Player>());
         cm.Players.Add(player2);

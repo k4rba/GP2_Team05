@@ -9,7 +9,7 @@ public class DoorOpen : MonoBehaviour {
     [SerializeField] private AudioClip _sound;
     
     private void Awake() {
-        targetPos = transform.position.y - 7f;
+        targetPos = transform.position.y - 5.5f;
     }
     public void DoorSlideOpen() {
         transform.DOMoveY(targetPos, timeToOpen, false);

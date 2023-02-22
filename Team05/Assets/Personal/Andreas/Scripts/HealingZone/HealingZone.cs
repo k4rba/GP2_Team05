@@ -6,7 +6,7 @@ namespace Andreas.Scripts.HealingZone
     public class HealingZone : MonoBehaviour
     {
         public Player CurrentPlayer;
-        public bool IsOccupied => _activated;
+        public bool IsOccupied => CurrentPlayer != null;
         
         [SerializeField] private HealingZoneData _data;
 
@@ -60,6 +60,7 @@ namespace Andreas.Scripts.HealingZone
             var player = other.gameObject.GetComponent<Player>();
             if(player == CurrentPlayer)
             {
+                CurrentPlayer = null;
                 StopStuff();
             }
         }
@@ -67,7 +68,6 @@ namespace Andreas.Scripts.HealingZone
         private void StopStuff()
         {
             healingVFX.SetActive(false);
-            CurrentPlayer = null;
             _sfxActive?.Stop();
             _activated = false;
         }

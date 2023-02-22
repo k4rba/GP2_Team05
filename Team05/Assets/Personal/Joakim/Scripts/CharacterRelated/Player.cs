@@ -13,6 +13,7 @@ using UnityEngine.InputSystem;
 using AttackNamespace;
 using AudioSystem;
 using Health;
+using Util;
 
 #if UNITY_EDITOR
 using UnityEditor;
@@ -83,19 +84,19 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         _rb = GetComponent<Rigidbody>();
 
         _projectileReceiver = GetComponent<ProjectileReceiver>();
-        _projectileReceiver.OnHit += Projectile_OnHit;
-
+        _projectileReceiver.OnHit.AddListener(OnHitRef);
 
 #if UNITY_EDITOR
         EditorApplication.playmodeStateChanged += ModeChanged;
 #endif
     }
 
+
     private void HealthOnOnDamageTaken() {
         StatesManager.AddState(new StateColorFlash(_model, Color.red));
     }
 
-    private void Projectile_OnHit(Projectile proj) {
+    private void OnHitRef(Projectile proj){
         Health.InstantDamage(this, proj.Damage);
     }
 
@@ -119,8 +120,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
 
-                _model = transform.Find("Jose").gameObject;
-                _model.SetActive(true);
+                var modelJosePrefab = FastResources.Load<GameObject>("Prefabs/Player/Model/Jose");
+                _model = Instantiate(modelJosePrefab, gameObject.transform);
                 _animController = _model.GetComponent<Animator>();
                 break;
             case CharacterType.Melee:
@@ -132,8 +133,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
 
-                _model = transform.Find("Bronk").gameObject;
-                _model.SetActive(true);
+                var modelBronkPrefab = FastResources.Load<GameObject>("Prefabs/Player/Model/Bronk");
+                _model = Instantiate(modelBronkPrefab, gameObject.transform);
                 _animController = _model.GetComponent<Animator>();
                 break;
         }

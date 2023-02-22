@@ -1,4 +1,5 @@
-﻿using Personal.Andreas.Scripts.Actors;
+﻿using AudioSystem;
+using Personal.Andreas.Scripts.Actors;
 using UnityEngine;
 using Util;
 
@@ -25,6 +26,9 @@ namespace Andreas.Scripts.EnemyStuff.EnemyAttacks
             var box = Object.Instantiate(prefab, boxPosition, Quaternion.identity);
             var hitCheck = box.GetComponent<HitCheck>();
             hitCheck.Set(unit.gameObject);
+            
+            AudioManager.PlaySfx("VoiceMeleeEnemyHits_mixdown", Enemy.transform.position);
+
         }
 
     }

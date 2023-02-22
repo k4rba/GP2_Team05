@@ -159,13 +159,13 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         if (enemy == null) {
             return;
         }
-
-
+        
         if (rangedAttackType != RangedAttackType.StunBall) {
             if (enemy != null) {
                 int finalDamage = (int)Mathf.Min(1, BasicDamage);
                 enemy._animator.SetTrigger("GetHit");
                 enemy.TakeDamage(finalDamage);
+                AudioManager.PlaySfx(_player.SfxData.BasicAttack.name, _player.transform.position);
             }
         }
         else if (rangedAttackType == RangedAttackType.StunBall) {

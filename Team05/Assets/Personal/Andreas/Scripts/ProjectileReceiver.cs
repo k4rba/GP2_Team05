@@ -6,7 +6,7 @@ namespace Andreas.Scripts
     public class ProjectileReceiver : MonoBehaviour
     {
         // public Action<Projectile> OnHit;
-        public UnityAction<Projectile> OnHit;
+        [SerializeField] public UnityEvent<Projectile> OnHit;
 
         private void OnTriggerEnter(Collider other)
         {
