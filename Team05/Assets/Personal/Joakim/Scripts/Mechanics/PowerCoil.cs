@@ -1,10 +1,9 @@
-using System;
 using System.Collections.Generic;
+using Andreas.Scripts;
 using Andreas.Scripts.HealingZone;
 using AudioSystem;
 using Health;
 using UnityEngine;
-using UnityEngine.InputSystem.LowLevel;
 using DG.Tweening;
 using Util;
 
@@ -37,6 +36,9 @@ namespace Joakim.Scripts.Mechanics {
         public bool multipleCoils;
 
         private Vector3 _lineStartPos, _lineEndPos;
+
+        [Header("Only check this for the final powercoil interaction of the level.")]
+        public bool endPowerCoil;
 
         private void Awake() {
             _lightningTrailEffect = FastResources.Load<GameObject>("TeslaLightningTrail");
@@ -107,7 +109,7 @@ namespace Joakim.Scripts.Mechanics {
                 _currentTic++;
                 Debug.Log($"TICKED COIL ({_currentTic} / {requiredTicsToExecuteEvent})");
             }
-            
+
             else if (_currentTic == requiredTicsToExecuteEvent) {
                 done = !done;
                 ExecuteEvent();
@@ -128,14 +130,17 @@ namespace Joakim.Scripts.Mechanics {
                 _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
             }
 
-            if (!multipleCoils) {
-
+            if (!multipleCoils && !endPowerCoil) {
                 foreach (var door in objectToDisableUponExecute) {
                     door.GetComponent<DoorOpen>().DoorSlideOpen();
                 }
             }
-            else {
+            else if (multipleCoils) {
                 coupledFuseBox.GetComponent<FuseBoxMultipleCoilsOnly>().CheckIfFinished();
+            }
+
+            else if (endPowerCoil) {
+                GameManager.Instance.Ending();
             }
         }
     }
