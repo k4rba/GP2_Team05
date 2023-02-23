@@ -30,8 +30,8 @@ public class CharacterManager : MonoBehaviour
         // Destroy(gameObject);
     }
 
-    public void CheckIfAllAreLockedIn()
-    {
+    public bool CheckIfAllAreLockedIn() {
+        bool allLockedIn = rangedLockedIn && meleeLockedIn;
         if(rangedLockedIn && meleeLockedIn)
         {
             Destroy(camerToDisable);
@@ -98,6 +98,8 @@ public class CharacterManager : MonoBehaviour
             }
         }
         GameManager.Instance.PlayerHudUi.SetUi();
+
+        return allLockedIn;
     }
 
 
