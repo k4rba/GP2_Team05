@@ -718,7 +718,7 @@ MonoBehaviour:
   m_AutoDolly:
     m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
+    m_SearchRadius: 0
     m_SearchResolution: 20
 --- !u!114 &1331495501278087039
 MonoBehaviour:
@@ -1097,7 +1097,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1331495502937188515}
   m_PathPosition: 0
-  m_PositionUnits: 0
+  m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
   m_YDamping: 0
@@ -1222,7 +1222,7 @@ MonoBehaviour:
   m_AutoDolly:
     m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
+    m_SearchRadius: 0
     m_SearchResolution: 20
 --- !u!114 &1331495502092994885
 MonoBehaviour:
@@ -1323,7 +1323,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Path: {fileID: 1331495501963439145}
   m_PathPosition: 0
-  m_PositionUnits: 0
+  m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
   m_YDamping: 0
@@ -1335,7 +1335,7 @@ MonoBehaviour:
   m_AutoDolly:
     m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
+    m_SearchRadius: 0
     m_SearchResolution: 20
 --- !u!114 &1331495502493105604
 MonoBehaviour:
@@ -1887,7 +1887,7 @@ MonoBehaviour:
   m_AutoDolly:
     m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
+    m_SearchRadius: 0
     m_SearchResolution: 20
 --- !u!114 &1331495502905426703
 MonoBehaviour:
@@ -2000,7 +2000,7 @@ MonoBehaviour:
   m_AutoDolly:
     m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
+    m_SearchRadius: 0
     m_SearchResolution: 20
 --- !u!114 &1331495502917997543
 MonoBehaviour:
@@ -2368,8 +2368,8 @@ GameObject:
   m_Component:
   - component: {fileID: 6655961675028308805}
   - component: {fileID: 6955842887537561094}
-  - component: {fileID: 9767496631586614}
   - component: {fileID: 2866676996981631947}
+  - component: {fileID: 147415989}
   m_Layer: 0
   m_Name: cm
   m_TagString: Untagged
@@ -2404,7 +2404,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac0b09e7857660247b1477e93731de29, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &9767496631586614
+--- !u!114 &2866676996981631947
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -2413,7 +2413,35 @@ MonoBehaviour:
   m_GameObject: {fileID: 2357022918948640512}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4044717213e31446939f7bd49c896ea, type: 3}
+  m_Script: {fileID: 11500000, guid: 418e42c7d0405cc48a7b83f63ea53bb3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Path: {fileID: 6242913202963083710}
+  m_PathPosition: 0
+  m_PositionUnits: 1
+  m_PathOffset: {x: 0, y: 0, z: 0}
+  m_XDamping: 0
+  m_YDamping: 0
+  m_ZDamping: 1
+  m_CameraUp: 0
+  m_PitchDamping: 0
+  m_YawDamping: 0
+  m_RollDamping: 0
+  m_AutoDolly:
+    m_Enabled: 1
+    m_PositionOffset: 0
+    m_SearchRadius: 0
+    m_SearchResolution: 20
+--- !u!114 &147415989
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2357022918948640512}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0f7633c93f0364a418841eeb8b058634, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
   m_TrackedObjectOffset: {x: 0, y: 0, z: 0}
@@ -2431,34 +2459,18 @@ MonoBehaviour:
   m_BiasX: 0
   m_BiasY: 0
   m_CenterOnActivate: 1
---- !u!114 &2866676996981631947
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2357022918948640512}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 418e42c7d0405cc48a7b83f63ea53bb3, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Path: {fileID: 6242913202963083710}
-  m_PathPosition: 0
-  m_PositionUnits: 0
-  m_PathOffset: {x: 0, y: 0, z: 0}
-  m_XDamping: 0
-  m_YDamping: 0
-  m_ZDamping: 1
-  m_CameraUp: 0
-  m_PitchDamping: 0
-  m_YawDamping: 0
-  m_RollDamping: 0
-  m_AutoDolly:
-    m_Enabled: 0
-    m_PositionOffset: 0
-    m_SearchRadius: 2
-    m_SearchResolution: 5
+  m_GroupFramingSize: 0.8
+  m_FramingMode: 2
+  m_FrameDamping: 2
+  m_AdjustmentMode: 0
+  m_MaxDollyIn: 5000
+  m_MaxDollyOut: 5000
+  m_MinimumDistance: 1
+  m_MaximumDistance: 5000
+  m_MinimumFOV: 3
+  m_MaximumFOV: 60
+  m_MinimumOrthoSize: 1
+  m_MaximumOrthoSize: 5000
 --- !u!1 &3758007159086175742
 GameObject:
   m_ObjectHideFlags: 0
@@ -2546,7 +2558,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Path: {fileID: 7300038617224037944}
   m_PathPosition: 0
-  m_PositionUnits: 0
+  m_PositionUnits: 1
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
   m_YDamping: 0
@@ -2556,10 +2568,10 @@ MonoBehaviour:
   m_YawDamping: 0
   m_RollDamping: 0
   m_AutoDolly:
-    m_Enabled: 0
+    m_Enabled: 1
     m_PositionOffset: 0
-    m_SearchRadius: 2
-    m_SearchResolution: 5
+    m_SearchRadius: 0
+    m_SearchResolution: 20
 --- !u!1 &4751656076720116948
 GameObject:
   m_ObjectHideFlags: 0

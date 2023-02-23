@@ -13,6 +13,7 @@ namespace Joakim.Scripts.Mechanics {
         private HealthSystem.IDamagable affectedPlayer;
 
         public int requiredTicsToExecuteEvent;
+        public float tickRate = 1;
         private int _currentTic = 0;
         public List<GameObject> objectToDisableUponExecute = new List<GameObject>();
         private GameObject _lightningTrailEffect;
@@ -63,7 +64,7 @@ namespace Joakim.Scripts.Mechanics {
             if (affectedPlayer == null && !done) {
                 affectedPlayer = player;
                 _affectedPlayerPos = other.transform;
-                InvokeRepeating(nameof(OfferHealth), 0, 2);
+                InvokeRepeating(nameof(OfferHealth), 0, tickRate);
                 Debug.Log("STARTED COIL");
 
                 if (_sfxCharging != null)
