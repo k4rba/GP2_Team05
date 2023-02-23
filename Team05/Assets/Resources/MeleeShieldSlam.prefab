@@ -15,6 +15,7 @@ GameObject:
   - component: {fileID: 898736138956242903}
   - component: {fileID: 9099300374757321544}
   - component: {fileID: 6613452748423250804}
+  - component: {fileID: 3501098003325067293}
   m_Layer: 0
   m_Name: MeleeShieldSlam
   m_TagString: Untagged
@@ -357,7 +358,20 @@ MonoBehaviour:
   <ProjectileSpeed>k__BackingField: 0
   <AttackSize>k__BackingField: 1
   meleeAttackType: 3
-  player: {fileID: 0}
+  playerObj: {fileID: 0}
+--- !u!114 &3501098003325067293
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2264191049891188702}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e5ce93c0de47d47a054da43a81e588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 3
 --- !u!1 &4281854938932174748
 GameObject:
   m_ObjectHideFlags: 0

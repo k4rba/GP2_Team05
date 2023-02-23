@@ -365,6 +365,9 @@ MonoBehaviour:
   Data: {fileID: 11400000, guid: a182ac1ca7442ae449023da79c046eda, type: 2}
   State: 
   _model: {fileID: 0}
+  ProjectileSpawnPosition: {fileID: 0}
+  _animator: {fileID: 0}
+  EnteredCombat: 0
 --- !u!1 &6327942626956263289
 GameObject:
   m_ObjectHideFlags: 0
@@ -471,10 +474,10 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8109581762779777178}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
+  m_LocalScale: {x: 2, y: 2, z: 2}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 4051627539403161413}
   - {fileID: 4051627537921499736}
@@ -483,7 +486,7 @@ Transform:
   - {fileID: 75024016877232393}
   m_Father: {fileID: 4051627539880822151}
   m_RootOrder: 0
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: -90, z: 0}
 --- !u!1 &8584217488585408113
 GameObject:
   m_ObjectHideFlags: 0
