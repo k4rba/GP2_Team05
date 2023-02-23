@@ -8,6 +8,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Util;
+using DG.Tweening;
 
 namespace Andreas.Scripts {
     public class GameManager : MonoBehaviour {
@@ -28,7 +29,15 @@ namespace Andreas.Scripts {
 
         public GameObject gameOverScreen, pauseScreen;
 
+        public GameObject healthBar;
+
         public bool paused;
+
+        [Header(
+            "This is the place the players jump to in the ending.")]
+        public GameObject endJumpTarget;
+
+        public GameObject credits;
 
 
         public void TogglePause() {
@@ -110,5 +119,20 @@ namespace Andreas.Scripts {
 
             gameOverScreen.SetActive(true);
         }
+
+        public void Ending() {
+            foreach (var player in CharacterManager.Players) {
+                player.gameObject.GetComponent<PlayerInput>().actions.Disable();
+                player.gameObject.transform.DOJump(endJumpTarget.transform.position, 12, 1, 4, false);
+            }
+            Invoke(nameof(ShowCredits), 4);
+        }
+
+        private void ShowCredits() {
+            credits.SetActive(true);
+            PlayerHudUi.gameObject.SetActive(false);
+            healthBar.SetActive(false);
+        }
     }
+    
 }
