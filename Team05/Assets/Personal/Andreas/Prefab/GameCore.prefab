@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 654144816016968970}
   - component: {fileID: 654144816016968969}
-  - component: {fileID: 1379539381}
+  - component: {fileID: 561702809}
   m_Layer: 0
   m_Name: GameCore
   m_TagString: Untagged
@@ -45,7 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ef7827ea0f804ca0a68204b79502d7d4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &1379539381
+--- !u!114 &561702809
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -65,3 +65,6 @@ MonoBehaviour:
   CheckpointManager: {fileID: 0}
   RopeManager: {fileID: 0}
   DollyManager: {fileID: 0}
+  gameOverScreen: {fileID: 0}
+  pauseScreen: {fileID: 0}
+  paused: 0
