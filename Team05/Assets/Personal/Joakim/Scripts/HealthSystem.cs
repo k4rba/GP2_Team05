@@ -48,8 +48,8 @@ namespace Health {
         }
 
         public void ResetHealth(IDamagable player) {
-            player.Health.Health = 0.25f;
-            player.HealthMaterial.SetFloat("_HP", 0.25f);
+            player.Health.Health = 0.5f;
+            player.HealthMaterial.SetFloat("_HP", 0.5f);
         }
 
         public void Die(IDamagable damagable) {

@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using System.Data;
 using Andreas.Scripts;
 using Andreas.Scripts.EnemyData;
 using Andreas.Scripts.PlayerData;
@@ -14,6 +15,7 @@ using UnityEngine.InputSystem;
 using AttackNamespace;
 using AudioSystem;
 using Health;
+using UnityEngine.Experimental.GlobalIllumination;
 using Util;
 
 #if UNITY_EDITOR
@@ -31,9 +33,13 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private bool _switchedToCharacterMode = true;
     public GameObject otherPlayer;
 
+    private Light pl;
+
     public bool isDead = false;
 
     private GameObject _model;
+
+    public GameObject feetPos;
 
     [field: SerializeField] public Material HealthMaterial { get; set; }
     public HealthSystem Health { get; set; }
@@ -59,7 +65,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private ProjectileReceiver _projectileReceiver;
 
     private float _lowHealthWarningCooldownTimer;
-    public Animator _animController;
+    public Animator animController;
 
     public enum CharacterType {
         Ranged,
@@ -77,6 +83,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     }
 #endif
     private void Awake() {
+        pl = GetComponentInChildren<Light>();
         StatesManager = new();
         Health = new HealthSystem();
         Health.OnDamageTaken += HealthOnOnDamageTaken;
@@ -85,7 +92,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         gameObject.tag = _playerNumber == 1 ? "Player1" : "Player2";
         GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
         _rb = GetComponent<Rigidbody>();
-        
         _projectileReceiver = GetComponent<ProjectileReceiver>();
         _projectileReceiver.OnHit.AddListener(OnHitRef);
 
@@ -142,10 +148,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Ranged;
                 }
+                pl.color = new Color(53, 93, 123);
 
                 var modelJosePrefab = FastResources.Load<GameObject>("Prefabs/Player/Model/Jose");
                 _model = Instantiate(modelJosePrefab, gameObject.transform);
-                _animController = _model.GetComponent<Animator>();
+                animController = _model.GetComponent<Animator>();
                 break;
             case CharacterType.Melee:
                 GameManager.Instance.PlayerHudUi.Players.Add(this);
@@ -155,10 +162,11 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
                 if (playerAttackScheme != null) {
                     playerAttackScheme.characterType = PlayerAttackScheme.Character.Melee;
                 }
+                pl.color = new Color(101, 183, 1);
 
                 var modelBronkPrefab = FastResources.Load<GameObject>("Prefabs/Player/Model/Bronk");
                 _model = Instantiate(modelBronkPrefab, gameObject.transform);
-                _animController = _model.GetComponent<Animator>();
+                animController = _model.GetComponent<Animator>();
                 break;
         }
     }
@@ -188,7 +196,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
     private void HoldBasic() {
         if (playerAttackScheme != null) {
             playerAttackScheme.BasicAttacksList[0]();
-            _animController.SetTrigger("BasicAttackTrig");
+            animController.SetTrigger("BasicAttackTrig");
         }
     }
 
@@ -206,7 +214,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_aOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[1]();
-                _animController.SetTrigger("ShieldDomeTrig");
+                animController.SetTrigger("ShieldDomeTrig");
                 _aOnCd = !_aOnCd;
                 StartCoroutine(StartAbilityACooldown());
             }
@@ -224,7 +232,7 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         if (context.performed && !_bOnCd) {
             if (playerAttackScheme != null) {
                 playerAttackScheme.BasicAttacksList[2]();
-                _animController.SetTrigger("ShieldSlamTrig");
+                animController.SetTrigger("ShieldSlamTrig");
                 _bOnCd = !_bOnCd;
                 StartCoroutine(StartAbilityBCooldown());
             }
@@ -282,8 +290,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
         var filbert = transform.TransformDirection(new Vector3(moveDirection.x, 0, moveDirection.y));
 
 
-        _animController.SetFloat("VelX", filbert.x);
-        _animController.SetFloat("VelY", filbert.z);
+        animController.SetFloat("VelX", filbert.x);
+        animController.SetFloat("VelY", filbert.z);
     }
 
     public void OnLook(InputAction.CallbackContext context) {

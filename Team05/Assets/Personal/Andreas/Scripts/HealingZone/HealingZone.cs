@@ -1,10 +1,8 @@
 using UnityEngine;
 using Util;
 
-namespace Andreas.Scripts.HealingZone
-{
-    public class HealingZone : MonoBehaviour
-    {
+namespace Andreas.Scripts.HealingZone {
+    public class HealingZone : MonoBehaviour {
         public Player CurrentPlayer;
         public bool IsOccupied => CurrentPlayer != null;
 
@@ -21,86 +19,72 @@ namespace Andreas.Scripts.HealingZone
 
         public bool IsHanSolo;
 
-        private void Awake()
-        {
+        private void Awake() {
             _tickTimer = _data.TickRate;
             _ticks = _data.MaxTicks;
         }
 
-        private void Start()
-        {
+        private void Start() {
             _sfxIdle = _data.Idle.Play(transform.position);
             _sfxIdle.loop = true;
             _sfxIdle.SetMaxDistance(50f);
         }
 
-        private void OnTriggerEnter(Collider other)
-        {
-            if(_ticks <= 0)
-                return;
-
-            if(CurrentPlayer != null)
-                return;
-
+        private void OnTriggerEnter(Collider other) {
             var player = other.gameObject.GetComponent<Player>();
-            if(player == null)
+            if (player == null)
+                return;
+
+            CurrentPlayer = player;
+
+            if (_ticks <= 0)
                 return;
 
             healingVFX.SetActive(true);
             _sfxActive = _data.Active.Play(transform.position);
-            CurrentPlayer = player;
             _activated = true;
-            
-            if(!IsHanSolo)
-            {
-                player.SfxData.GoToPowerCoil.Play(player.transform.position);
+
+            if (!IsHanSolo) {
+                CurrentPlayer.SfxData.GoToPowerCoil.Play(CurrentPlayer.transform.position);
             }
         }
 
-        private void OnTriggerExit(Collider other)
-        {
+        private void OnTriggerExit(Collider other) {
             var player = other.gameObject.GetComponent<Player>();
-            if(player == CurrentPlayer)
-            {
+            if (player == CurrentPlayer) {
                 CurrentPlayer = null;
                 StopStuff();
             }
         }
 
-        private void StopStuff()
-        {
+        private void StopStuff() {
             healingVFX.SetActive(false);
             _sfxActive?.Stop();
             _activated = false;
         }
 
-        private void Update()
-        {
-            if(!_activated)
+        private void Update() {
+            if (!_activated)
                 return;
-            if(_ticks <= 0)
+            if (_ticks <= 0)
                 return;
 
-            if(_tickTimer.UpdateTick())
-            {
+            if (_tickTimer.UpdateTick()) {
                 Heal();
                 _ticks--;
-                if(_ticks <= 0)
-                {
+                if (_ticks <= 0) {
                     Deplete();
                 }
             }
         }
 
-        private void Deplete()
-        {
+        private void Deplete() {
             StopStuff();
             Debug.Log("HEALING PAD DEPLETED");
         }
 
-        private void Heal()
-        {
-            if(CurrentPlayer == null)
+        private void Heal() {
+            if (CurrentPlayer == null)
                 return;
 
             CurrentPlayer.Health.InstantHealing(CurrentPlayer, _data.HealAmount);

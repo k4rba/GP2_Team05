@@ -112,7 +112,7 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
 
     bool CheckIfBulletCollided() {
         Physics.SphereCast(transform.position, 0.2f, playerObj.GetComponent<Player>().lookDirV3, out RaycastHit hit, 1);
-        if (hit.collider != null) {
+        if (hit.collider != null && !hit.collider.GetComponent<Enemy>()) {
             return true;
         }
 

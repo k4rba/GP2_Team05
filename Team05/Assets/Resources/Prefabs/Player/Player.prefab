@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 714828357424995838}
   - component: {fileID: 714828357424995837}
   - component: {fileID: 714828357424995836}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: FacingDir
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -116,7 +116,7 @@ GameObject:
   - component: {fileID: 3373715374849181714}
   - component: {fileID: 7069198549760303795}
   - component: {fileID: 8934059289705220366}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -403,6 +403,7 @@ MonoBehaviour:
   _playerNumber: 0
   otherPlayer: {fileID: 0}
   isDead: 0
+  feetPos: {fileID: 5492434035948490245}
   <HealthMaterial>k__BackingField: {fileID: 0}
   <CurrentHealth>k__BackingField: 0
   <Energy>k__BackingField: 0
@@ -412,7 +413,7 @@ MonoBehaviour:
   allMats: []
   currentAbilityACooldown: 0
   currentAbilityBCooldown: 0
-  _animController: {fileID: 0}
+  animController: {fileID: 0}
   cType: 1
 --- !u!114 &5651366575927957283
 MonoBehaviour:
@@ -458,6 +459,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c16fb8b6d044c3b343f6eff040b567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &7069198549760303795
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -494,7 +498,7 @@ GameObject:
   - component: {fileID: 714828357503984147}
   - component: {fileID: 714828357503984149}
   - component: {fileID: 714828357503984148}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Point Light
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -508,14 +512,14 @@ Transform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 714828357503984146}
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0.07, z: 0}
+  m_LocalRotation: {x: 0.5, y: 0.5, z: -0.5, w: 0.5}
+  m_LocalPosition: {x: 0, y: 3.068, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 714828357488824484}
   m_RootOrder: 1
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 90, y: 90, z: 0}
 --- !u!108 &714828357503984149
 Light:
   m_ObjectHideFlags: 0
@@ -525,13 +529,13 @@ Light:
   m_GameObject: {fileID: 714828357503984146}
   m_Enabled: 1
   serializedVersion: 10
-  m_Type: 2
+  m_Type: 0
   m_Shape: 0
   m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_Intensity: 3.44
-  m_Range: 40.12
-  m_SpotAngle: 30
-  m_InnerSpotAngle: 21.80208
+  m_Intensity: 0.001
+  m_Range: 5.1
+  m_SpotAngle: 104
+  m_InnerSpotAngle: 17
   m_CookieSize: 10
   m_Shadows:
     m_Type: 0
@@ -565,7 +569,7 @@ Light:
   m_RenderMode: 0
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 1015
   m_RenderingLayerMask: 1
   m_Lightmapping: 4
   m_LightShadowCasterMode: 0
@@ -609,7 +613,7 @@ GameObject:
   - component: {fileID: 5162609527924588747}
   - component: {fileID: 8333786806494414140}
   - component: {fileID: 6856746617348724539}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: TetherConnector
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -692,7 +696,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6815102015750390601}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: Feet
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -725,7 +729,7 @@ GameObject:
   - component: {fileID: 8153843246396417627}
   - component: {fileID: 6105262294659913442}
   - component: {fileID: 8484342711740364789}
-  m_Layer: 0
+  m_Layer: 11
   m_Name: ProjectileReceiver
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -772,3 +776,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 10c16fb8b6d044c3b343f6eff040b567, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  OnHit:
+    m_PersistentCalls:
+      m_Calls: []
