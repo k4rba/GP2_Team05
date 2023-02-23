@@ -65,7 +65,26 @@ PrefabInstance:
     - target: {fileID: 9022783105542135219, guid: 1f69874ea9cede141a566efda5ce81b8,
         type: 3}
       propertyPath: m_Name
-      value: LightningStunGraph
+      value: StunBallHitFX
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f69874ea9cede141a566efda5ce81b8, type: 3}
+--- !u!1 &1820728288819964904 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9022783105542135219, guid: 1f69874ea9cede141a566efda5ce81b8,
+    type: 3}
+  m_PrefabInstance: {fileID: 7238370735677404763}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6065934893658276679
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1820728288819964904}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 70e5ce93c0de47d47a054da43a81e588, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  time: 3

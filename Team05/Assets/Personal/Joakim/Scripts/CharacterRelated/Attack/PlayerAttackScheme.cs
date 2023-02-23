@@ -66,7 +66,7 @@ public class PlayerAttackScheme : MonoBehaviour {
     public void MeleeAbilityB() {
         var playerTransform = transform;
         var shieldDome = Instantiate(_specialBAbility,
-            new Vector3(transform.position.x, transform.position.y - 1.53f, transform.position.z), Quaternion.identity);
+            new Vector3(transform.position.x, transform.position.y - 1f, transform.position.z), Quaternion.identity);
         AudioManager.PlaySfx(SfxData.SpecialAttack.name, playerTransform.position);
     }
 

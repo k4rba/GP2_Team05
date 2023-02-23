@@ -11,24 +11,33 @@ public class PlayerHudUI : MonoBehaviour {
 
     [SerializeField] private Image[] rangerAbility;
     [SerializeField] private Image[] tankAbility;
-
+    
+    [SerializeField] public GameObject bronk;
+    [SerializeField] public GameObject jose;
+    
+    [SerializeField] public GameObject pos1;
+    [SerializeField] public GameObject pos2;
 
     public List<Player> Players = new List<Player>();
 
 
     private float meleeAbility1CDMax, meleeAbility2CDMax, rangedAbility1CDMax, rangedAbility2CDMax;
 
+    Vector3 GetUiPosition(int id) => id == 1 ? pos1.transform.position : pos2.transform.position;
 
     public void SetUi() {
+        
         foreach (var player in Players) {
             switch (player.cType) {
                 case Player.CharacterType.Melee:
                     meleeAbility1CDMax = player.AbilityBCooldown;
                     meleeAbility2CDMax = player.AbilityACooldown;
+                    bronk.transform.position = GetUiPosition(player._playerNumber);
                     break;
                 case Player.CharacterType.Ranged:
                     rangedAbility1CDMax = player.AbilityBCooldown;
                     rangedAbility2CDMax = player.AbilityACooldown;
+                    jose.transform.position = GetUiPosition(player._playerNumber);
                     break;
             }
         }
