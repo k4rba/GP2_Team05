@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   HealAmount: 0.08
   TickRate: 1
-  MaxTicks: 12
+  MaxTicks: 10
   Idle:
     Chance: 100
     Audios:
