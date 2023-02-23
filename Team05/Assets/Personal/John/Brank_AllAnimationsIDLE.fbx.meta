@@ -14,6 +14,16 @@ ModelImporter:
       assembly: UnityEngine.CoreModule
       name: Eyes
     second: {fileID: 2100000, guid: 7ff91121448eec5438da1da15c69b29a, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: HeartLOW
+    second: {fileID: 2100000, guid: e586897bd147a064fbc101d6d926653b, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Shield
+    second: {fileID: 2100000, guid: 701ee377e0841d14cb7818566ad07f78, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
@@ -75,7 +85,7 @@ ModelImporter:
       name: rig|ChargeSlam
       takeName: rig|ChargeSlam
       internalID: 43951337261665941
-      firstFrame: 0
+      firstFrame: 8
       lastFrame: 25
       wrapMode: 0
       orientationOffsetY: 0
