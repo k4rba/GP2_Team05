@@ -43,9 +43,9 @@ namespace Andreas.Scripts {
         private void Start() {
             var msuic = new GameObject("Music");
             var source = msuic.AddComponent<AudioSource>();
-            source.clip = AudioManager.GetSoundClip("skalar_banan_men_bananen_blev_till_kiseloxid");
+            source.clip = AudioManager.GetSoundClip("main_game_music");
             source.loop = true;
-            source.volume = 0.18f;
+            source.volume = 0.6f;
             source.Play();
         }
 

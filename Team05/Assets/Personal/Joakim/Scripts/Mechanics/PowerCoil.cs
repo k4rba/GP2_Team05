@@ -14,7 +14,7 @@ namespace Joakim.Scripts.Mechanics {
 
         public int requiredTicsToExecuteEvent;
         private int _currentTic = 0;
-        public GameObject objectToDisableUponExecute;
+        public List<GameObject> objectToDisableUponExecute = new List<GameObject>();
         private GameObject _lightningTrailEffect;
         private Transform _affectedPlayerPos;
         public float damagePerTic;
@@ -24,9 +24,9 @@ namespace Joakim.Scripts.Mechanics {
         private int _currentLineIndex;
         public bool done;
 
-        [Space(8)]
-        [Header("SFX")]
-        [SerializeField] private AudioClip _sfxIdle;
+        [Space(8)] [Header("SFX")] [SerializeField]
+        private AudioClip _sfxIdle;
+
         [SerializeField] private AudioClip _sfxCharging;
         [SerializeField] private AudioClip _sfxOnComplete;
         private AudioSource _sfxIdleSource, _sfxChargingSource, _sfxOnCompleteSource;
@@ -53,36 +53,36 @@ namespace Joakim.Scripts.Mechanics {
 
         private void OnTriggerEnter(Collider other) {
             var player = other.gameObject.GetComponent<Player>();
-            if(player == null)
+            if (player == null)
                 return;
 
-            if(!coupledHealingStation.IsOccupied) {
+            if (!coupledHealingStation.IsOccupied) {
                 player.SfxData.GoToHealPad.Play(player.transform.position);
             }
-            
+
             if (affectedPlayer == null && !done) {
                 affectedPlayer = player;
                 _affectedPlayerPos = other.transform;
                 InvokeRepeating(nameof(OfferHealth), 0, 2);
                 Debug.Log("STARTED COIL");
-                
-                if(_sfxCharging != null)
+
+                if (_sfxCharging != null)
                     _sfxChargingSource = AudioManager.PlaySfx(_sfxCharging.name, transform.position);
             }
         }
 
         private void OnTriggerExit(Collider other) {
             var player = other.gameObject.GetComponent<Player>();
-            if(player == null)
+            if (player == null)
                 return;
-            
+
             if (other.GetComponent<HealthSystem.IDamagable>() == affectedPlayer) {
                 if (!done) {
                     _lr.SetPosition(0, _lineStartPos);
                 }
-    
+
                 _sfxChargingSource?.Stop();
-                
+
                 _currentLineIndex = 0;
                 _currentTic = 0;
                 affectedPlayer = null;
@@ -105,8 +105,8 @@ namespace Joakim.Scripts.Mechanics {
                 affectedPlayer?.Health.InstantDamage(affectedPlayer, damagePerTic);
                 _currentTic++;
                 Debug.Log($"TICKED COIL ({_currentTic} / {requiredTicsToExecuteEvent})");
-
             }
+            
             else if (_currentTic == requiredTicsToExecuteEvent) {
                 done = !done;
                 ExecuteEvent();
@@ -115,22 +115,23 @@ namespace Joakim.Scripts.Mechanics {
         }
 
         public void ExecuteEvent() {
-                Debug.Log("COMPLETED COIL");
+            Debug.Log("COMPLETED COIL");
             var pos = transform.position;
-            if(_sfxIdle != null)
-            {
+            if (_sfxIdle != null) {
                 _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
                 _sfxIdleSource.loop = true;
                 _sfxIdleSource.maxDistance = 20f;
             }
-            if(_sfxOnComplete != null)
-            {
+
+            if (_sfxOnComplete != null) {
                 _sfxOnCompleteSource = AudioManager.PlaySfx(_sfxOnComplete.name, pos);
             }
+
             if (!multipleCoils) {
-                var doorOpen =objectToDisableUponExecute.GetComponent<DoorOpen>(); 
-                    if(doorOpen!=null)
-                        doorOpen.DoorSlideOpen();
+
+                foreach (var door in objectToDisableUponExecute) {
+                    door.GetComponent<DoorOpen>().DoorSlideOpen();
+                }
             }
             else {
                 coupledFuseBox.GetComponent<FuseBoxMultipleCoilsOnly>().CheckIfFinished();

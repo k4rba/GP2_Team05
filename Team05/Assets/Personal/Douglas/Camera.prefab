@@ -878,7 +878,7 @@ MonoBehaviour:
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
   m_YDamping: 0
-  m_ZDamping: 0
+  m_ZDamping: 5
   m_CameraUp: 0
   m_PitchDamping: 0
   m_YawDamping: 0
@@ -1035,7 +1035,7 @@ MonoBehaviour:
     roll: 0
   - position: {x: 0.8811188, y: -6.158558, z: -38.603027}
     roll: 0
-  - position: {x: 4.9758453, y: -7.548336, z: -99.56595}
+  - position: {x: 4.9758453, y: -7.548336, z: -102.60214}
     roll: 0
 --- !u!1 &1331495502055226999
 GameObject:
@@ -2094,7 +2094,7 @@ MonoBehaviour:
   m_Waypoints:
   - position: {x: -14.576744, y: 0, z: -5}
     roll: 0
-  - position: {x: 7.8040314, y: 2.9913855, z: -2.9645996}
+  - position: {x: -3.3466263, y: 5.410945, z: -1.2479248}
     roll: 0
 --- !u!1 &1331495502988259067
 GameObject:
@@ -2121,7 +2121,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1331495502988259067}
   m_LocalRotation: {x: -0.2830027, y: -0.6592835, z: 0.29585105, w: -0.63065594}
-  m_LocalPosition: {x: 52.672424, y: 32.628387, z: -178.43224}
+  m_LocalPosition: {x: 54.77, y: 38.39, z: -178.43224}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -2550,7 +2550,7 @@ MonoBehaviour:
   m_PathOffset: {x: 0, y: 0, z: 0}
   m_XDamping: 0
   m_YDamping: 0
-  m_ZDamping: 1
+  m_ZDamping: 5
   m_CameraUp: 0
   m_PitchDamping: 0
   m_YawDamping: 0

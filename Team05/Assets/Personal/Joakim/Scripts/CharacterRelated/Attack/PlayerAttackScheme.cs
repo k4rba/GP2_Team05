@@ -46,9 +46,9 @@ public class PlayerAttackScheme : MonoBehaviour {
 
     //  STUN SHOT
     public void RangedAbilityA() {
-        var playerTransform = transform;
+        var playerTransform = GetComponent<Player>().feetPos.transform;
         Instantiate(_specialAAbility,
-            playerTransform.position + (playerTransform.forward * 1), playerTransform.rotation);
+            playerTransform.position + (playerTransform.forward * 1) + Vector3.up * 0.3f,  playerTransform.rotation);
             AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
     }
 

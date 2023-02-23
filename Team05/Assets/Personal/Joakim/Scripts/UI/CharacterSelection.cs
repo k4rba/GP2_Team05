@@ -79,6 +79,7 @@ public class CharacterSelection : MonoBehaviour {
                         GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                         player.SfxData = FastResources.Load<PlayerSfxData>("Data/JoseSfxData");
                         GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
+                        player.GetComponent<PlayerInput>().actions.Disable();
                         GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                     }
                     else {
@@ -94,6 +95,7 @@ public class CharacterSelection : MonoBehaviour {
                         GetComponentInChildren<PlayerAttackScheme>().InitializeAttack();
                         player.SfxData = FastResources.Load<PlayerSfxData>("Data/BronkSfxData");
                         GameManager.Instance.CharacterManager.Players.Add(GetComponent<Player>());
+                        player.GetComponent<PlayerInput>().actions.Disable();
                         GameManager.Instance.CharacterManager.CheckIfAllAreLockedIn();
                     }
                     else {

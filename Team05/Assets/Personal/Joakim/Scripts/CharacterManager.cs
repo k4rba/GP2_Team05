@@ -16,6 +16,9 @@ public class CharacterManager : MonoBehaviour
     [SerializeField] private Transform _spawnPoint1;
     [SerializeField] private Transform _spawnPoint2;
 
+    public GameObject selectionObj;
+    public GameObject camerToDisable;
+
 
     // public static CharacterManager Instance = null;
 
@@ -31,16 +34,28 @@ public class CharacterManager : MonoBehaviour
     {
         if(rangedLockedIn && meleeLockedIn)
         {
+            Destroy(camerToDisable);
+            Destroy(selectionObj);
             characterSelectionScreen.SetActive(false);
             mainGameUI.SetActive(true);
             playerHUDui.SetActive(true);
 
             foreach(var player in Players)
             {
+                player.GetComponent<PlayerInput>().actions.Enable();
                 player.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
                 player.AssignPlayerToRole(player.cType);
                 player.HealthMaterial = Resources.Load<Material>("Player" + player._playerNumber + "Health");
                 player.Health.ResetHealth(player);
+
+                switch (player.cType) {
+                    case Player.CharacterType.Melee:
+                        player.HealthMaterial.SetColor("_CharacterDependentColor", new Color(101/255f, 183/255f, 19/255f));
+                        break;
+                    case Player.CharacterType.Ranged:
+                        player.HealthMaterial.SetColor("_CharacterDependentColor", new Color(53/255f, 93/255f, 123/255f));
+                        break;
+                }
 
                 if(player._playerNumber == 1)
                 {
