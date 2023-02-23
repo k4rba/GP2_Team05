@@ -4,7 +4,6 @@ using Andreas.Scripts.CheckpointSystem;
 using AudioSystem;
 using Personal.Andreas.Scripts;
 using Personal.Andreas.Scripts.Actors;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Util;
@@ -26,41 +25,14 @@ namespace Andreas.Scripts {
         public RopeManager RopeManager;
         public DollyCamManager DollyManager;
 
-        public GameObject gameOverScreen, pauseScreen;
-
-        public bool paused;
-
-
-        public void TogglePause() {
-            
-            if(!CharacterManager.CheckIfAllAreLockedIn())
-                return;
-            
-            paused = !paused;
-            if (paused) {
-                pauseScreen.SetActive(true);
-                foreach (var player in CharacterManager.Players) {
-                    player.gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("UI");
-                }
-
-                Time.timeScale = 0;
-            }
-            else {
-                Time.timeScale = 1;
-                foreach (var player in CharacterManager.Players) {
-                    player.gameObject.GetComponent<PlayerInput>().SwitchCurrentActionMap("Player");
-                }
-
-                pauseScreen.SetActive(false);
-            }
-        }
+        public GameObject gameOverScreen;
 
         private void Awake() {
             // InputSystem.DisableDevice(Keyboard.current);
 
             if (Instance == null) {
                 Instance = this;
-            //    DontDestroyOnLoad(gameObject);
+                DontDestroyOnLoad(gameObject);
             }
             else {
                 Destroy(gameObject);
@@ -98,16 +70,15 @@ namespace Andreas.Scripts {
             foreach (var player in CharacterManager.Players) {
                 player.isDead = true;
                 var input = player.GetComponent<PlayerInput>();
-                if (input != null && input.enabled) {
+                if(input != null && input.enabled)
+                {
                     input.SwitchCurrentActionMap("UI");
-                    if (input.currentActionMap != null)
+                    if(input.currentActionMap != null)
                         input.currentActionMap.Enable();
                 }
-
                 player.GetComponent<CharacterSelection>().gameOver = true;
                 player.transform.rotation = Quaternion.Euler(0, 90, 0);
             }
-
             gameOverScreen.SetActive(true);
         }
     }

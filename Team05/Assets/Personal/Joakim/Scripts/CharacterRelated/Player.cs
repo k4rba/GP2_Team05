@@ -16,7 +16,6 @@ using AttackNamespace;
 using AudioSystem;
 using Health;
 using UnityEngine.Experimental.GlobalIllumination;
-using UnityEngine.SceneManagement;
 using Util;
 
 #if UNITY_EDITOR
@@ -317,25 +316,6 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             var camMove = fwInput + riInput;
 
             _lookDirection = new Vector2(camMove.x, camMove.z);
-        }
-    }
-    
-    public void OnPause(InputAction.CallbackContext context) {
-        if (context.performed && !isDead) {
-            GameManager.Instance.TogglePause();
-        }
-    }
-    
-    public void OnPauseMenuResume(InputAction.CallbackContext context) {
-        if (context.performed && !isDead) {
-            GameManager.Instance.TogglePause();
-        }
-    }
-    
-    public void OnPauseMenuQuit(InputAction.CallbackContext context) {
-        if (context.performed && !isDead) {
-            GameManager.Instance.TogglePause();
-            SceneManager.LoadScene("MainScene");
         }
     }
 

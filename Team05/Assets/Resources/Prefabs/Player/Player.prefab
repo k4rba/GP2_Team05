@@ -349,62 +349,6 @@ MonoBehaviour:
       m_Calls: []
     m_ActionId: dcccd813-88e8-4bed-9115-f2db4d7ce0a4
     m_ActionName: Player/Interact
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: b36467da-c4b5-45ec-a495-db5df67e1326
-    m_ActionName: MenuActions/A[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls: []
-    m_ActionId: 52c2e58d-812e-42dc-8333-18d3ff2111c8
-    m_ActionName: MenuActions/B[/XInputControllerWindows/buttonEast,/XInputControllerWindows1/buttonEast]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 714828357488824483}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnPause
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: d5c1c041-2bfb-49d8-b816-e42ff194d709
-    m_ActionName: Player/New action
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 714828357488824483}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnPauseMenuResume
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 3991dc92-ca5e-4b75-94e0-69df3416a0ec
-    m_ActionName: UI/Choose1[/XInputControllerWindows/buttonSouth,/XInputControllerWindows1/buttonSouth]
-  - m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 714828357488824483}
-        m_TargetAssemblyTypeName: Player, Assembly-CSharp
-        m_MethodName: OnPauseMenuQuit
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
-    m_ActionId: 808a1143-77c9-4d5b-bcf7-58d01d375790
-    m_ActionName: UI/Quit[/XInputControllerWindows/select,/XInputControllerWindows1/select]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player
