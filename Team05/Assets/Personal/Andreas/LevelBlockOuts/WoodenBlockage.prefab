@@ -343,6 +343,10 @@ MonoBehaviour:
   _debrisCount: 10
   _debrisPrefabs:
   - {fileID: 7867809331492652015, guid: d986152163309ec46940c2f34e4b421b, type: 3}
+  Sound:
+    Chance: 100
+    Audios:
+    - {fileID: 8300000, guid: 4442d3de67981ac4fbb059b4974a54b4, type: 3}
   OnDestroyed:
     m_PersistentCalls:
       m_Calls: []

@@ -133,6 +133,14 @@ namespace Andreas.Scripts {
             PlayerHudUi.gameObject.SetActive(false);
             healthBar.SetActive(false);
         }
+
+        private void Update()
+        {
+            // if(Input.GetKeyDown(KeyCode.R))
+            // {
+                // AudioManager.PlaySfx("bronk_breakable");
+            // }
+        }
     }
     
 }

@@ -1,9 +1,5 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Windows.WebCam;
 
 public class MenuInput : MonoBehaviour {
     public GameObject cSelection;
@@ -11,15 +7,26 @@ public class MenuInput : MonoBehaviour {
 
     public void OnStart(InputAction.CallbackContext context) {
         if (context.performed) {
-            cSelection.SetActive(true);
-            transform.parent.gameObject.SetActive(false);
-            playerJoinManager.SetActive(true);
+            StartGame();
         }
     }
 
     public void OnExit(InputAction.CallbackContext context) {
         if (context.performed) {
             Application.Quit();
+        }
+    }
+
+    private void StartGame()
+    {
+        cSelection.SetActive(true);
+        transform.parent.gameObject.SetActive(false);
+        playerJoinManager.SetActive(true);
+    }
+
+    private void Update() {
+        if(Input.GetKeyDown(KeyCode.F2)) {
+            StartGame();
         }
     }
 }

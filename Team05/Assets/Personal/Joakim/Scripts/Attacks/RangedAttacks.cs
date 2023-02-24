@@ -150,9 +150,10 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
     }
 
     private void OnTriggerEnter(Collider other) {
-        if (BasicDamage < 1) {
-            return;
-        }
+        int finalDamage = (int)Mathf.Max(1, BasicDamage);
+        
+        //  hmmmmmmm
+        // if (BasicDamage < 1) return;
 
         var enemy = other.gameObject.GetComponent<Enemy>();
 
@@ -162,7 +163,6 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         
         if (rangedAttackType != RangedAttackType.StunBall) {
             if (enemy != null) {
-                int finalDamage = (int)Mathf.Min(1, BasicDamage);
                 enemy._animator.SetTrigger("GetHit");
                 enemy.TakeDamage(finalDamage);
                 AudioManager.PlaySfx(_player.SfxData.BasicAttack.name, _player.transform.position);
