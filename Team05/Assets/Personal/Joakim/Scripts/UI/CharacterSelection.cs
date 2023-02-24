@@ -69,6 +69,7 @@ public class CharacterSelection : MonoBehaviour {
             if (!context.performed)
                 return;
             var player = GetComponent<Player>();
+            player.GetComponent<PlayerInput>().actions.Disable();
             switch (selectedDir) {
                 case -1:
                     if (!GameManager.Instance.CharacterManager.rangedLockedIn) {
