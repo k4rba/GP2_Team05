@@ -16,6 +16,8 @@ namespace Andreas.Scripts.HealingZone {
 
         private AudioSource _sfxIdle;
         private AudioSource _sfxActive;
+        
+        // public bool IsPlay
 
         public bool IsHanSolo;
 
@@ -25,9 +27,9 @@ namespace Andreas.Scripts.HealingZone {
         }
 
         private void Start() {
-            _sfxIdle = _data.Idle.Play(transform.position);
-            _sfxIdle.loop = true;
-            _sfxIdle.SetMaxDistance(50f);
+            // _sfxIdle = _data.Idle.Play(transform.position);
+            // _sfxIdle.loop = true;
+            // _sfxIdle.SetMaxDistance(20f);
         }
 
         private void OnTriggerEnter(Collider other) {

@@ -187,10 +187,10 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
 
         //  test       
 #if UNITY_EDITOR
-        if (Input.GetKeyDown(KeyCode.F)) {
-            TestHealth();
+        // if (Input.GetKeyDown(KeyCode.F)) {
+            // TestHealth();
             // Interact();
-        }
+        // }
 #endif
     }
 

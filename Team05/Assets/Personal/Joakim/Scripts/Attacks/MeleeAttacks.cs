@@ -86,11 +86,6 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
 
     private void OnTriggerEnter(Collider other)
     {
-
-        //  ignore skill if low dmg
-        if(BasicDamage < 1)
-            return;
-        
         var enemy = other.gameObject.GetComponent<Enemy>();
 
         if(enemy == null)
@@ -103,7 +98,7 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
         }
         
         if (meleeAttackType == MeleeAttackType.ShieldSlam) {
-            enemy.StateManager.SetState(new EnemyStateStunned(2f));
+            enemy.StateManager.SetState(new EnemyStateStunned(4f));
         }
 
         int finalDamage = (int)Mathf.Max(1, BasicDamage);

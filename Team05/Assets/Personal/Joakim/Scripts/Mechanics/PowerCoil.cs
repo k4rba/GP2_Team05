@@ -122,8 +122,7 @@ namespace Joakim.Scripts.Mechanics {
             var pos = transform.position;
             if (_sfxIdle != null) {
                 _sfxIdleSource = AudioManager.PlaySfx(_sfxIdle.name, pos);
-                _sfxIdleSource.loop = true;
-                _sfxIdleSource.maxDistance = 20f;
+                _sfxIdleSource.SetMaxDistance(20f);
             }
 
             if (_sfxOnComplete != null) {

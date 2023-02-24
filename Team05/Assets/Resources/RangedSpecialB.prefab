@@ -55,7 +55,7 @@ SphereCollider:
   m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
+  m_Radius: 0.75
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!114 &67583390151345085
 MonoBehaviour:
@@ -69,11 +69,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 829fda358966f9348b794ec8213cfaaf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  <BasicDamage>k__BackingField: 1
+  <BasicDamage>k__BackingField: 5
   <SpecialDamage>k__BackingField: 0.8
   <ProjectileSpeed>k__BackingField: 30
   <AttackSize>k__BackingField: 1.5
-  player: {fileID: 0}
+  playerObj: {fileID: 0}
   distToPlayer: 0
   stunBallNearbyEnemies: []
   numberOfBounces: 0
