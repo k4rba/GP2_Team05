@@ -71,11 +71,11 @@ public class PlayerHudUI : MonoBehaviour {
     }
 
     IEnumerator VisualizeCooldown(Image relevantFillImage, float maxCd) {
-        relevantFillImage.fillAmount = 0;
+        relevantFillImage.fillAmount = 1;
         var fillAmountStep = 1 / (maxCd * 10);
         for (int i = 0; i < maxCd * 10; i++) {
             yield return new WaitForSeconds(0.1f);
-            relevantFillImage.fillAmount += fillAmountStep;
+            relevantFillImage.fillAmount -= fillAmountStep;
         }
     }
 }

@@ -42,7 +42,7 @@ namespace Andreas.Scripts {
 
         public void TogglePause() {
             
-            if(!CharacterManager.CheckIfAllAreLockedIn())
+            if(!CharacterManager.IsAllLockedIn())
                 return;
             
             paused = !paused;
@@ -65,7 +65,8 @@ namespace Andreas.Scripts {
         }
 
         private void Awake() {
-            // InputSystem.DisableDevice(Keyboard.current);
+            InputSystem.DisableDevice(Keyboard.current);
+            InputSystem.DisableDevice(Mouse.current);
 
             if (Instance == null) {
                 Instance = this;
@@ -78,12 +79,12 @@ namespace Andreas.Scripts {
         }
 
         private void Start() {
-            var msuic = new GameObject("Music");
-            var source = msuic.AddComponent<AudioSource>();
-            source.clip = AudioManager.GetSoundClip("main_game_music");
-            source.loop = true;
-            source.volume = 0.6f;
-            source.Play();
+            // var msuic = new GameObject("Music");
+            // var source = msuic.AddComponent<AudioSource>();
+            // source.clip = AudioManager.GetSoundClip("main_game_music");
+            // source.loop = true;
+            // source.volume = 0.6f;
+            // source.Play();
         }
 
         public IEnumerator PlayEnemySfxCheer(Enemy enemy) {

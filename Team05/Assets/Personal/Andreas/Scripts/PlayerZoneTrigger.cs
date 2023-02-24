@@ -10,7 +10,8 @@ namespace Andreas.Scripts
 
         private void OnTriggerEnter(Collider other)
         {
-            if(other.GetComponent<Player>())
+            var player = other.GetComponent<Player>();
+            if(player != null)
             {
                 OnEnterZone?.Invoke();
             }
@@ -18,7 +19,8 @@ namespace Andreas.Scripts
 
         private void OnTriggerExit(Collider other)
         {
-            if(other.GetComponent<Player>())
+            var player = other.GetComponent<Player>();
+            if(player != null)
             {
                 OnExitZone?.Invoke();
             }

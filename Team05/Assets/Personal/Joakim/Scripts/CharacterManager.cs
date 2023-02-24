@@ -30,6 +30,11 @@ public class CharacterManager : MonoBehaviour
         // Destroy(gameObject);
     }
 
+    public bool IsAllLockedIn()
+    {
+        return rangedLockedIn && meleeLockedIn;
+    }
+    
     public bool CheckIfAllAreLockedIn() {
         bool allLockedIn = rangedLockedIn && meleeLockedIn;
         if(rangedLockedIn && meleeLockedIn)
@@ -71,7 +76,6 @@ public class CharacterManager : MonoBehaviour
                 GameManager.Instance.CameraController.SetTransforms(player.transform);
                 var spawner = GameManager.Instance.EnemyManager.Spawner;
                 spawner.EnableSpawning(false);
-                player.GetComponent<PlayerInput>().actions.Enable();
                 // spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
 

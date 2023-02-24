@@ -154,19 +154,16 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         
         //  hmmmmmmm
         // if (BasicDamage < 1) return;
-
+        
         var enemy = other.gameObject.GetComponent<Enemy>();
-
         if (enemy == null) {
             return;
         }
         
         if (rangedAttackType != RangedAttackType.StunBall) {
-            if (enemy != null) {
                 enemy._animator.SetTrigger("GetHit");
                 enemy.TakeDamage(finalDamage);
                 AudioManager.PlaySfx(_player.SfxData.BasicAttack.name, _player.transform.position);
-            }
         }
         else if (rangedAttackType == RangedAttackType.StunBall) {
             GetComponent<Collider>().enabled = false;
