@@ -3,9 +3,10 @@ using UnityEngine;
 
 public class SoundTrigger : MonoBehaviour {
     public AudioClip sound;
-    private bool _soundPlayed;
+    [SerializeField] private bool _soundPlayed;
 
     private void OnTriggerEnter(Collider other) {
+        
         var player = other.gameObject.GetComponent<Player>();
         if(player == null)
             return;

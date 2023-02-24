@@ -21,7 +21,7 @@ namespace Health {
             if (self.Health.Health >= -0.40f && other.Health.Health < 0.5f) {
                 InstantHealing(other, 0.05f);
 
-                InstantDamage(self, 0.05f);
+                InstantDamage(self, 0.05f, false);
 
                 var otherHealthMatFloat = other.HealthMaterial.GetFloat("_HP");
             }
@@ -33,14 +33,15 @@ namespace Health {
             player.HealthMaterial.SetFloat("_HP", ClampHP(playerHealthMat + value));
         }
 
-        public void InstantDamage(HealthSystem.IDamagable player, float value) {
+        public void InstantDamage(HealthSystem.IDamagable player, float value, bool invokeEvent = true) {
             if (player.Health.Health >= -0.45f) {
                 player.Health.Health = ClampHP(player.Health.Health - value);
                 var playerHealthMat = player.HealthMaterial.GetFloat("_HP");
                 player.HealthMaterial.SetFloat("_HP",ClampHP(playerHealthMat - value));
                 
                 playerHealthMat = player.HealthMaterial.GetFloat("_HP");
-                OnDamageTaken?.Invoke();
+                if(invokeEvent)
+                    OnDamageTaken?.Invoke();
             }
             else {
                 Die(player);

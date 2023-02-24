@@ -114,8 +114,8 @@ public class Player : MonoBehaviour, Attack.IPlayerAttacker, HealthSystem.IDamag
             var lowHealth = Mathf.Lerp(HealthSystem.MinHp, HealthSystem.MaxHp, 0.25f);
             if(lowHealth <= Health.Health) {
                 voiceLine = SfxData.LowHealth;
-                const float LowHealthWarningCooldownTime = 3.5f; 
-                _lowHealthWarningCooldownTimer = LowHealthWarningCooldownTime;
+                const float LowHealthWarningVoiceCooldownTime = 3.5f; 
+                _lowHealthWarningCooldownTimer = LowHealthWarningVoiceCooldownTime;
             }
         }
         
