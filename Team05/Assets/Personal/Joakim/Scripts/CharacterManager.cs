@@ -71,6 +71,7 @@ public class CharacterManager : MonoBehaviour
                 GameManager.Instance.CameraController.SetTransforms(player.transform);
                 var spawner = GameManager.Instance.EnemyManager.Spawner;
                 spawner.EnableSpawning(false);
+                player.GetComponent<PlayerInput>().actions.Enable();
                 // spawner.AssignFlowField(player.GetComponentInChildren<FlowFieldManager>());
             }
 
