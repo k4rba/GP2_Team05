@@ -14,7 +14,7 @@ GameObject:
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!4 &8709904138443255534
 Transform:
@@ -109,6 +109,21 @@ PrefabInstance:
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 558a80d4e11b0b44ebe9e0002a8c63ee, type: 2}
+    - target: {fileID: -4647288816301494150, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -3334238306272731573, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: -2431063616435387675, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 635992093937885742, guid: b8b62ec85a0da4d4b843c09a2787d61b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
@@ -119,11 +134,31 @@ PrefabInstance:
       propertyPath: m_Name
       value: FenceUnwrapped
       objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 2898897828475971369, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
+    - target: {fileID: 4468589824537997585, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 5488720632221961646, guid: b8b62ec85a0da4d4b843c09a2787d61b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
       value: 
       objectReference: {fileID: 2100000, guid: 558a80d4e11b0b44ebe9e0002a8c63ee, type: 2}
+    - target: {fileID: 8975804475052805530, guid: b8b62ec85a0da4d4b843c09a2787d61b,
+        type: 3}
+      propertyPath: m_StaticEditorFlags
+      value: 2147483647
+      objectReference: {fileID: 0}
     - target: {fileID: 9166173979996456510, guid: b8b62ec85a0da4d4b843c09a2787d61b,
         type: 3}
       propertyPath: m_Materials.Array.data[0]
