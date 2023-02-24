@@ -106,7 +106,7 @@ public class MeleeAttacks : MonoBehaviour, Attack.IAttack {
             enemy.StateManager.SetState(new EnemyStateStunned(2f));
         }
 
-        int finalDamage = (int)Mathf.Min(1, BasicDamage);
+        int finalDamage = (int)Mathf.Max(1, BasicDamage);
         enemy.TakeDamage(finalDamage);
         enemy._animator.SetTrigger("GetHit");
     }

@@ -69,7 +69,9 @@ namespace AudioSystem
         internal static void ReturnAudioPlayer(AudioPlayer player)
         {
             player.GetSource().Stop();
+            player.gameObject.SetActive(false);
             _sources.Push(player);
+            Debug.Log($"returned ({_sources.Count})");
         }
 
         public static AudioClip GetSoundClip(string name)
@@ -95,10 +97,12 @@ namespace AudioSystem
                 go.transform.parent = _audioSourceContainer.transform;
                 retSource = go.GetComponent<AudioPlayer>();
                 _allPlayers.Add(retSource);
+                // Debug.Log("created new source");
             }
             else
             {
                 retSource = _sources.Pop();
+                // Debug.Log($"popped source ({_sources.Count})");
             }
 
             retSource.GetSource().loop = false;
