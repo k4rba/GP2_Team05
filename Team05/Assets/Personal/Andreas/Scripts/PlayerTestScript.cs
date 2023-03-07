@@ -1,18 +1,23 @@
-﻿using System;
-using UnityEngine;
-using UnityEngine.Serialization;
+﻿using UnityEngine;
 
 namespace Andreas.Scripts
 {
+    [RequireComponent(typeof(Rigidbody))]
     public class PlayerTestScript : MonoBehaviour
     {
-        [SerializeField] private Rigidbody _body;
+        private Rigidbody _body;
 
         [SerializeField] private bool _enabledInput;
 
         [SerializeField] private bool _playerOne;
 
         [SerializeField] private float _speed= 15f;
+
+
+        private void Awake()
+        {
+            _body = GetComponent<Rigidbody>();
+        }
 
         private void FixedUpdate()
         {
