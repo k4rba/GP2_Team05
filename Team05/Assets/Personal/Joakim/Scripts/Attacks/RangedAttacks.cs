@@ -159,16 +159,27 @@ public class RangedAttacks : MonoBehaviour, Attack.IAttack {
         if (enemy == null) {
             return;
         }
+
+        switch(rangedAttackType)
+        {
+            case RangedAttackType.BasicAttack:
+                AudioManager.PlaySfx(_player.SfxData.AttackHit.name, _player.transform.position);
+                break;
+            case RangedAttackType.StunBall:
+                AudioManager.PlaySfx(_player.SfxData.SpecialAttack.name, _player.transform.position);
+                break;
+            case RangedAttackType.TetherBlast:
+                AudioManager.PlaySfx(_player.SfxData.SecondaryAttack.name, _player.transform.position);
+                break;
+        }
         
         if (rangedAttackType != RangedAttackType.StunBall) {
                 enemy._animator.SetTrigger("GetHit");
                 enemy.TakeDamage(finalDamage);
-                AudioManager.PlaySfx(_player.SfxData.BasicAttack.name, _player.transform.position);
         }
         else if (rangedAttackType == RangedAttackType.StunBall) {
             GetComponent<Collider>().enabled = false;
             CheckForNearbyEnemies();
-            AudioManager.PlaySfx(_player.SfxData.SecondaryAttack.name, _player.transform.position);
         }
     }
 }
