@@ -25,7 +25,7 @@ public class PlayerAttackScheme : MonoBehaviour {
         if (ActiveProjectiles.Count == 0) {
             var basicAttack =
                 Instantiate(_basicAttack,
-                    playerTransform.position + (playerTransform.forward * 2), playerTransform.rotation);
+                    playerTransform.position + (playerTransform.forward * 2) + Vector3.up * .5f, playerTransform.rotation);
             ActiveProjectiles.Add(basicAttack);
             AudioManager.PlaySfx(SfxData.BasicAttack.name, playerTransform.position);
             // AudioManager.PlaySfx("attack_basic_attack_ranged", playerTransform.position);
