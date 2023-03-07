@@ -65,6 +65,9 @@ public class CharacterSelection : MonoBehaviour {
     }
 
     public void OnChoose(InputAction.CallbackContext context) {
+        if(GameManager.Instance.paused)
+            return;
+        
         if (!gameOver) {
             if (!context.performed)
                 return;
